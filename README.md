@@ -28,6 +28,10 @@ Native browser downloads were unavailable, and browser security denied opening t
 
 Live monetization proposal D is unapproved and disabled. Fixtures test optional rematch and next-family credits, timing, strict grants, failed saves, delayed callbacks and host-pause ordering. Production integration must use actual platform APIs and measured publisher data.
 
+## Three.js game build
+
+`game/` contains the production presentation: a low-poly three.js renderer, HUD and YouTube Playables lifecycle. It sits on top of the unchanged engine and course bank. Build it with `cd game && npm ci && npm run build`. The initial bundle is about 243 KB gzipped. See `game/README.md` for the layout and for what is still unverified. Ads remain disabled.
+
 ## Repository handoff
 
 Added to Car-shift on 18 October 2026. The contract is `docs/PRODUCT-CONTRACT.txt` revision 5.0. The full result is in `docs/QA-RESULTS.md`. The repository contains the engine, course bank, authoring tools, tests and actual evidence. Diagnostic archive generation and report exports write to the local `artifacts/` directory; they do not publish or call a live ad service.

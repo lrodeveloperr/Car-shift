@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>Shape Shifting: Vehicle Race</title>
+<!--ytgame--><script src="https://www.youtube.com/game_api/v1"></script><!--/ytgame-->
+<style>
+:root{color-scheme:dark;--ink:#fff;--shade:rgba(14,22,38,.62);--accent:#ff7a1a;--gold:#ffd23f;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+*{box-sizing:border-box}
+html,body{width:100%;height:100%;margin:0;overflow:hidden;overscroll-behavior:none;background:#3a9cf5}
+#game-root{position:relative;width:100%;height:100%;height:100dvh;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
+#game-canvas{display:block;width:100%;height:100%}
+[hidden]{display:none!important}
+button{font:inherit;color:var(--ink);border:0;cursor:pointer;min-width:44px;min-height:44px;touch-action:manipulation}
+button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.hud{position:absolute;inset:0;pointer-events:none;display:flex;flex-direction:column;justify-content:space-between;
+  padding:max(10px,env(safe-area-inset-top)) max(10px,env(safe-area-inset-right)) max(10px,env(safe-area-inset-bottom)) max(10px,env(safe-area-inset-left))}
+.hud button{pointer-events:auto}
+.top{display:flex;align-items:center;gap:10px}
+.pill{background:var(--shade);border-radius:999px;padding:6px 14px;font-weight:800;font-size:18px;font-variant-numeric:tabular-nums;color:var(--ink);text-shadow:0 1px 2px #0006}
+.rank{font-size:26px;min-width:76px;text-align:center;color:var(--gold)}
+.track{position:relative;flex:1;height:12px;border-radius:999px;background:var(--shade);margin:0 10px}
+.dot{position:absolute;top:50%;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;border:2px solid #fff;transition:left .1s linear}
+#dot0{background:#ff7a1a;width:24px;height:24px;margin:-12px 0 0 -12px;z-index:2}#dot1{background:#2f80ed}#dot2{background:#d83f87}
+.round{border-radius:50%;background:var(--shade);font-size:16px;font-weight:900}
+.terrain{align-self:center;margin-top:8px;background:var(--shade);border-radius:999px;padding:5px 14px;font-weight:700;font-size:15px;color:var(--ink)}
+.bottom{display:flex;flex-direction:column;gap:8px;align-items:center;margin-top:auto}
+.fork{display:flex;gap:8px;align-items:center;background:var(--shade);border-radius:16px;padding:6px}
+.fork button{background:#ffffff22;border-radius:12px;padding:6px 14px;font-weight:800}
+.fork button[aria-pressed=true]{background:var(--gold);color:#222}
+#gate{font-size:13px;font-weight:700;min-width:84px;text-align:center;color:#fff}
+.slots{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;max-width:560px}
+.slot{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;height:clamp(78px,15vh,118px);border-radius:20px;
+  border:3px solid #ffffff55;box-shadow:0 6px 0 #0004;transition:transform .08s,opacity .15s;padding:2px}
+.slot img{width:clamp(52px,10vh,82px);height:clamp(52px,10vh,82px);border-radius:12px;pointer-events:none}
+.slot img[src=""]{display:none}
+.slot span{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;opacity:.85;pointer-events:none}
+.slot b{font-size:15px;pointer-events:none}
+.s0{background:#5d9b3c}.s1{background:#2f8fd8}.s2{background:#6aa9df}
+.slot[aria-pressed=true]{border-color:#fff;transform:translateY(-6px);box-shadow:0 10px 0 #0004,0 0 0 4px var(--gold)}
+.slot.unusable{opacity:.45}
+.slot.nope{animation:nope .3s}
+@keyframes nope{25%{transform:translateX(-7px)}50%{transform:translateX(7px)}75%{transform:translateX(-4px)}}
+.overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:radial-gradient(#0000,#0008);padding:20px}
+.card{background:var(--shade);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border-radius:28px;padding:22px 26px;text-align:center;color:var(--ink);
+  min-width:min(320px,90vw);display:flex;flex-direction:column;gap:12px;align-items:stretch;box-shadow:0 20px 50px #0005}
+h1{margin:0;font-size:40px;line-height:1;font-weight:900;letter-spacing:-.02em;text-shadow:0 3px 0 #0005}
+h1 small{display:block;font-size:20px;color:var(--gold);margin-top:6px;letter-spacing:.06em;text-transform:uppercase}
+h2{margin:0;font-size:30px;font-weight:900}
+p{margin:0}
+.hint{font-size:14px;opacity:.85}
+.card button{background:#ffffff26;border-radius:16px;padding:12px 20px;font-weight:800;font-size:18px}
+.card .primary{background:var(--accent);font-size:24px;padding:16px 28px;box-shadow:0 6px 0 #a64700}
+.card .primary:disabled{opacity:.5}
+.medal{font-size:72px;line-height:1}
+#go{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:96px;font-weight:900;color:var(--gold);
+  text-shadow:0 6px 0 #0006;pointer-events:none;opacity:0}
+#go.flash{animation:go .8s ease-out}
+@keyframes go{0%{opacity:1;transform:scale(.6)}40%{opacity:1;transform:scale(1.1)}100%{opacity:0;transform:scale(1.4)}}
+@media (orientation:landscape){.bottom{flex-direction:row;justify-content:center;align-items:flex-end}.slots{max-width:min(460px,58vw)}}
+@media (orientation:landscape) and (max-height:500px){.slot{height:clamp(64px,20vh,92px)}.slot img{width:clamp(30px,10vh,52px);height:clamp(30px,10vh,52px)}
+  .fork{flex-direction:column;gap:4px}.fork button{padding:4px 10px}h1{font-size:32px}.card{padding:14px 20px;gap:8px}.medal{font-size:48px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="game-root">
+  <canvas id="game-canvas" aria-label="Race view"></canvas>
+  <div id="hud" class="hud" hidden>
+    <div class="top">
+      <div id="rank" class="pill rank" role="status">1st</div>
+      <div class="track" aria-hidden="true"><i id="dot1" class="dot"></i><i id="dot2" class="dot"></i><i id="dot0" class="dot"></i></div>
+      <div id="clock" class="pill" aria-hidden="true">0.0</div>
+      <button id="pause" class="round" aria-label="Pause">II</button>
+    </div>
+    <div id="terrain" class="terrain"></div>
+    <div class="bottom">
+      <div id="fork" class="fork" hidden>
+        <button data-branch="0" aria-label="Direct route with gate">◀ Direct</button><span id="gate"></span><button data-branch="1" aria-label="Bypass route">Bypass ▶</button>
+      </div>
+      <div class="slots">
+        <button id="slot0" class="slot s0" data-slot="0" aria-pressed="false"><img alt="" src=""><b>Car</b><span>Ground · 1</span></button>
+        <button id="slot1" class="slot s1" data-slot="1" aria-pressed="false"><img alt="" src=""><b>Boat</b><span>Water · 2</span></button>
+        <button id="slot2" class="slot s2" data-slot="2" aria-pressed="false"><img alt="" src=""><b>Helicopter</b><span>Air · 3</span></button>
+      </div>
+    </div>
+  </div>
+  <div id="go" hidden aria-hidden="true">GO!</div>
+  <div id="title" class="overlay"><div class="card">
+    <h1>Shape Shift<small>Vehicle Race</small></h1>
+    <p id="stage">Loading…</p>
+    <button id="play" class="primary" disabled>Play</button>
+    <p class="hint">Switch to the vehicle that fits the terrain. Swipe ◀ ▶ to pick a route.</p>
+  </div></div>
+  <div id="result" class="overlay" hidden><div class="card">
+    <div id="medal" class="medal"></div><h2 id="place"></h2><p id="time"></p>
+    <button id="next" class="primary">Next race</button><button id="replay">Replay</button>
+  </div></div>
+  <div id="paused" class="overlay" hidden><div class="card"><h2>Paused</h2><button id="resume" class="primary">Resume</button></div></div>
+</div>
+<script type="module" src="game.js"></script>
+</body>
+</html>
