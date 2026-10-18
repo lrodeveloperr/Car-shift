@@ -1,0 +1,444 @@
+{
+  "scope": "scripted foundation simulation; human teaching comprehension NOT RUN",
+  "count": 36,
+  "results": [
+    {
+      "stage": 1,
+      "id": "F01",
+      "family": "coastal",
+      "perfectMs": 20026.66666666677,
+      "aiMs": [
+        25934.35897435889,
+        23602.48062015492
+      ],
+      "routes": 1,
+      "checkpoints": 0,
+      "firstUsefulSwitchMs": 3353.3333333333353
+    },
+    {
+      "stage": 2,
+      "id": "F02",
+      "family": "coastal",
+      "perfectMs": 25040,
+      "aiMs": [
+        32524.61538461542,
+        29423.100775193663
+      ],
+      "routes": 1,
+      "checkpoints": 0
+    },
+    {
+      "stage": 3,
+      "id": "F03",
+      "family": "coastal",
+      "perfectMs": 25040,
+      "aiMs": [
+        32391.282051282087,
+        29623.100775193663
+      ],
+      "routes": 1,
+      "checkpoints": 0
+    },
+    {
+      "stage": 4,
+      "id": "F04",
+      "family": "coastal",
+      "perfectMs": 30053.333333333332,
+      "aiMs": [
+        35437.05426356574,
+        33268.69565217413
+      ],
+      "routes": 2,
+      "checkpoints": 1
+    },
+    {
+      "stage": 5,
+      "id": "F05",
+      "family": "coastal",
+      "perfectMs": 30053.333333333332,
+      "aiMs": [
+        35437.05426356574,
+        33135.362318840795
+      ],
+      "routes": 2,
+      "checkpoints": 1
+    },
+    {
+      "stage": 6,
+      "id": "F06",
+      "family": "coastal",
+      "perfectMs": 26053.33333333332,
+      "aiMs": [
+        30719.224806201444,
+        28920.869565217552
+      ],
+      "routes": 1,
+      "checkpoints": 0
+    },
+    {
+      "stage": 7,
+      "id": "F07",
+      "family": "rough",
+      "perfectMs": 32543.33333333357,
+      "aiMs": [
+        35001.13475177305,
+        33693.265306122164
+      ],
+      "routes": 1,
+      "checkpoints": 2,
+      "firstUsefulSwitchMs": 3520
+    },
+    {
+      "stage": 8,
+      "id": "F08",
+      "family": "rough",
+      "perfectMs": 43570.00000000012,
+      "aiMs": [
+        47063.26241134752,
+        44997.75510204061
+      ],
+      "routes": 1,
+      "checkpoints": 1
+    },
+    {
+      "stage": 9,
+      "id": "F09",
+      "family": "coastal",
+      "perfectMs": 44080,
+      "aiMs": [
+        47755.17730496454,
+        45537.95918367341
+      ],
+      "routes": 1,
+      "checkpoints": 1
+    },
+    {
+      "stage": 10,
+      "id": "F10",
+      "family": "rough",
+      "perfectMs": 48570.00000000019,
+      "aiMs": [
+        52449.0780141844,
+        50033.129251700346
+      ],
+      "routes": 1,
+      "checkpoints": 2
+    },
+    {
+      "stage": 11,
+      "id": "F11",
+      "family": "coastal",
+      "perfectMs": 39079.99999999998,
+      "aiMs": [
+        42436.02836879433,
+        40435.918367346996
+      ],
+      "routes": 1,
+      "checkpoints": 1
+    },
+    {
+      "stage": 12,
+      "id": "F12",
+      "family": "rough",
+      "perfectMs": 50086.66666666677,
+      "aiMs": [
+        54244.822695035466,
+        51813.74149659842
+      ],
+      "routes": 1,
+      "checkpoints": 2
+    },
+    {
+      "stage": 13,
+      "id": "F13",
+      "family": "rail",
+      "perfectMs": 31559.999999999978,
+      "aiMs": [
+        34070.6382978724,
+        32922.85714285701
+      ],
+      "routes": 1,
+      "checkpoints": 2,
+      "firstUsefulSwitchMs": 3520
+    },
+    {
+      "stage": 14,
+      "id": "F14",
+      "family": "rough",
+      "perfectMs": 50083.33333333349,
+      "aiMs": [
+        54124.822695035466,
+        51803.74149659842
+      ],
+      "routes": 1,
+      "checkpoints": 1
+    },
+    {
+      "stage": 15,
+      "id": "F15",
+      "family": "rail",
+      "perfectMs": 37091.11111111112,
+      "aiMs": [
+        41159.29078014194,
+        39149.75056689332
+      ],
+      "routes": 2,
+      "checkpoints": 1
+    },
+    {
+      "stage": 16,
+      "id": "F16",
+      "family": "coastal",
+      "perfectMs": 48566.66666666671,
+      "aiMs": [
+        52329.0780141844,
+        50089.79591836701
+      ],
+      "routes": 2,
+      "checkpoints": 1
+    },
+    {
+      "stage": 17,
+      "id": "F17",
+      "family": "rough",
+      "perfectMs": 50056.66666666676,
+      "aiMs": [
+        53332.90780141844,
+        50980.20408163213
+      ],
+      "routes": 2,
+      "checkpoints": 1
+    },
+    {
+      "stage": 18,
+      "id": "F18",
+      "family": "rail",
+      "perfectMs": 38915.555555555606,
+      "aiMs": [
+        42205.39007092218,
+        40494.73922902483
+      ],
+      "routes": 1,
+      "checkpoints": 1
+    },
+    {
+      "stage": 19,
+      "id": "F19",
+      "family": "snow",
+      "perfectMs": 32560,
+      "aiMs": [
+        35134.46808510638,
+        33943.265306122164
+      ],
+      "routes": 1,
+      "checkpoints": 2,
+      "firstUsefulSwitchMs": 3520
+    },
+    {
+      "stage": 20,
+      "id": "F20",
+      "family": "snow",
+      "perfectMs": 46073.333333333474,
+      "aiMs": [
+        49776.17021276596,
+        48068.979591836454
+      ],
+      "routes": 2,
+      "checkpoints": 2
+    },
+    {
+      "stage": 21,
+      "id": "F21",
+      "family": "coastal",
+      "perfectMs": 46397.77777777793,
+      "aiMs": [
+        49955.22458628849,
+        47972.24489795891
+      ],
+      "routes": 2,
+      "checkpoints": 2
+    },
+    {
+      "stage": 22,
+      "id": "F22",
+      "family": "rough",
+      "perfectMs": 45573.3333333335,
+      "aiMs": [
+        49344.255319148935,
+        47081.9047619045
+      ],
+      "routes": 2,
+      "checkpoints": 1
+    },
+    {
+      "stage": 23,
+      "id": "F23",
+      "family": "rail",
+      "perfectMs": 41920,
+      "aiMs": [
+        45390.212765957585,
+        43647.0748299318
+      ],
+      "routes": 1,
+      "checkpoints": 1
+    },
+    {
+      "stage": 24,
+      "id": "F24",
+      "family": "snow",
+      "perfectMs": 46586.66666666681,
+      "aiMs": [
+        50488.085106382976,
+        48801.63265306116
+      ],
+      "routes": 4,
+      "checkpoints": 2
+    },
+    {
+      "stage": 25,
+      "id": "F25",
+      "family": "deep",
+      "perfectMs": 38541.66666666691,
+      "aiMs": [
+        41557.44680851067,
+        39577.38095238094
+      ],
+      "routes": 1,
+      "checkpoints": 1,
+      "firstUsefulSwitchMs": 4520
+    },
+    {
+      "stage": 26,
+      "id": "F26",
+      "family": "coastal",
+      "perfectMs": 43566.6666666667,
+      "aiMs": [
+        47009.92907801419,
+        44987.75510204061
+      ],
+      "routes": 2,
+      "checkpoints": 1
+    },
+    {
+      "stage": 27,
+      "id": "F27",
+      "family": "deep",
+      "perfectMs": 41916.666666666664,
+      "aiMs": [
+        45703.5460992908,
+        43170.40816326535
+      ],
+      "routes": 1,
+      "checkpoints": 2
+    },
+    {
+      "stage": 28,
+      "id": "F28",
+      "family": "rail",
+      "perfectMs": 40177.77777777782,
+      "aiMs": [
+        43924.82269503559,
+        41729.47845804985
+      ],
+      "routes": 4,
+      "checkpoints": 2
+    },
+    {
+      "stage": 29,
+      "id": "F29",
+      "family": "snow",
+      "perfectMs": 41573.333333333416,
+      "aiMs": [
+        45043.40425531915,
+        43033.60544217672
+      ],
+      "routes": 4,
+      "checkpoints": 1
+    },
+    {
+      "stage": 30,
+      "id": "F30",
+      "family": "deep",
+      "perfectMs": 52083.33333333346,
+      "aiMs": [
+        57480.63829787239,
+        53159.62585034022
+      ],
+      "routes": 4,
+      "checkpoints": 2
+    },
+    {
+      "stage": 31,
+      "id": "F31",
+      "family": "flight",
+      "perfectMs": 31553.333333333383,
+      "aiMs": [
+        34063.971631205815,
+        32802.85714285695
+      ],
+      "routes": 1,
+      "checkpoints": 2,
+      "firstUsefulSwitchMs": 3520
+    },
+    {
+      "stage": 32,
+      "id": "F32",
+      "family": "rough",
+      "perfectMs": 50566.666666666875,
+      "aiMs": [
+        53924.82269503546,
+        52130.61224489757
+      ],
+      "routes": 2,
+      "checkpoints": 2
+    },
+    {
+      "stage": 33,
+      "id": "F33",
+      "family": "coastal",
+      "perfectMs": 41335.89743589742,
+      "aiMs": [
+        44670.10365520999,
+        42811.459968602765
+      ],
+      "routes": 1,
+      "checkpoints": 2
+    },
+    {
+      "stage": 34,
+      "id": "F34",
+      "family": "flight",
+      "perfectMs": 44133.33333333332,
+      "aiMs": [
+        48075.17730496454,
+        46364.625850340184
+      ],
+      "routes": 2,
+      "checkpoints": 1
+    },
+    {
+      "stage": 35,
+      "id": "F35",
+      "family": "deep",
+      "perfectMs": 46343.33333333336,
+      "aiMs": [
+        50562.12765957445,
+        47673.877551020494
+      ],
+      "routes": 2,
+      "checkpoints": 2
+    },
+    {
+      "stage": 36,
+      "id": "F36",
+      "family": "flight",
+      "perfectMs": 38648.000000000015,
+      "aiMs": [
+        42458.780141844014,
+        40729.71428571435
+      ],
+      "routes": 1,
+      "checkpoints": 1
+    }
+  ]
+}

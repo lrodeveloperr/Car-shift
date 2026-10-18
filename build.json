@@ -1,0 +1,29 @@
+{
+  "commands": {
+    "build": [
+      "node",
+      "tools/rebuild.mjs"
+    ],
+    "domain": [
+      "node",
+      "--test",
+      "--test-reporter=tap",
+      "tests/race.test.mjs",
+      "tests/boundaries.test.mjs"
+    ],
+    "lifecycle": [
+      "node",
+      "--test",
+      "--test-reporter=tap",
+      "tests/session.test.mjs"
+    ],
+    "layout": [
+      "node",
+      "tools/layout-blocked.mjs"
+    ],
+    "performance": [
+      "node",
+      "tools/performance.mjs"
+    ]
+  }
+}

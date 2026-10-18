@@ -1,0 +1,10 @@
+:root { color-scheme: dark; }
+* { box-sizing: border-box; }
+html,body { width:100%; height:100%; margin:0; overflow:hidden; overscroll-behavior:none; }
+#game-root { position:relative; width:100%; height:100%; height:100dvh; overflow:hidden; touch-action:none; user-select:none; }
+#game-canvas { display:block; width:100%; height:100%; }
+.hud { position:absolute; inset:0; pointer-events:none; padding:max(8px,env(safe-area-inset-top)) max(8px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left)); }
+.hud button,.hud input,.hud [role=button] { pointer-events:auto; min-width:44px; min-height:44px; }
+button:focus-visible,[role=button]:focus-visible { outline:2px solid currentColor; outline-offset:2px; }
+[hidden] { display:none!important; }
+@media (prefers-reduced-motion:reduce) { .hud * { animation:none!important; transition:none!important; } }

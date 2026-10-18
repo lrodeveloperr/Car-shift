@@ -1,0 +1,54 @@
+{
+  "scope": "standalone diagnostic only; SDK/graphics/host certification absent",
+  "byteIdenticalTwoBuilds": true,
+  "archiveBytes": 198348,
+  "expandedRuntimeBytes": 790377,
+  "sha256": "cd2d0e15c780d866c0b275cb883cfc3b217f7ff658f55cd0b5f808af087cd04a",
+  "files": [
+    {
+      "path": "data/bank.json",
+      "bytes": 338099,
+      "sha256": "10d986225e8587eb497f84bd49332dda27d6f03f237eb87c8068c91ae2007728"
+    },
+    {
+      "path": "data/foundations.json",
+      "bytes": 2466,
+      "sha256": "28c6c6c4f5415ed39ec137758e9430da7be24d05f63e299d9775607bf5feab98"
+    },
+    {
+      "path": "index.html",
+      "bytes": 396250,
+      "sha256": "b4abd97e9673a4a16a8ee455e2bf1accd2c60df1bb22140f9996cd273d9e2e76"
+    },
+    {
+      "path": "src/content.mjs",
+      "bytes": 6351,
+      "sha256": "07c001a7176990e25761dc9a09d9cfd85fafe83e0ccad8bdfec937ce0be21fcb"
+    },
+    {
+      "path": "src/harness.mjs",
+      "bytes": 9339,
+      "sha256": "52ed9db186729482ad567716f70fb9bb01512556226d6d5d23459e69f0cd7662"
+    },
+    {
+      "path": "src/race.mjs",
+      "bytes": 12494,
+      "sha256": "b87c230685f102575e9815ce9f9e73230b1f66a497a20966179fb1f6f3ebf471"
+    },
+    {
+      "path": "src/rules.mjs",
+      "bytes": 2612,
+      "sha256": "be197282fe9514b3096dd4a83f968528adf49e1929b9f83baf7f3ad68ab39a83"
+    },
+    {
+      "path": "src/session.mjs",
+      "bytes": 21081,
+      "sha256": "b15383e35988229c8a073340612e72b5cf482d92a7c08fefcb00490743f87edc"
+    },
+    {
+      "path": "src/solver.mjs",
+      "bytes": 1685,
+      "sha256": "9d891d0b3f0b9a611ca5eabd0d450ab52d608268b574ab7b213cf3f8fb206d8b"
+    }
+  ]
+}

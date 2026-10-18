@@ -1,0 +1,119 @@
+TAP version 13
+# Subtest: shared load exactly once and no writes before successful load
+ok 1 - shared load exactly once and no writes before successful load
+  ---
+  duration_ms: 2.530301
+  type: 'test'
+  ...
+# Subtest: nonempty malformed, future, unknown, oversized and hostile saves are protected
+ok 2 - nonempty malformed, future, unknown, oversized and hostile saves are protected
+  ---
+  duration_ms: 0.730464
+  type: 'test'
+  ...
+# Subtest: empty SDK forms recognized; valid decoded object also accepted
+ok 3 - empty SDK forms recognized; valid decoded object also accepted
+  ---
+  duration_ms: 2.423854
+  type: 'test'
+  ...
+# Subtest: genuine finish advances once, Bronze also advances, rematch does not duplicate
+ok 4 - genuine finish advances once, Bronze also advances, rematch does not duplicate
+  ---
+  duration_ms: 11.290527
+  type: 'test'
+  ...
+# Subtest: mid-race acknowledged reload restores exact race, queue and pacing
+ok 5 - mid-race acknowledged reload restores exact race, queue and pacing
+  ---
+  duration_ms: 6.008546
+  type: 'test'
+  ...
+# Subtest: historical Replay survives reload without incrementing frontier
+ok 6 - historical Replay survives reload without incrementing frontier
+  ---
+  duration_ms: 8.370779
+  type: 'test'
+  ...
+# Subtest: dirty progress created after a pending acknowledgement stays dirty
+ok 7 - dirty progress created after a pending acknowledgement stays dirty
+  ---
+  duration_ms: 1.387881
+  type: 'test'
+  ...
+# Subtest: pre-ad save failure suppresses the ad request and keeps free continuation
+ok 8 - pre-ad save failure suppresses the ad request and keeps free continuation
+  ---
+  duration_ms: 3.928588
+  type: 'test'
+  ...
+# Subtest: interstitial first/later timing, AND conditions and failed-ad cooldown
+ok 9 - interstitial first/later timing, AND conditions and failed-ad cooldown
+  ---
+  duration_ms: 4.373352
+  type: 'test'
+  ...
+# Subtest: reward strict true, single in-flight request, chosen queue replaces once
+ok 10 - reward strict true, single in-flight request, chosen queue replaces once
+  ---
+  duration_ms: 15.202807
+  type: 'test'
+  ...
+# Subtest: reward settlement during host pause defers writes and does not release host
+ok 11 - reward settlement during host pause defers writes and does not release host
+  ---
+  duration_ms: 5.472113
+  type: 'test'
+  ...
+# Subtest: late reward cannot rewind a newer started race
+ok 12 - late reward cannot rewind a newer started race
+  ---
+  duration_ms: 3.864339
+  type: 'test'
+  ...
+# Subtest: host pause before bootstrap defers initial storage read
+ok 13 - host pause before bootstrap defers initial storage read
+  ---
+  duration_ms: 1.617678
+  type: 'test'
+  ...
+# Subtest: concurrent Next and Restart have one run transaction
+ok 14 - concurrent Next and Restart have one run transaction
+  ---
+  duration_ms: 2.975737
+  type: 'test'
+  ...
+# Subtest: ad wait excludes host pause and typed offers cannot be forged
+ok 15 - ad wait excludes host pause and typed offers cannot be forged
+  ---
+  duration_ms: 3.525198
+  type: 'test'
+  ...
+# Subtest: best foundation record survives a slower replay and record history uses LRU
+ok 16 - best foundation record survives a slower replay and record history uses LRU
+  ---
+  duration_ms: 2.234258
+  type: 'test'
+  ...
+# Subtest: hostile entrant profiles, positions, choices, nested checkpoints and record arrays stay protected
+ok 17 - hostile entrant profiles, positions, choices, nested checkpoints and record arrays stay protected
+  ---
+  duration_ms: 6.223993
+  type: 'test'
+  ...
+# Subtest: ad fixture cannot be called until reservation save is acknowledged
+ok 18 - ad fixture cannot be called until reservation save is acknowledged
+  ---
+  duration_ms: 4.266044
+  type: 'test'
+  ...
+1..18
+# tests 18
+# suites 0
+# pass 18
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 239.598695
+

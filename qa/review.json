@@ -1,0 +1,186 @@
+{
+  "inputDigest": null,
+  "policyReviewedAt": "2026-10-18",
+  "checks": {
+    "visual": {
+      "status": "blocked",
+      "notes": "Production acceptance is not established. Executable engine/content subchecks are recorded separately; native/host/device/presentation/human coverage remains unverified.",
+      "evidence": [
+        "docs/EXTERNAL-ACTIONS.md",
+        "qa/acceptance-matrix.json",
+        "qa/browser-blockers.json"
+      ]
+    },
+    "rights": {
+      "status": "blocked",
+      "notes": "Production acceptance is not established. Executable engine/content subchecks are recorded separately; native/host/device/presentation/human coverage remains unverified.",
+      "evidence": [
+        "docs/EXTERNAL-ACTIONS.md",
+        "qa/acceptance-matrix.json",
+        "qa/browser-blockers.json"
+      ]
+    },
+    "originality": {
+      "status": "blocked",
+      "notes": "Production acceptance is not established. Executable engine/content subchecks are recorded separately; native/host/device/presentation/human coverage remains unverified.",
+      "evidence": [
+        "docs/EXTERNAL-ACTIONS.md",
+        "qa/acceptance-matrix.json",
+        "qa/browser-blockers.json"
+      ]
+    },
+    "contentSafety": {
+      "status": "blocked",
+      "notes": "Production acceptance is not established. Executable engine/content subchecks are recorded separately; native/host/device/presentation/human coverage remains unverified.",
+      "evidence": [
+        "docs/EXTERNAL-ACTIONS.md",
+        "qa/acceptance-matrix.json",
+        "qa/browser-blockers.json"
+      ]
+    },
+    "localization": {
+      "status": "blocked",
+      "notes": "Production acceptance is not established. Executable engine/content subchecks are recorded separately; native/host/device/presentation/human coverage remains unverified.",
+      "evidence": [
+        "docs/EXTERNAL-ACTIONS.md",
+        "qa/acceptance-matrix.json",
+        "qa/browser-blockers.json"
+      ]
+    },
+    "research": {
+      "status": "blocked",
+      "notes": "Production acceptance is not established. Executable engine/content subchecks are recorded separately; native/host/device/presentation/human coverage remains unverified.",
+      "evidence": [
+        "docs/EXTERNAL-ACTIONS.md",
+        "qa/acceptance-matrix.json",
+        "qa/browser-blockers.json"
+      ]
+    },
+    "foundationReliability": {
+      "status": "blocked",
+      "notes": "Production acceptance is not established. Executable engine/content subchecks are recorded separately; native/host/device/presentation/human coverage remains unverified.",
+      "evidence": [
+        "docs/EXTERNAL-ACTIONS.md",
+        "qa/acceptance-matrix.json",
+        "qa/browser-blockers.json"
+      ]
+    },
+    "PG-technical": {
+      "status": "blocked",
+      "notes": "Production acceptance is not established. Executable engine/content subchecks are recorded separately; native/host/device/presentation/human coverage remains unverified.",
+      "evidence": [
+        "docs/EXTERNAL-ACTIONS.md",
+        "qa/acceptance-matrix.json",
+        "qa/browser-blockers.json"
+      ]
+    },
+    "PG-experience": {
+      "status": "blocked",
+      "notes": "Production acceptance is not established. Executable engine/content subchecks are recorded separately; native/host/device/presentation/human coverage remains unverified.",
+      "evidence": [
+        "docs/EXTERNAL-ACTIONS.md",
+        "qa/acceptance-matrix.json",
+        "qa/browser-blockers.json"
+      ]
+    },
+    "PG-ads": {
+      "status": "blocked",
+      "notes": "Production acceptance is not established. Executable engine/content subchecks are recorded separately; native/host/device/presentation/human coverage remains unverified.",
+      "evidence": [
+        "docs/EXTERNAL-ACTIONS.md",
+        "qa/acceptance-matrix.json",
+        "qa/browser-blockers.json"
+      ]
+    },
+    "PG-content": {
+      "status": "blocked",
+      "notes": "Production acceptance is not established. Executable engine/content subchecks are recorded separately; native/host/device/presentation/human coverage remains unverified.",
+      "evidence": [
+        "docs/EXTERNAL-ACTIONS.md",
+        "qa/acceptance-matrix.json",
+        "qa/browser-blockers.json"
+      ]
+    },
+    "PG-other": {
+      "status": "blocked",
+      "notes": "Production acceptance is not established. Executable engine/content subchecks are recorded separately; native/host/device/presentation/human coverage remains unverified.",
+      "evidence": [
+        "docs/EXTERNAL-ACTIONS.md",
+        "qa/acceptance-matrix.json",
+        "qa/browser-blockers.json"
+      ]
+    },
+    "YT-accessibility": {
+      "status": "blocked",
+      "notes": "Production acceptance is not established. Executable engine/content subchecks are recorded separately; native/host/device/presentation/human coverage remains unverified.",
+      "evidence": [
+        "docs/EXTERNAL-ACTIONS.md",
+        "qa/acceptance-matrix.json",
+        "qa/browser-blockers.json"
+      ]
+    },
+    "YT-design": {
+      "status": "blocked",
+      "notes": "Production acceptance is not established. Executable engine/content subchecks are recorded separately; native/host/device/presentation/human coverage remains unverified.",
+      "evidence": [
+        "docs/EXTERNAL-ACTIONS.md",
+        "qa/acceptance-matrix.json",
+        "qa/browser-blockers.json"
+      ]
+    },
+    "YT-localization": {
+      "status": "blocked",
+      "notes": "Production acceptance is not established. Executable engine/content subchecks are recorded separately; native/host/device/presentation/human coverage remains unverified.",
+      "evidence": [
+        "docs/EXTERNAL-ACTIONS.md",
+        "qa/acceptance-matrix.json",
+        "qa/browser-blockers.json"
+      ]
+    },
+    "YT-integration": {
+      "status": "blocked",
+      "notes": "Production acceptance is not established. Executable engine/content subchecks are recorded separately; native/host/device/presentation/human coverage remains unverified.",
+      "evidence": [
+        "docs/EXTERNAL-ACTIONS.md",
+        "qa/acceptance-matrix.json",
+        "qa/browser-blockers.json"
+      ]
+    },
+    "YT-monetization": {
+      "status": "blocked",
+      "notes": "Production acceptance is not established. Executable engine/content subchecks are recorded separately; native/host/device/presentation/human coverage remains unverified.",
+      "evidence": [
+        "docs/EXTERNAL-ACTIONS.md",
+        "qa/acceptance-matrix.json",
+        "qa/browser-blockers.json"
+      ]
+    },
+    "YT-privacy": {
+      "status": "blocked",
+      "notes": "Production acceptance is not established. Executable engine/content subchecks are recorded separately; native/host/device/presentation/human coverage remains unverified.",
+      "evidence": [
+        "docs/EXTERNAL-ACTIONS.md",
+        "qa/acceptance-matrix.json",
+        "qa/browser-blockers.json"
+      ]
+    },
+    "YT-stability": {
+      "status": "blocked",
+      "notes": "Production acceptance is not established. Executable engine/content subchecks are recorded separately; native/host/device/presentation/human coverage remains unverified.",
+      "evidence": [
+        "docs/EXTERNAL-ACTIONS.md",
+        "qa/acceptance-matrix.json",
+        "qa/browser-blockers.json"
+      ]
+    },
+    "YT-trustSafety": {
+      "status": "blocked",
+      "notes": "Production acceptance is not established. Executable engine/content subchecks are recorded separately; native/host/device/presentation/human coverage remains unverified.",
+      "evidence": [
+        "docs/EXTERNAL-ACTIONS.md",
+        "qa/acceptance-matrix.json",
+        "qa/browser-blockers.json"
+      ]
+    }
+  }
+}

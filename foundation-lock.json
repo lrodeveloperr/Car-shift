@@ -1,0 +1,10 @@
+{
+  "revision": "local-2026-10-09",
+  "files": {
+    "shared/foundation.mjs": "c87927cba9af37b058ba227d0de53284451b44b5614aad6d69de9ef185388b22",
+    "shared/playgama-core/SOURCE.json": "b74cd3fa4b9f0388dd704d66b297d70fc929bd5efdbf53befc81fb2d1dc91f82",
+    "shared/playgama-core/playgama-client.js": "c6c65dfc3451b51563f1e78c6f78766c587b0267ec6e986003eafa267f344ff1",
+    "shared/shell.css": "aafe2388df3776e7360ea4d17b51ff635dab0d4b3a1b295916cabee252cf9564",
+    "shared/viewport.mjs": "6ceb91e5b943d2899b2c4f42129ff0e6a091499d6593819ad2b95b9aea05de7f"
+  }
+}

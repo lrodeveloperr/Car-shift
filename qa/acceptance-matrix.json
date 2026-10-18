@@ -1,0 +1,611 @@
+{
+  "scope": "All75 current contract cases assessed; PASS applies only to the explicit standalone method. No production/native/host/human certification.",
+  "caseCount": 75,
+  "statusCounts": {
+    "PASS": 20,
+    "NOT RUN": 51,
+    "N/A": 4
+  },
+  "cases": [
+    {
+      "id": "DOMAIN01",
+      "requirement": "All vehicle/terrain/modifier pairs; bounds and precedence match.",
+      "requiredMethod": "Deterministic table/property tests",
+      "status": "PASS",
+      "observed": "144 base support/form pairs, selected modifier boundaries, all actual admitted course intervals; unit-results.tap and course-audit.json",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "DOMAIN02",
+      "requirement": "Tick ties; player finishes after both AI; one earned result/clear.",
+      "requiredMethod": "Domain boundary tests",
+      "status": "PASS",
+      "observed": "Simultaneous tick/rank/tie, late player finish and once-only result tests; unit-results.tap and end-to-end-report.json",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "DOMAIN03",
+      "requirement": "Duplicate finalize/Next/Replay/Restart; exact progress/counters.",
+      "requiredMethod": "Domain and native input",
+      "status": "NOT RUN",
+      "observed": "Concurrent run transactions and replay origin pass model/DOM fixtures; native rapid-input flow not run.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "DOMAIN04",
+      "requirement": "Foundation/generated graphs, loadouts, all branch paths and solver.",
+      "requiredMethod": "Manifest enumerator + legal solver; reject unwinnable checkpoints",
+      "status": "PASS",
+      "observed": "36 teaching stages, all 3989 bank courses, all paths; foundation-audit.json, course-audit.json, end-to-end-report.json",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "DOMAIN05",
+      "requirement": "Rematch rewinds race, keeps original medal/finish/ad credit/pacing.",
+      "requiredMethod": "Deep snapshot equality tests",
+      "status": "PASS",
+      "observed": "Safe simultaneous snapshots, assisted rematch and original result/pacing preservation; unit-results.tap and safety-report.json",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "DOMAIN06",
+      "requirement": "Actual tap/swipe alternatives finish every course/rule family.",
+      "requiredMethod": "Native touch + mouse browser paths; no direct model-only pass",
+      "status": "NOT RUN",
+      "observed": "8050 legal command-driven finishes and six-family DOM flows pass; actual native touch/mouse not run.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "DOMAIN07",
+      "requirement": "Lost capture/extra fingers/resize/pause cancel pending gestures.",
+      "requiredMethod": "Native event sequences",
+      "status": "NOT RUN",
+      "observed": "JSDOM owner/cancel/extra-pointer/resize/pause fixtures pass with capture/rectangle stubs; native events not verified.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "DOMAIN08",
+      "requirement": "One finger completes fork then switch; >=800 ms separation.",
+      "requiredMethod": "Authoring proof + novice/physical-device observation",
+      "status": "NOT RUN",
+      "observed": "Maximum-speed authoring gates and >=820ms algorithmic route-action spacing pass; novice physical one-finger observation not run.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "DOMAIN09",
+      "requirement": "First visit, any-medal frontier clear, Expert, records and continuation.",
+      "requiredMethod": "End-to-end native flow; free continuation after reward decline",
+      "status": "NOT RUN",
+      "observed": "Progress/unlocks/Expert/records/continuation pass standalone fixtures and10000stages; native flow not run.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "DOMAIN10",
+      "requirement": "Both difficulty/personality profiles, seeded fixed mistakes, fair rules.",
+      "requiredMethod": "Seeded trace equality; frame-rate variation tests",
+      "status": "PASS",
+      "observed": "Fixed profile/seed traces independent of player; shared clocks and slow-frame rule; unit-results.tap, course-audit.json",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "BOOT01",
+      "requirement": "Block SDK; Retry, no fake SDK, no write or silent preview.",
+      "requiredMethod": "Network faults + genuine SDK case",
+      "status": "NOT RUN",
+      "observed": "Requires genuine native browser/device/YouTube host, production presentation/adapter, live measurement or human/comparator evidence; no standalone substitute is asserted.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "BOOT02",
+      "requirement": "Once-only firstFrame/gameReady; restore precedes interactive ready.",
+      "requiredMethod": "Ordered API/input trace",
+      "status": "NOT RUN",
+      "observed": "Requires genuine native browser/device/YouTube host, production presentation/adapter, live measurement or human/comparator evidence; no standalone substitute is asserted.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "BOOT03",
+      "requirement": "Delayed locale/load, early pause, shared read, concurrent work.",
+      "requiredMethod": "Controllable SDK fixture outside release",
+      "status": "NOT RUN",
+      "observed": "Shared read, early host pause and stale-load protection pass fixtures; genuine SDK/locale flow absent.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "BOOT04",
+      "requirement": "Zero viewport, late stale response, Retry 20 times; bounded state.",
+      "requiredMethod": "Browser lifecycle/fault procedures",
+      "status": "NOT RUN",
+      "observed": "Requires genuine native browser/device/YouTube host, production presentation/adapter, live measurement or human/comparator evidence; no standalone substitute is asserted.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "SAVE01",
+      "requirement": "Empty forms vs corrupt/unknown/future/oversized source.",
+      "requiredMethod": "Fixture matrix; no overwrite/deletion on protected data",
+      "status": "PASS",
+      "observed": "Empty/decoded/malformed/future/hostile/oversized protected fixtures; unit-results.tap",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "SAVE02",
+      "requirement": "String/decoded v1; future actually shipped migrations.",
+      "requiredMethod": "Schema fixtures; no fabricated historic PASS",
+      "status": "PASS",
+      "observed": "Current schema v1 and diagnostic-only missing-fork-field migration; no shipped historic migration is claimed; unit-results.tap",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "SAVE03",
+      "requirement": "Delayed r/r+1 acknowledgements, failure, merged isolated snapshots.",
+      "requiredMethod": "Async fault injection and dirty-state assertions",
+      "status": "PASS",
+      "observed": "Serialized delayed acknowledgements/failure and newer dirty progress; unit-results.tap",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "SAVE04",
+      "requirement": "Native play -> acknowledged snapshot -> reload exact equality.",
+      "requiredMethod": "Browser persisted-data comparison, including queue/reward/ad state",
+      "status": "NOT RUN",
+      "observed": "8050 exact mid-race acknowledged reloads pass MemoryStorage; native persisted-data procedure not run.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "SAVE05",
+      "requirement": "Maximum inventory, hostile numbers/depth/IDs/tick.",
+      "requiredMethod": "Bounded validators; UTF-8 size report",
+      "status": "PASS",
+      "observed": "Bounded validators, nesting and maximum-state fixture 15016 UTF-8 bytes; safety-report.json and unit-results.tap",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "SAVE06",
+      "requirement": "Exit/pause final-save limits and material milestones.",
+      "requiredMethod": "Host-aware trace; last acknowledged revision identifiable",
+      "status": "NOT RUN",
+      "observed": "Requires genuine native browser/device/YouTube host, production presentation/adapter, live measurement or human/comparator evidence; no standalone substitute is asserted.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "LIFE01",
+      "requirement": "Pause during boot/race/menu/save/ad/score; correct execution stop.",
+      "requiredMethod": "Trace timers/audio/input/network and resume clock",
+      "status": "NOT RUN",
+      "observed": "Shared pause/tick/input and waiting fixtures pass; genuine host/audio/timer inventory not run.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "LIFE02",
+      "requirement": "Ad completion before host resume/menu close; no owner released.",
+      "requiredMethod": "Delayed callback order matrix",
+      "status": "NOT RUN",
+      "observed": "Delayed ad settlement under host pause passes fixture; full host/menu/audio matrix not run.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "LIFE03",
+      "requirement": "Teardown/retry resources; no visibility/multi-tab pause listener.",
+      "requiredMethod": "Listener/timer audit and repeated teardown",
+      "status": "NOT RUN",
+      "observed": "Requires genuine native browser/device/YouTube host, production presentation/adapter, live measurement or human/comparator evidence; no standalone substitute is asserted.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "AD01",
+      "requirement": "D first/later 1/2 meaningful finishes and 119999/120000 ms; B control4.",
+      "requiredMethod": "Controlled clock; ALL conditions and no premature request",
+      "status": "NOT RUN",
+      "observed": "D thresholds and failed-request cooldown pass fixtures; B control and actual host experiment not implemented.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "AD02",
+      "requirement": "Reward before first interstitial, replay/menu/reload/reset.",
+      "requiredMethod": "Persisted counter/transition matrix",
+      "status": "NOT RUN",
+      "observed": "Fixture pacing and typed claims persist; full native/replay/menu/reset/host matrix not run.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "AD03",
+      "requirement": "Finish payoff -> explicit Next; menu/abort/reward decline no ad.",
+      "requiredMethod": "Native flow and captured call order",
+      "status": "NOT RUN",
+      "observed": "DOM result->explicit Next passes; authorized host capture absent.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "AD04",
+      "requirement": "Pre-ad save pending/failure; SDK not called until acknowledged.",
+      "requiredMethod": "Deferred Promise faults",
+      "status": "PASS",
+      "observed": "Pre-ad acknowledgement/failure prevents premature fixture request; unit-results.tap",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "AD05",
+      "requirement": "Reward true/false/undefined/rejection/no-fill/double callback.",
+      "requiredMethod": "Strict grant/token tests; exactly one live-runtime grant",
+      "status": "NOT RUN",
+      "observed": "Strict true/false/undefined/rejection and single Promise settlement tested; live host grants not run.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "AD06",
+      "requirement": "Double taps and duplicate Next; one reservation/in-flight request.",
+      "requiredMethod": "Native rapid-input plus async concurrency",
+      "status": "NOT RUN",
+      "observed": "Model single-flight/concurrent Next plus DOM input tests pass; native rapid taps/host callbacks not run.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "AD07",
+      "requirement": " ",
+      "requiredMethod": "Late true after Keep playing; rematch claim saved, no forced rewind. Delayed callback then reload/consume test",
+      "status": "NOT RUN",
+      "observed": "Late set claim cannot rewind newer race; typed rematch persistence passes; complete native late-rematch flow not run.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "AD08",
+      "requirement": "Crash before/after grant acknowledgement; pending grants nothing.",
+      "requiredMethod": "Simulated process termination; document unreceipted crash window",
+      "status": "PASS",
+      "observed": "Unreceipted pending reservation grants nothing; acknowledged claim survives load; safety-report.json; documented crash window remains",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "AD09",
+      "requirement": "Failed/cancelled/unsupported ads; free Restart and normal play.",
+      "requiredMethod": "Host fixture + authorized host test inventory",
+      "status": "NOT RUN",
+      "observed": "Throwing/failed fixtures preserve free play; authorized unavailable/cancelled host cases not run.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "AD10",
+      "requirement": "Accepted request vs impression vs reward counters stay distinct.",
+      "requiredMethod": "Adapter/API trace and reporting reconciliation",
+      "status": "NOT RUN",
+      "observed": "Requires genuine native browser/device/YouTube host, production presentation/adapter, live measurement or human/comparator evidence; no standalone substitute is asserted.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "METRIC01",
+      "requirement": "Positive Journey-stage clears; zero/replay/Expert-repeat/rematch no inflation.",
+      "requiredMethod": "Domain/save/API trace; no calls when disabled",
+      "status": "N/A",
+      "observed": "Reporting disabled and no reporting SDK included in the diagnostic; production score acceptance remains unresolved.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "METRIC02",
+      "requirement": "Pending/rejected score cannot block save/play/readiness.",
+      "requiredMethod": "Deferred callbacks and host-pause ordering",
+      "status": "N/A",
+      "observed": "No score callbacks exist in this diagnostic, so none can block its save/readiness. Production adapter still required.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "PACK01",
+      "requirement": "Two builds identical; root/path/name/count/license/size closure.",
+      "requiredMethod": "Deterministic packager + archive audit",
+      "status": "PASS",
+      "observed": "Two deterministic diagnostic builds identical and runtime within both size caps; package-report.json; not a production release",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "PACK02",
+      "requirement": "No secrets/mocks/exporters/remote assets/other publisher runtime.",
+      "requiredMethod": "Allowlist/static scan and network capture",
+      "status": "NOT RUN",
+      "observed": "Requires genuine native browser/device/YouTube host, production presentation/adapter, live measurement or human/comparator evidence; no standalone substitute is asserted.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "PACK03",
+      "requirement": "Changed transitive payload/query entry; digest identity correct.",
+      "requiredMethod": "Dependency traversal + response-byte comparison",
+      "status": "N/A",
+      "observed": "Standalone inline diagnostic has no transitive request/query-entry payload; production delivery is not built.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "PACK04",
+      "requirement": "Cache A then serve B with existing save; no mixed-release loop.",
+      "requiredMethod": "Browser cached-update procedure",
+      "status": "NOT RUN",
+      "observed": "Requires genuine native browser/device/YouTube host, production presentation/adapter, live measurement or human/comparator evidence; no standalone substitute is asserted.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "PACK05",
+      "requirement": "Exact extracted ZIP, current response CSP, genuine SDK.",
+      "requiredMethod": "CSP server + separate no-fixture official-SDK test",
+      "status": "NOT RUN",
+      "observed": "Requires genuine native browser/device/YouTube host, production presentation/adapter, live measurement or human/comparator evidence; no standalone substitute is asserted.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "PACK06",
+      "requirement": "Hosted vs explicit off-platform vs standalone; denied storage.",
+      "requiredMethod": "Three target procedures; no overwrite of unread disk",
+      "status": "NOT RUN",
+      "observed": "Requires genuine native browser/device/YouTube host, production presentation/adapter, live measurement or human/comparator evidence; no standalone substitute is asserted.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "BROWSER01",
+      "requirement": "Native flow/save/ad/lifecycle in Chromium/Firefox/WebKit/Edge.",
+      "requiredMethod": "Current recorded versions, exact archive",
+      "status": "NOT RUN",
+      "observed": "Requires genuine native browser/device/YouTube host, production presentation/adapter, live measurement or human/comparator evidence; no standalone substitute is asserted.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "LAYOUT01",
+      "requirement": "Controls/state at all required ratios and resized mid-gesture.",
+      "requiredMethod": "Viewport matrix below plus native sequences",
+      "status": "NOT RUN",
+      "observed": "Requires genuine native browser/device/YouTube host, production presentation/adapter, live measurement or human/comparator evidence; no standalone substitute is asserted.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "SOAK01",
+      "requirement": ">=50 race transitions AND >=10 active minutes, including rewards.",
+      "requiredMethod": "Error/resource snapshot comparison; no stuck locks",
+      "status": "NOT RUN",
+      "observed": "Ten-minute final synthetic DOM RAF soak evidence is separate; no ten-minute native/human interactive session or real reward ads.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "PERF01",
+      "requirement": "Cold/warm input/startup/heap/save/size budgets and failed loads.",
+      "requiredMethod": "Recorded desktop/device profiles, honest exclusions",
+      "status": "NOT RUN",
+      "observed": "Node microbenchmarks/byte report and synthetic heap samples only; host cold load, browser input and devices not measured.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "RECOVERY01",
+      "requirement": "Applicable presentation-resource loss and restoration.",
+      "requiredMethod": "Fault test without domain reset; justify unavailable mechanism",
+      "status": "NOT RUN",
+      "observed": "Semantic DOM state render survives model refresh fixtures; final renderer/context behavior unspecified.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "DEVICE01",
+      "requirement": "Physical Android+iOS touch/audio/background/rotation/save return.",
+      "requiredMethod": "Actual YouTube-app authorized test route; device/OS evidence",
+      "status": "NOT RUN",
+      "observed": "Requires genuine native browser/device/YouTube host, production presentation/adapter, live measurement or human/comparator evidence; no standalone substitute is asserted.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "HOST01",
+      "requirement": "Exact SHA uploaded only when authorized; inspect every warning.",
+      "requiredMethod": "McPlay pre-flight evidence and warning dispositions",
+      "status": "NOT RUN",
+      "observed": "Requires genuine native browser/device/YouTube host, production presentation/adapter, live measurement or human/comparator evidence; no standalone substitute is asserted.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "HOST02",
+      "requirement": "Real test-route save/pause/mute/earned/cancelled/unavailable ads.",
+      "requiredMethod": "Authorized host test inventory; local fixture not enough",
+      "status": "NOT RUN",
+      "observed": "Requires genuine native browser/device/YouTube host, production presentation/adapter, live measurement or human/comparator evidence; no standalone substitute is asserted.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "HOST03",
+      "requirement": "Listing/rights/audience/locale/accessibility claims match build.",
+      "requiredMethod": "Submission answers traced to actual evidence",
+      "status": "NOT RUN",
+      "observed": "Requires genuine native browser/device/YouTube host, production presentation/adapter, live measurement or human/comparator evidence; no standalone substitute is asserted.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "MEASURE01",
+      "requirement": "Metrics source, denominators, time/geography/granularity recorded.",
+      "requiredMethod": "Publisher-field inventory; no tracking introduced",
+      "status": "NOT RUN",
+      "observed": "Requires genuine native browser/device/YouTube host, production presentation/adapter, live measurement or human/comparator evidence; no standalone substitute is asserted.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "MEASURE02",
+      "requirement": "Only approved ad experiment, fixed window and rollback evidence.",
+      "requiredMethod": "Experiment registration and comparison report",
+      "status": "NOT RUN",
+      "observed": "Requires genuine native browser/device/YouTube host, production presentation/adapter, live measurement or human/comparator evidence; no standalone substitute is asserted.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "INPUT01",
+      "requirement": "Wrong form at air edge/midair/landing; no floating car or stuck state.",
+      "requiredMethod": "Native input + domain boundary tests",
+      "status": "NOT RUN",
+      "observed": "Illegal airborne/submerged commands pass model tests; native edges/interior/landing not run.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "FAIR01",
+      "requirement": "Lawful controller can earn Gold on each offered loadout/profile.",
+      "requiredMethod": "Exhaustive manifest/seed solver with route legality",
+      "status": "PASS",
+      "observed": "Every offered bank/teaching course has a lawful Gold command solution on both profiles; end-to-end-report.json",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "FAIR02",
+      "requirement": "Fixed AI has no position/ad-dependent speed or teleporting.",
+      "requiredMethod": "Seeded trace comparison before/after ads and player errors",
+      "status": "PASS",
+      "observed": "No position/ad-dependent profile changes; player-error AI trace equality and fixed rules; unit-results.tap, stress-report.json",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "FAIR03",
+      "requirement": " ",
+      "requiredMethod": "Novice/competent traces show credible competition and clear mistakes. Counterbalanced physical-device observation; do not force a fixed gap",
+      "status": "NOT RUN",
+      "observed": "Requires genuine native browser/device/YouTube host, production presentation/adapter, live measurement or human/comparator evidence; no standalone substitute is asserted.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "CONTENT01",
+      "requirement": "36 foundation manifests differ meaningfully; eight-vehicle teaching order.",
+      "requiredMethod": "Catalogue enumeration; reject cosmetic/seed duplicates",
+      "status": "PASS",
+      "observed": "36 distinct teaching configurations and actual eight-role entry order; foundation-audit.json and product-count.json; human comprehension excluded",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "CONTENT02",
+      "requirement": ">=10000 seeds/family/both difficulties, graphs/routes legally solvable",
+      "requiredMethod": "Generator/solver report with failures, rejection and fallback rates",
+      "status": "PASS",
+      "observed": "Bank-first revision: 10000 selection seeds/family, 120000 profile cases, every selected route independently checked; stress-report.json; not runtime procedural novelty",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "CONTENT03",
+      "requirement": "Queue3/history12/hash64/bags/loadouts restore exactly across reload.",
+      "requiredMethod": "Domain + native save/reload; Replay/ad outcomes cannot reroll",
+      "status": "NOT RUN",
+      "observed": "Queue/history/bags restore exactly in8050+102 reloads; native cloud save not run.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "CONTENT04",
+      "requirement": "Generated-record64 eviction keeps frontier/access/claim/live queue.",
+      "requiredMethod": "Forced eviction/migration; no infinite-storage or infinite-novelty claim",
+      "status": "PASS",
+      "observed": "64-record LRU and preserved foundation/frontier/queue state after eviction; unit-results.tap and stress-report.json",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "CONTENT05",
+      "requirement": ">=10000-stage sequence; 36->37 and later stages have no content cap.",
+      "requiredMethod": "Saved sequential progression test; all constraints and queue ownership",
+      "status": "PASS",
+      "observed": "Saved 10000-stage trace, 36->37 handoff and frontier10001; stress-report.json",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "CONTENT06",
+      "requirement": "100-stage diversity/family/fork/fallback gates meet section 4.4.",
+      "requiredMethod": "Signature report; no counting cosmetic/seed changes as novelty",
+      "status": "PASS",
+      "observed": "First100:99 distinct layouts/structures, six families; six-family and3/5/2 fork bags maintained; stress-report.json",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "CONTENT07",
+      "requirement": "16 rejects, fallback exhaustion, pending prep/host pause stay usable",
+      "requiredMethod": "Fault injection; bounded work, lawful saved frontier, no corrupt overwrite",
+      "status": "N/A",
+      "observed": "Runtime16-candidate generation/fallback was replaced by offline prevalidation per user preference. Bank selection has no runtime candidate generation; production critical-load recovery remains unresolved.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "FORMS01",
+      "requirement": "Eight vehicles, six loadouts, all support/modifier/invalid pairs.",
+      "requiredMethod": "Deterministic table + native entry/interior/exit and exact replay tests",
+      "status": "NOT RUN",
+      "observed": "All eight roles/base supports, actual modifiers and all routes pass; native boundaries not run.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "FORMS02",
+      "requirement": " ",
+      "requiredMethod": "Ground/Water/Air slots remain stable across specialty introductions. Adult one-finger comprehension test; no surprise mid-race loadout swap",
+      "status": "NOT RUN",
+      "observed": "Requires genuine native browser/device/YouTube host, production presentation/adapter, live measurement or human/comparator evidence; no standalone substitute is asserted.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "ENDLESS01",
+      "requirement": "Clear/replay/rewind/double callback advance frontier exactly once.",
+      "requiredMethod": "Domain/native/save acknowledgement and high-counter boundary tests",
+      "status": "NOT RUN",
+      "observed": "Once-only model clear/replay/rematch and duplicate requests pass; native/host callback inventory not run.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "ENDLESS02",
+      "requirement": "Stage1000/10000, reload/record eviction keep fair solvable Next.",
+      "requiredMethod": "Long-run deterministic trace; no speed/cue creep or last-level state",
+      "status": "PASS",
+      "observed": "Stage1000/10000 reload and stage1b fixture retain fair free Next; stress-report.json and unit-results.tap",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "FORMS03",
+      "requirement": " ",
+      "requiredMethod": "Train continuous rails/junctions/signal/exit; no off-track movement. Native/domain/solver tests including boundary gestures and pause",
+      "status": "NOT RUN",
+      "observed": "Connected rail/signal graph and valid/invalid domain moves pass; native rail gestures not run.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "FORMS04",
+      "requirement": " ",
+      "requiredMethod": "Plane runway/corridor>=72/landing/wind21.6; no helicopter-only gap. Native/domain/solver tests and max-speed cue/input distances",
+      "status": "NOT RUN",
+      "observed": "Runway L-F-L and72-unit/favorable21.6 cue bounds pass; native plane gestures not run.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "AD11",
+      "requirement": " ",
+      "requiredMethod": "Chosen-set true/false/pending/double/late; one typed durable credit. SDK fixtures + native flow; failed outcomes leave queue identical",
+      "status": "NOT RUN",
+      "observed": "Typed set true/false/pending/double/late fixtures pass; native SDK flow not run.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "AD12",
+      "requirement": " ",
+      "requiredMethod": "Consume next-set once, future queue/frontier/replay/ad counts exact. Save/reload/ack faults; one override, no speed or completion grant",
+      "status": "NOT RUN",
+      "observed": "One queue replacement/one consumption, save ack faults and unchanged frontier/pacing pass fixtures; native flow not run.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "AD13",
+      "requirement": " ",
+      "requiredMethod": "Gold reward eligibility, rematch priority, cooldown/no stacked ads. Result/decline/late claim boundary matrix + authorized host checks",
+      "status": "NOT RUN",
+      "observed": "Gold gating/rematch priority/cooldown code and fixtures assessed; actual player understanding/host checks not run.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "COMPARE01",
+      "requirement": "Real direct-comparator sessions captured on supported devices.",
+      "requiredMethod": "Hands-on run report; browser WebGL block cannot be marked PASS",
+      "status": "NOT RUN",
+      "observed": "Requires genuine native browser/device/YouTube host, production presentation/adapter, live measurement or human/comparator evidence; no standalone substitute is asserted.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "COMPARE02",
+      "requirement": "First-action/eight-transport control/replay/preference quality gates.",
+      "requiredMethod": "Counterbalanced novice/experienced protocols, honest sample limits",
+      "status": "NOT RUN",
+      "observed": "Requires genuine native browser/device/YouTube host, production presentation/adapter, live measurement or human/comparator evidence; no standalone substitute is asserted.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    },
+    {
+      "id": "COMPARE03",
+      "requirement": "Reward terms understood; declines/ads preserve continuation.",
+      "requiredMethod": "Adult usability sessions + authorized host test inventory",
+      "status": "NOT RUN",
+      "observed": "Requires genuine native browser/device/YouTube host, production presentation/adapter, live measurement or human/comparator evidence; no standalone substitute is asserted.",
+      "scope": "diagnostic engine/content, not production acceptance"
+    }
+  ]
+}

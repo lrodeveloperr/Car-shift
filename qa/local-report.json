@@ -1,0 +1,40 @@
+{
+  "passed": false,
+  "inputDigest": "f017a8086861988d824c0c45da03c7101b230a69947c6723de07d89188a18737",
+  "reviewSha256": "3aa3bb50e96e2390c823c6d0c630d220e6eab0b3aebf213940e3e21572af6a85",
+  "archive": "releases/shape-shifting-vehicle-race-candidate.zip",
+  "archiveSha256": "f076ad19e55efc4e63b53cd4d548c887b38c8ccd83c6e9ce70aeca36abe71963",
+  "commands": {
+    "build": 0,
+    "domain": 0,
+    "lifecycle": 0,
+    "layout": 2,
+    "performance": 0
+  },
+  "errors": [
+    "monetization.minimumCompletedRounds below studio floor",
+    "layout: failed; see qa/layout.log",
+    "Runtime SDK must byte-match the local canonical wrapper",
+    "index.html: prohibited/suspicious direct persistence; fix or document a policy-reviewed implementation",
+    "src/harness.mjs: prohibited/suspicious direct persistence; fix or document a policy-reviewed implementation",
+    "Root index must load the official Bridge before game code",
+    "Builder review inputDigest does not match current game/foundation",
+    "visual: builder review/evidence incomplete",
+    "rights: builder review/evidence incomplete",
+    "originality: builder review/evidence incomplete",
+    "contentSafety: builder review/evidence incomplete",
+    "localization: builder review/evidence incomplete",
+    "research: builder review/evidence incomplete",
+    "foundationReliability: builder review/evidence incomplete",
+    "YT-accessibility: builder review/evidence incomplete",
+    "YT-design: builder review/evidence incomplete",
+    "YT-localization: builder review/evidence incomplete",
+    "YT-integration: builder review/evidence incomplete",
+    "YT-monetization: builder review/evidence incomplete",
+    "YT-privacy: builder review/evidence incomplete",
+    "YT-stability: builder review/evidence incomplete",
+    "YT-trustSafety: builder review/evidence incomplete",
+    "Existing compliance manifest gate failed; see qa/compliance.log"
+  ],
+  "externalStatus": "pending; see docs/EXTERNAL-ACTIONS.md"
+}

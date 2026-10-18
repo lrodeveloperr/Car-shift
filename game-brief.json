@@ -1,0 +1,171 @@
+{
+  "schemaVersion": 1,
+  "slug": "shape-shifting-vehicle-race",
+  "title": "Shape Shifting: Vehicle Race",
+  "targets": [
+    "youtube"
+  ],
+  "engineFamily": "presentation-independent-transform-racer",
+  "playerPromise": "Switch eight transport types across fair, varied courses; certify level data before production graphics.",
+  "firstAction": "Play, then a useful family-slot tap within five active seconds in the first course.",
+  "input": {
+    "touch": "one pointer; release within 12 CSS px; Ground/Water/Air; optional left/right tap or 24 px swipe",
+    "pointer": "equivalent mouse actions",
+    "keyboard": "1/2/3, arrows for branches, Enter/Space action, Escape menu without host trapping"
+  },
+  "orientation": "both",
+  "loop": {
+    "start": "restore acknowledged Journey or start a bank course",
+    "action": "read support, change slot, choose route",
+    "feedback": "live positions and actual speed/rank",
+    "completion": "player crosses finish; Gold/Silver/Bronze",
+    "retry": "free exact Restart/Replay",
+    "nextJob": "next prevalidated bank recipe; no terminal stage"
+  },
+  "rules": {
+    "stateFields": [
+      "course",
+      "entrants",
+      "clocks",
+      "checkpoints",
+      "result",
+      "journey",
+      "queue",
+      "adProposal"
+    ],
+    "legalActions": [
+      "slot",
+      "branch",
+      "pause",
+      "resume",
+      "restart",
+      "next",
+      "replay"
+    ],
+    "invariants": [
+      "all routes completable",
+      "perfect lawful play can earn Gold",
+      "fixed AI independent of player/ad",
+      "20 ms simultaneous ticks",
+      "one completion credit/run",
+      "three active slots",
+      "safe unsupported transitions"
+    ],
+    "scoreFormula": "acknowledged Journey stages cleared; optional reporting, no SDK enabled in QA harness",
+    "win": "genuine full finish; Gold first, Silver second, Bronze third",
+    "failure": "mistakes slow/wait safely; never force an ad; retry free"
+  },
+  "content": {
+    "jobArchetypes": [
+      "coastal",
+      "rough",
+      "rail",
+      "snow",
+      "deep",
+      "flight"
+    ],
+    "seedPolicy": "deterministic versioned candidate and frozen exact bank recipe",
+    "difficultyCurve": "36 teaching stages then fixed Standard/optional Expert profiles; no unbounded speed escalation",
+    "antiRepetition": "motif rejection, 12 structural/64 exact recent guards; curated bank order",
+    "meaningfulPlayMinutes": 8
+  },
+  "progression": {
+    "unlocks": [
+      "bike7",
+      "train13",
+      "snowmobile19",
+      "submarine25",
+      "plane31",
+      "expert6"
+    ],
+    "restartPolicy": "new serial/same graph/seed; no pace reset",
+    "saveFields": [
+      "frontier",
+      "run",
+      "queue",
+      "records64",
+      "teaching",
+      "typedClaim",
+      "pacing"
+    ],
+    "saveKey": "vehicle-shift-level-audit-v1",
+    "saveVersion": 1,
+    "corruptSaveRecovery": "protect and Retry; isolated unsaved practice only"
+  },
+  "presentation": {
+    "camera": "UNSPECIFIED; QA uses semantic text/progress controls only",
+    "artDirection": "UNSPECIFIED by user",
+    "motion": "No production presentation selected; diagnostic progress only",
+    "haptics": "absent",
+    "audio": "absent from level harness; host production audio NOT RUN",
+    "hud": "diagnostic support, three actual vehicle controls, positions, result",
+    "successReveal": "textual rank and measured time in diagnostic harness",
+    "referenceAssets": []
+  },
+  "localization": {
+    "defaultLanguage": "en",
+    "languages": [
+      "en"
+    ],
+    "strings": [
+      "Play",
+      "Ground",
+      "Water",
+      "Air",
+      "Next",
+      "Replay",
+      "Pause",
+      "Resume",
+      "Gold",
+      "Silver",
+      "Bronze"
+    ]
+  },
+  "monetization": {
+    "interstitialPlacement": "explicit Next/Replay after result; proposal D only in fixtures",
+    "minimumCompletedRounds": 2,
+    "minimumActiveSeconds": 120,
+    "cooldownActiveSeconds": 120,
+    "rewardedPlacement": "checkpoint-rematch or next-transport-set",
+    "optionalReward": "one rematch or one next family choice; no production ad calls in this scope",
+    "rewardReceiptIdPolicy": "stable reward-type IDs and internal one-shot token"
+  },
+  "performance": {
+    "maxArchiveBytes": 5000000,
+    "maxExpandedBytes": 5000000,
+    "workingBudgetBytes": 4000000,
+    "initialGamePayloadTargetBytes": 2000000,
+    "coldLoadProfile": "1.6 Mbps down, 150 ms RTT; SDK included in measurement",
+    "playableTargetSeconds": 5
+  },
+  "acceptance": [
+    "full checked course bank",
+    "independent reference solver comparison",
+    "all eight transports and both AI profiles",
+    "native browser end-to-end flow",
+    "bounded state/UTF-8 storage",
+    "no human-enjoyment or host certification claim"
+  ],
+  "evidence": {
+    "successfulAnalogues": [
+      "contract E1/E2/E5 with observed metrics and limitations"
+    ],
+    "weakAnalogues": [
+      "contract R02\u2013R09 selected reviews"
+    ],
+    "supportedElements": [
+      "one finger",
+      "eight transport roles",
+      "fair fixed rivals",
+      "safe endless progression"
+    ],
+    "unverifiedAssumptions": [
+      "human enjoyment",
+      "comparative preference",
+      "publisher revenue/retention",
+      "host/device/graphics"
+    ]
+  },
+  "status": "design-complete",
+  "genreProfile": "arcade"
+}

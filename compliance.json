@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "slug": "shape-shifting-vehicle-race",
+  "reviewedAt": "2026-10-18",
+  "targets": [
+    "youtube"
+  ],
+  "languages": {
+    "declared": [
+      "en"
+    ],
+    "default": "en",
+    "automatic": true,
+    "complete": false,
+    "manualSelector": false,
+    "selectorUsesNativeNames": false
+  },
+  "experience": {
+    "progressOrInteraction": false,
+    "increasingDifficulty": false,
+    "meaningfulPlayMinutes": 0,
+    "audioFeedback": false,
+    "muteControl": false,
+    "oneHandPlayable": false,
+    "portrait": false,
+    "landscape": false,
+    "noBlackOrBlurSidebars": false
+  },
+  "content": {
+    "original": false,
+    "rightsCleared": false,
+    "humanRefined": false,
+    "safeForGeneralAudience": false,
+    "primarilyGeneratedAi": false,
+    "externalBrands": false,
+    "prohibitedContent": false,
+    "realMoney": false,
+    "externalPurchases": false,
+    "externalRegistration": false,
+    "externalVideo": false,
+    "copiesCatalogGame": false,
+    "userData": "none"
+  },
+  "ads": {
+    "thirdParty": false,
+    "payments": "none",
+    "saveBeforeFullScreenAds": false,
+    "placements": []
+  },
+  "manualEvidence": {
+    "quality": "NOT RUN for production. This is a standalone content/engine diagnostic; see docs/QA-RESULTS.md and qa/acceptance-matrix.json.",
+    "originality": "NOT RUN for production. This is a standalone content/engine diagnostic; see docs/QA-RESULTS.md and qa/acceptance-matrix.json.",
+    "rights": "NOT RUN for production. This is a standalone content/engine diagnostic; see docs/QA-RESULTS.md and qa/acceptance-matrix.json.",
+    "localization": "NOT RUN for production. This is a standalone content/engine diagnostic; see docs/QA-RESULTS.md and qa/acceptance-matrix.json.",
+    "layout": "NOT RUN for production. This is a standalone content/engine diagnostic; see docs/QA-RESULTS.md and qa/acceptance-matrix.json.",
+    "input": "NOT RUN for production. This is a standalone content/engine diagnostic; see docs/QA-RESULTS.md and qa/acceptance-matrix.json.",
+    "contentSafety": "NOT RUN for production. This is a standalone content/engine diagnostic; see docs/QA-RESULTS.md and qa/acceptance-matrix.json."
+  },
+  "hostedQa": {
+    "saveReload": "pending",
+    "progressionReload": "pending",
+    "adPauseAudio": "pending",
+    "minimizeAudio": "pending",
+    "physicalMobile": "pending",
+    "legacyBrowsers": "pending",
+    "evidence": "qa/browser-blockers.json; no host SDK or authorized host route in this diagnostic."
+  }
+}

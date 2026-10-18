@@ -1,0 +1,21 @@
+{
+  "status": "BLOCKED",
+  "observations": [
+    {
+      "method": "Playwright browser download",
+      "observed": "Official browser download endpoint returned a 195-byte Site Unavailable HTML response; no executable installed."
+    },
+    {
+      "method": "Cloud browser local file",
+      "observed": "Browser security rejected opening the local file: only http/https allowed. No alternate route was attempted after rejection."
+    }
+  ],
+  "notPassed": [
+    "native Chromium/Firefox/WebKit/Edge",
+    "native pointer/keyboard",
+    "responsive visual inspection",
+    "physical Android/iOS",
+    "YouTube host SDK/save/ads/audio",
+    "human enjoyment and competitor preference"
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "passed": true,
+  "limitBytes": 5000000,
+  "archiveBytes": 198348,
+  "expandedBytes": 790377,
+  "fileCount": 9,
+  "largestFiles": [
+    [
+      "index.html",
+      396250
+    ],
+    [
+      "data/bank.json",
+      338099
+    ],
+    [
+      "src/session.mjs",
+      21081
+    ],
+    [
+      "src/race.mjs",
+      12494
+    ],
+    [
+      "src/harness.mjs",
+      9339
+    ],
+    [
+      "src/content.mjs",
+      6351
+    ],
+    [
+      "src/rules.mjs",
+      2612
+    ],
+    [
+      "data/foundations.json",
+      2466
+    ],
+    [
+      "src/solver.mjs",
+      1685
+    ]
+  ],
+  "errors": []
+}

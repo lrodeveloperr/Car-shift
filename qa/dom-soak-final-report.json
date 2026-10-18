@@ -1,0 +1,124 @@
+{
+  "scope": "JSDOM code/event integration ONLY; not a native browser, layout, device, YouTube host or human playtest",
+  "adapter": "Wrap the exact standalone module code in an async function; inject clone/encoder, pointer-capture stubs and fixed button rectangles. No external requests.",
+  "harnessSha256": "b4abd97e9673a4a16a8ee455e2bf1accd2c60df1bb22140f9996cd273d9e2e76",
+  "jsdomVersion": "26.1.0",
+  "nodeVersion": "v24.19.0",
+  "cases": [
+    {
+      "name": "boot -> load before Play; semantic status",
+      "status": "PASS"
+    },
+    {
+      "name": "DOM Play dispatches a saved Journey race",
+      "status": "PASS"
+    },
+    {
+      "name": "one owner, release-only slot commit and no click duplication",
+      "status": "PASS"
+    },
+    {
+      "name": "cancel, lost capture and resize cancel an uncommitted gesture",
+      "status": "PASS"
+    },
+    {
+      "name": "unrelated extra-finger cancellation does not cancel the owner",
+      "status": "PASS"
+    },
+    {
+      "name": "movement over 12 px and release outside cancel",
+      "status": "PASS"
+    },
+    {
+      "name": "pause cancels the held gesture and freezes the race",
+      "status": "PASS"
+    },
+    {
+      "name": "keyboard slot action and repeat suppression",
+      "status": "PASS"
+    },
+    {
+      "name": "genuine finish -> rank/payoff -> enabled Next",
+      "status": "PASS"
+    },
+    {
+      "name": "DOM Replay does not clear frontier; Next starts one genuine run",
+      "status": "PASS"
+    },
+    {
+      "name": "all six families and all eight vehicles complete through DOM-dispatched Play/results",
+      "status": "PASS"
+    },
+    {
+      "name": "50 restart transitions without additional document listeners",
+      "status": "PASS"
+    },
+    {
+      "name": "DOM save action persists bounded acknowledged state",
+      "status": "PASS"
+    },
+    {
+      "name": "ten elapsed minutes and >=50 synthetic race transitions under DOM RAF",
+      "status": "PASS"
+    }
+  ],
+  "errors": [],
+  "soak": {
+    "wallMs": 600005,
+    "transitions": 56,
+    "errors": 0,
+    "heap": 36932824,
+    "complete": true,
+    "initialHeap": 33034152,
+    "method": "600000 ms elapsed wall time, real JSDOM RAF callbacks, 4x simulated controls; not interactive/native browser",
+    "nodeHeap": 33242736
+  },
+  "nodeHeapSamples": [
+    {
+      "wallMs": 0,
+      "postGcHeap": 33230416
+    },
+    {
+      "wallMs": 60021,
+      "postGcHeap": 33065424
+    },
+    {
+      "wallMs": 120038,
+      "postGcHeap": 33088664
+    },
+    {
+      "wallMs": 180088,
+      "postGcHeap": 33152880
+    },
+    {
+      "wallMs": 240104,
+      "postGcHeap": 33168448
+    },
+    {
+      "wallMs": 300133,
+      "postGcHeap": 33200176
+    },
+    {
+      "wallMs": 360141,
+      "postGcHeap": 33212320
+    },
+    {
+      "wallMs": 420179,
+      "postGcHeap": 33217280
+    },
+    {
+      "wallMs": 480192,
+      "postGcHeap": 33239568
+    },
+    {
+      "wallMs": 540207,
+      "postGcHeap": 33226848
+    },
+    {
+      "wallMs": 600005,
+      "postGcHeap": 33235784
+    }
+  ],
+  "passed": true,
+  "durationSeconds": 600.5250970490001
+}

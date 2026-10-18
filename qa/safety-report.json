@@ -1,0 +1,20 @@
+{
+  "scope": "standalone maximum-state and fault fixtures, not host receipt guarantees",
+  "completeSaveBytes": 15016,
+  "saveLimit": 32768,
+  "records": 64,
+  "foundationRecords": 36,
+  "history": 64,
+  "signatures": 12,
+  "queue": 3,
+  "checkpoints": 2,
+  "typedRematch": true,
+  "rematchStartMs": 29760,
+  "rematchOriginalResultPreserved": true,
+  "duplicateClaimBlocked": true,
+  "pendingCrashGrantsNothing": true,
+  "loadFailureRetries": 20,
+  "writesToUnreadSource": 0,
+  "unreceiptedCrashWindow": "A crash after host completion but before durable acknowledgement can lose the reward; no host receipt/reconciliation is available in this fixture.",
+  "passed": true
+}

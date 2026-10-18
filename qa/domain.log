@@ -1,0 +1,137 @@
+TAP version 13
+# Subtest: stage one billion retains fixed fair profiles and free ordinary continuation
+ok 1 - stage one billion retains fixed fair profiles and free ordinary continuation
+  ---
+  duration_ms: 8.341495
+  type: 'test'
+  ...
+# Subtest: integer exhaustion does not overflow the run identifier
+ok 2 - integer exhaustion does not overflow the run identifier
+  ---
+  duration_ms: 0.883382
+  type: 'test'
+  ...
+# Subtest: foundation best medal/time survives a slower later record
+ok 3 - foundation best medal/time survives a slower later record
+  ---
+  duration_ms: 2.498759
+  type: 'test'
+  ...
+# Subtest: 5580 restricted structural candidates, not multiplied length/seed copies
+ok 4 - 5580 restricted structural candidates, not multiplied length/seed copies
+  ---
+  duration_ms: 13.834651
+  type: 'test'
+  ...
+# Subtest: known 20-second traversal agrees with independently derived switch cost
+ok 5 - known 20-second traversal agrees with independently derived switch cost
+  ---
+  duration_ms: 1.649526
+  type: 'test'
+  ...
+# Subtest: every shipped course is unique and passes static content gates
+ok 6 - every shipped course is unique and passes static content gates
+  ---
+  duration_ms: 328.849502
+  type: 'test'
+  ...
+# Subtest: speed matrix key boundary cases and specialized transport identities
+ok 7 - speed matrix key boundary cases and specialized transport identities
+  ---
+  duration_ms: 0.239965
+  type: 'test'
+  ...
+# Subtest: invalid airborne/submerged transforms keep safe vehicle, never buffer
+ok 8 - invalid airborne/submerged transforms keep safe vehicle, never buffer
+  ---
+  duration_ms: 3.314855
+  type: 'test'
+  ...
+# Subtest: unsupported train at non-rail support cannot be selected
+ok 9 - unsupported train at non-rail support cannot be selected
+  ---
+  duration_ms: 0.264419
+  type: 'test'
+  ...
+# Subtest: fixed simultaneous clocks, slow-frame record penalty and overlapping pause
+ok 10 - fixed simultaneous clocks, slow-frame record penalty and overlapping pause
+  ---
+  duration_ms: 0.90533
+  type: 'test'
+  ...
+# Subtest: AI trace is independent of player actions and interruptions to player choices
+ok 11 - AI trace is independent of player actions and interruptions to player choices
+  ---
+  duration_ms: 3.426062
+  type: 'test'
+  ...
+# Subtest: safe checkpoints restore every entrant and do not recursively grow
+ok 12 - safe checkpoints restore every entrant and do not recursively grow
+  ---
+  duration_ms: 4.460344
+  type: 'test'
+  ...
+# Subtest: player finishes even when both rivals already crossed; Bronze is settled
+ok 13 - player finishes even when both rivals already crossed; Bronze is settled
+  ---
+  duration_ms: 3.734994
+  type: 'test'
+  ...
+# Subtest: future forks accept one choice; committed and past forks do not change
+ok 14 - future forks accept one choice; committed and past forks do not change
+  ---
+  duration_ms: 0.908339
+  type: 'test'
+  ...
+# Subtest: all gate bypasses have a real phase-dependent time advantage
+ok 15 - all gate bypasses have a real phase-dependent time advantage
+  ---
+  duration_ms: 375.93227
+  type: 'test'
+  ...
+# Subtest: motif filter rejects long repeats while preserving legitimate short two-form races
+ok 16 - motif filter rejects long repeats while preserving legitimate short two-form races
+  ---
+  duration_ms: 0.255048
+  type: 'test'
+  ...
+# Subtest: serialized race keeps replay origin and once-only assisted commit
+ok 17 - serialized race keeps replay origin and once-only assisted commit
+  ---
+  duration_ms: 0.735338
+  type: 'test'
+  ...
+# Subtest: snapshot at the exact checkpoint tick restores without rejecting its equal timestamp
+ok 18 - snapshot at the exact checkpoint tick restores without rejecting its equal timestamp
+  ---
+  duration_ms: 1.04291
+  type: 'test'
+  ...
+# Subtest: gate is open just before 2500 ms, closed at 2500, and open again at 4000
+ok 19 - gate is open just before 2500 ms, closed at 2500, and open again at 4000
+  ---
+  duration_ms: 0.150406
+  type: 'test'
+  ...
+# Subtest: already-matching submarine earns one clean transition into underwater
+ok 20 - already-matching submarine earns one clean transition into underwater
+  ---
+  duration_ms: 0.488648
+  type: 'test'
+  ...
+# Subtest: all 144 equipped-form/base-support pairs match the written product table
+ok 21 - all 144 equipped-form/base-support pairs match the written product table
+  ---
+  duration_ms: 0.365804
+  type: 'test'
+  ...
+1..21
+# tests 21
+# suites 0
+# pass 21
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 837.951794
+

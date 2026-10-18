@@ -1,0 +1,244 @@
+TAP version 13
+# Subtest: stage one billion retains fixed fair profiles and free ordinary continuation
+ok 1 - stage one billion retains fixed fair profiles and free ordinary continuation
+  ---
+  duration_ms: 8.536232
+  type: 'test'
+  ...
+# Subtest: integer exhaustion does not overflow the run identifier
+ok 2 - integer exhaustion does not overflow the run identifier
+  ---
+  duration_ms: 1.161233
+  type: 'test'
+  ...
+# Subtest: foundation best medal/time survives a slower later record
+ok 3 - foundation best medal/time survives a slower later record
+  ---
+  duration_ms: 2.441559
+  type: 'test'
+  ...
+# Subtest: 5580 restricted structural candidates, not multiplied length/seed copies
+ok 4 - 5580 restricted structural candidates, not multiplied length/seed copies
+  ---
+  duration_ms: 15.173115
+  type: 'test'
+  ...
+# Subtest: known 20-second traversal agrees with independently derived switch cost
+ok 5 - known 20-second traversal agrees with independently derived switch cost
+  ---
+  duration_ms: 1.821825
+  type: 'test'
+  ...
+# Subtest: every shipped course is unique and passes static content gates
+ok 6 - every shipped course is unique and passes static content gates
+  ---
+  duration_ms: 328.631707
+  type: 'test'
+  ...
+# Subtest: speed matrix key boundary cases and specialized transport identities
+ok 7 - speed matrix key boundary cases and specialized transport identities
+  ---
+  duration_ms: 0.254923
+  type: 'test'
+  ...
+# Subtest: invalid airborne/submerged transforms keep safe vehicle, never buffer
+ok 8 - invalid airborne/submerged transforms keep safe vehicle, never buffer
+  ---
+  duration_ms: 3.439929
+  type: 'test'
+  ...
+# Subtest: unsupported train at non-rail support cannot be selected
+ok 9 - unsupported train at non-rail support cannot be selected
+  ---
+  duration_ms: 0.2083
+  type: 'test'
+  ...
+# Subtest: fixed simultaneous clocks, slow-frame record penalty and overlapping pause
+ok 10 - fixed simultaneous clocks, slow-frame record penalty and overlapping pause
+  ---
+  duration_ms: 0.847065
+  type: 'test'
+  ...
+# Subtest: AI trace is independent of player actions and interruptions to player choices
+ok 11 - AI trace is independent of player actions and interruptions to player choices
+  ---
+  duration_ms: 3.491755
+  type: 'test'
+  ...
+# Subtest: safe checkpoints restore every entrant and do not recursively grow
+ok 12 - safe checkpoints restore every entrant and do not recursively grow
+  ---
+  duration_ms: 4.218511
+  type: 'test'
+  ...
+# Subtest: player finishes even when both rivals already crossed; Bronze is settled
+ok 13 - player finishes even when both rivals already crossed; Bronze is settled
+  ---
+  duration_ms: 4.132173
+  type: 'test'
+  ...
+# Subtest: future forks accept one choice; committed and past forks do not change
+ok 14 - future forks accept one choice; committed and past forks do not change
+  ---
+  duration_ms: 1.039228
+  type: 'test'
+  ...
+# Subtest: all gate bypasses have a real phase-dependent time advantage
+ok 15 - all gate bypasses have a real phase-dependent time advantage
+  ---
+  duration_ms: 317.609514
+  type: 'test'
+  ...
+# Subtest: motif filter rejects long repeats while preserving legitimate short two-form races
+ok 16 - motif filter rejects long repeats while preserving legitimate short two-form races
+  ---
+  duration_ms: 0.117453
+  type: 'test'
+  ...
+# Subtest: serialized race keeps replay origin and once-only assisted commit
+ok 17 - serialized race keeps replay origin and once-only assisted commit
+  ---
+  duration_ms: 0.575285
+  type: 'test'
+  ...
+# Subtest: snapshot at the exact checkpoint tick restores without rejecting its equal timestamp
+ok 18 - snapshot at the exact checkpoint tick restores without rejecting its equal timestamp
+  ---
+  duration_ms: 1.180264
+  type: 'test'
+  ...
+# Subtest: gate is open just before 2500 ms, closed at 2500, and open again at 4000
+ok 19 - gate is open just before 2500 ms, closed at 2500, and open again at 4000
+  ---
+  duration_ms: 0.11836
+  type: 'test'
+  ...
+# Subtest: already-matching submarine earns one clean transition into underwater
+ok 20 - already-matching submarine earns one clean transition into underwater
+  ---
+  duration_ms: 0.469241
+  type: 'test'
+  ...
+# Subtest: all 144 equipped-form/base-support pairs match the written product table
+ok 21 - all 144 equipped-form/base-support pairs match the written product table
+  ---
+  duration_ms: 0.297892
+  type: 'test'
+  ...
+# Subtest: shared load exactly once and no writes before successful load
+ok 22 - shared load exactly once and no writes before successful load
+  ---
+  duration_ms: 2.322327
+  type: 'test'
+  ...
+# Subtest: nonempty malformed, future, unknown, oversized and hostile saves are protected
+ok 23 - nonempty malformed, future, unknown, oversized and hostile saves are protected
+  ---
+  duration_ms: 0.736308
+  type: 'test'
+  ...
+# Subtest: empty SDK forms recognized; valid decoded object also accepted
+ok 24 - empty SDK forms recognized; valid decoded object also accepted
+  ---
+  duration_ms: 2.836003
+  type: 'test'
+  ...
+# Subtest: genuine finish advances once, Bronze also advances, rematch does not duplicate
+ok 25 - genuine finish advances once, Bronze also advances, rematch does not duplicate
+  ---
+  duration_ms: 8.524909
+  type: 'test'
+  ...
+# Subtest: mid-race acknowledged reload restores exact race, queue and pacing
+ok 26 - mid-race acknowledged reload restores exact race, queue and pacing
+  ---
+  duration_ms: 5.207234
+  type: 'test'
+  ...
+# Subtest: historical Replay survives reload without incrementing frontier
+ok 27 - historical Replay survives reload without incrementing frontier
+  ---
+  duration_ms: 6.245534
+  type: 'test'
+  ...
+# Subtest: dirty progress created after a pending acknowledgement stays dirty
+ok 28 - dirty progress created after a pending acknowledgement stays dirty
+  ---
+  duration_ms: 0.909814
+  type: 'test'
+  ...
+# Subtest: pre-ad save failure suppresses the ad request and keeps free continuation
+ok 29 - pre-ad save failure suppresses the ad request and keeps free continuation
+  ---
+  duration_ms: 4.62995
+  type: 'test'
+  ...
+# Subtest: interstitial first/later timing, AND conditions and failed-ad cooldown
+ok 30 - interstitial first/later timing, AND conditions and failed-ad cooldown
+  ---
+  duration_ms: 4.192531
+  type: 'test'
+  ...
+# Subtest: reward strict true, single in-flight request, chosen queue replaces once
+ok 31 - reward strict true, single in-flight request, chosen queue replaces once
+  ---
+  duration_ms: 15.67415
+  type: 'test'
+  ...
+# Subtest: reward settlement during host pause defers writes and does not release host
+ok 32 - reward settlement during host pause defers writes and does not release host
+  ---
+  duration_ms: 4.57265
+  type: 'test'
+  ...
+# Subtest: late reward cannot rewind a newer started race
+ok 33 - late reward cannot rewind a newer started race
+  ---
+  duration_ms: 4.052582
+  type: 'test'
+  ...
+# Subtest: host pause before bootstrap defers initial storage read
+ok 34 - host pause before bootstrap defers initial storage read
+  ---
+  duration_ms: 1.773101
+  type: 'test'
+  ...
+# Subtest: concurrent Next and Restart have one run transaction
+ok 35 - concurrent Next and Restart have one run transaction
+  ---
+  duration_ms: 3.131786
+  type: 'test'
+  ...
+# Subtest: ad wait excludes host pause and typed offers cannot be forged
+ok 36 - ad wait excludes host pause and typed offers cannot be forged
+  ---
+  duration_ms: 3.397316
+  type: 'test'
+  ...
+# Subtest: best foundation record survives a slower replay and record history uses LRU
+ok 37 - best foundation record survives a slower replay and record history uses LRU
+  ---
+  duration_ms: 1.370803
+  type: 'test'
+  ...
+# Subtest: hostile entrant profiles, positions, choices, nested checkpoints and record arrays stay protected
+ok 38 - hostile entrant profiles, positions, choices, nested checkpoints and record arrays stay protected
+  ---
+  duration_ms: 4.044294
+  type: 'test'
+  ...
+# Subtest: ad fixture cannot be called until reservation save is acknowledged
+ok 39 - ad fixture cannot be called until reservation save is acknowledged
+  ---
+  duration_ms: 3.95982
+  type: 'test'
+  ...
+1..39
+# tests 39
+# suites 0
+# pass 39
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 792.362071

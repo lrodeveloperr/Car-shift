@@ -1,0 +1,1 @@
+console.error('BLOCKED: native browser engines unavailable; browser security denied the local QA file. No native layout/viewport, visual, physical-device or YouTube-host PASS is claimed. JSDOM fixed rectangles do not test layout. See qa/browser-blockers.json.');process.exitCode=2;

@@ -1,0 +1,503 @@
+{
+  "purpose": "Car-shift source and actual diagnostic evidence; not production release",
+  "files": [
+    {
+      "path": ".gitignore",
+      "bytes": 71,
+      "sha256": "9d101acb7e63a1d1ab6468e598c0c404ed86f4192c00ad0d01d39de507f7d2b6",
+      "gitBlobSha": "baa246ed9b38c440d1ca2946fcdf757459e5d3ec"
+    },
+    {
+      "path": ".qa-deps/package-lock.json",
+      "bytes": 17770,
+      "sha256": "3ee8e6b17a70664df0a5fde92e1036320e2275c33c9d0a52a00f3e60b4ba29a4",
+      "gitBlobSha": "e47bdd117738c2a29394bea0d41e99a73df2b5fa"
+    },
+    {
+      "path": ".qa-deps/package.json",
+      "bytes": 51,
+      "sha256": "f7f1b2db56466792239fd1a245dccca219dbeca3838bb470e5a6d6e923388a7e",
+      "gitBlobSha": "1d73fca162646f826b00cd1f3698ddca22b8e36b"
+    },
+    {
+      "path": "README.md",
+      "bytes": 3971,
+      "sha256": "c76c64d8117b4d76aa8153975680e7996f6636ea861c10e21e40a181c4033ccd",
+      "gitBlobSha": "a6b169fb41473105730f56aab85e791b201e94e3"
+    },
+    {
+      "path": "build.json",
+      "bytes": 488,
+      "sha256": "a13e86147a4b68ca349779dc385294592920261cd65c996a895a0eef0cf26a84",
+      "gitBlobSha": "aed1c02bc79168401cd84c3dfd26e610e600680d"
+    },
+    {
+      "path": "compliance.json",
+      "bytes": 2503,
+      "sha256": "f05787f2dc97091f6b4d8f8c42872dd909552da8b07d46eba1f77be0c6d321a6",
+      "gitBlobSha": "8605ac054ce89f1771dd00da5e2b73d2a397dbed"
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "bytes": 1776,
+      "sha256": "5c54922c4950f1bbb9ba390f45a72c0d22d61a50a1538d118cfaf214e9bf6b0d",
+      "gitBlobSha": "a494094b8cf65017dc1ee376a60d8262d9ef7a9e"
+    },
+    {
+      "path": "docs/CHANGELOG.md",
+      "bytes": 1093,
+      "sha256": "b3ba973dba8e8fa726a34dca73450617aaa4006b9575f9a18d1cb00560c98bc1",
+      "gitBlobSha": "0731df22f08e87e72d127ebaff6f8fe134f4fe8e"
+    },
+    {
+      "path": "docs/DECISIONS.md",
+      "bytes": 727,
+      "sha256": "673145286c0115e802b5b77295103b0943374aca040c640a07f78aae48bc122a",
+      "gitBlobSha": "43e341c8666fd75d859a1eaad001b79b2e27a088"
+    },
+    {
+      "path": "docs/EXTERNAL-ACTIONS.md",
+      "bytes": 1344,
+      "sha256": "bd5e77b38fa4de817bd08712bf6c12d361389d70f83dd55f04d60706d38bb1d1",
+      "gitBlobSha": "a9c3316d1c09054e702e43ecb04220221854a9d1"
+    },
+    {
+      "path": "docs/FOUNDATION-ACCEPTANCE.md",
+      "bytes": 2448,
+      "sha256": "ff099820fcf41be0ab6690924b2e5ec1be65b0a61c28dc31bfd2ee92d288cb16",
+      "gitBlobSha": "604b1cb7d1f2e22b5f6d80bee3ad126d049be380"
+    },
+    {
+      "path": "docs/METADATA.md",
+      "bytes": 418,
+      "sha256": "06a007e4f384a7b6ba69aef7b31857e3a9a00286e244b7a8e64a26ec44f21c1a",
+      "gitBlobSha": "fd946beea52d550643ca0b09b52de69a1beff698"
+    },
+    {
+      "path": "docs/PRODUCT-CONTRACT.txt",
+      "bytes": 115925,
+      "sha256": "3acc1c1bb4f8d54aae440b92e1a07eda02d7bc51d2ad09878f040b831459b13e",
+      "gitBlobSha": "e6a301e9f9d99b4473b6426a9e937909217d00e6"
+    },
+    {
+      "path": "docs/QA-PLAN.md",
+      "bytes": 1778,
+      "sha256": "b919bbc99c81804a6892da585504676bd8b821e2692728e9f940db0fe3242efc",
+      "gitBlobSha": "0943ee8e9ab63bd90e512f95447735e851fd25f1"
+    },
+    {
+      "path": "docs/QA-RESULTS.md",
+      "bytes": 7885,
+      "sha256": "fb338413c2e35189ee77dc787b785f457e0a978ee016b1aee93ab73bbfddeb73",
+      "gitBlobSha": "f162a8016635fee0694aa5c2f67de8d3ef7221b6"
+    },
+    {
+      "path": "docs/RESEARCH-AND-DESIGN.md",
+      "bytes": 564,
+      "sha256": "3575572ac4d589f231d95cbcb44a3d91185efb2358f31de54704bcee7f43ad9b",
+      "gitBlobSha": "69f558297e8775c86ceba81a1e9b56b4baf6326c"
+    },
+    {
+      "path": "foundation-lock.json",
+      "bytes": 561,
+      "sha256": "2aaf76510cf55000fb8d4c84fbb06e042e957b0fe81984c92bd7cca352f11980",
+      "gitBlobSha": "fbfd2479ff59456484edd067dcbe883c0ab5ec9b"
+    },
+    {
+      "path": "game-brief.json",
+      "bytes": 5326,
+      "sha256": "14f51b33e04a149d97d994f1309a850a4d433abbaa365f0c3d8bf2827d1f3842",
+      "gitBlobSha": "f02b307004713f6ccb7eba91930621d119786183"
+    },
+    {
+      "path": "qa/acceptance-matrix.json",
+      "bytes": 34006,
+      "sha256": "a6c61f983d903ef4cb491e963d63b4ae8818a02f9cccc2a5184b7f309610f467",
+      "gitBlobSha": "4f2ac99e30b4b31559626e3b6696116fe4b9f7c0"
+    },
+    {
+      "path": "qa/browser-blockers.json",
+      "bytes": 691,
+      "sha256": "c1cb905fe9d329bf6b14ef4ba8eb8e295b610ee84fd37864922bed5ee6675c37",
+      "gitBlobSha": "7ee5c597e1755048beb460a7cc7a1b3dddb34b53"
+    },
+    {
+      "path": "qa/build.log",
+      "bytes": 223,
+      "sha256": "f68fe93477a04c2a808d98f71bcbb2ab5e44c95950b05d19144d770a8df67fe5",
+      "gitBlobSha": "3419f71f4ec4d2d5cfc20a38d265f93f2c3ecf22"
+    },
+    {
+      "path": "qa/compliance.log",
+      "bytes": 154,
+      "sha256": "efa797e0dddb9fec3a3ce6192894042faff85519c67f3a8400e31e3787bcaf03",
+      "gitBlobSha": "9e822c8a2dbb581f9345e08ea947201be04becde"
+    },
+    {
+      "path": "qa/course-audit.json",
+      "bytes": 3001,
+      "sha256": "0cac97ac984064f5b333f8357b9258422493c1ad517e437cb2c2937af3d4404a",
+      "gitBlobSha": "d7ee2365e6d74ecaa2cbac109b75ab881f5477a3"
+    },
+    {
+      "path": "qa/course-metrics.json",
+      "bytes": 1824525,
+      "sha256": "6c7ee2a595e016d2a3a50eec01cb2e6869804e3bc71ef1e55b8d49db29db09eb",
+      "gitBlobSha": "64538de3e7a14bcb757d681402291747d74c62b5"
+    },
+    {
+      "path": "qa/dom-soak-final-report.json",
+      "bytes": 3108,
+      "sha256": "6f0593d36cfaa0f8173f6a7ba18e7d1ce732fbbf419d2993227e7dc42f5def5a",
+      "gitBlobSha": "dd81830f1fe1a2423517cabf395299dee9b37ca2"
+    },
+    {
+      "path": "qa/domain.log",
+      "bytes": 4526,
+      "sha256": "04ddc4484f2e0ff3eefda38ad9367fbbc57d2cd06977eb4de87bd072bea68b2c",
+      "gitBlobSha": "47754486060eb6b47c04a235d98c01ea91bf06a2"
+    },
+    {
+      "path": "qa/end-to-end-report.json",
+      "bytes": 473,
+      "sha256": "2816937adf6ba2d7074f86a3e06e2678f24be08ba72e892d72f9f4075de4ec6e",
+      "gitBlobSha": "b913d6f2968c9ce6c6ceca9bb6d0f6f9c4492274"
+    },
+    {
+      "path": "qa/foundation-audit.json",
+      "bytes": 8736,
+      "sha256": "7f928de3a8184dc6d200aa784a9c60f5cc258315cf55e056fb7b139333949636",
+      "gitBlobSha": "8c7360eb5a74021e686bfd10f5d0dd7192293e99"
+    },
+    {
+      "path": "qa/layout.log",
+      "bytes": 246,
+      "sha256": "40a77db60be15e18d0ad5910b11b57ba731329c73ed3743c3a18ceb30de24a53",
+      "gitBlobSha": "e4424ccf082eab2db8ffa84b214b4722d1e367ed"
+    },
+    {
+      "path": "qa/lifecycle.log",
+      "bytes": 3844,
+      "sha256": "4a7718426a575cc4562777976cffd909c9747d557b709a5cd399aeecbf37be95",
+      "gitBlobSha": "7ac890dd2115b123134a7167a873e4a0ea8e2d68"
+    },
+    {
+      "path": "qa/local-report.json",
+      "bytes": 1980,
+      "sha256": "142a3922b9d0e1beb1c24dcb8376a27c8935ccb478bfccf875a06735c94b3443",
+      "gitBlobSha": "fc3743675079aa6926e0c90e08948ff1aa461800"
+    },
+    {
+      "path": "qa/package-report.json",
+      "bytes": 1625,
+      "sha256": "def1c0dc794d788ae620f9e0da07323b8b4dde5f5888e83a0e380454a674d8f3",
+      "gitBlobSha": "64e9eb95cdc9af8a53f3a788cd8eb0322fa3e9d1"
+    },
+    {
+      "path": "qa/performance-report.json",
+      "bytes": 712,
+      "sha256": "c926a3b80b5ed62b9fe96ef98980c58332c8e4a77113114e1761213042f037b2",
+      "gitBlobSha": "1714fd05aa7e43f844c4d5cb5d33123c17b3bc58"
+    },
+    {
+      "path": "qa/performance.log",
+      "bytes": 713,
+      "sha256": "fe9df29331a2ad458220e62e62acb92f804af60fd3b4d0f9ba1d19161b9a0ae7",
+      "gitBlobSha": "ab140267a3b3764997cc8fe095d0da7102fa0165"
+    },
+    {
+      "path": "qa/product-count.json",
+      "bytes": 1049,
+      "sha256": "2e170a8cac53a49f8d7f0f4bd05575d1f4e76073da15bca1318589b6979d64a4",
+      "gitBlobSha": "6ccae20cc7a26f79a2beb82b069b216a10981857"
+    },
+    {
+      "path": "qa/rejected-candidates.json",
+      "bytes": 245228,
+      "sha256": "0d7b69305d2c6d2f5a0974d9a4b63bf7cdb13a1417e0b3808f8613252a7ae3f3",
+      "gitBlobSha": "c157c6c62bed84d5f082bb7dc023f3da76b8ec48"
+    },
+    {
+      "path": "qa/review.json",
+      "bytes": 7671,
+      "sha256": "3aa3bb50e96e2390c823c6d0c630d220e6eab0b3aebf213940e3e21572af6a85",
+      "gitBlobSha": "52721e4f6bb147f83779383062f459164affc14e"
+    },
+    {
+      "path": "qa/safety-report.json",
+      "bytes": 673,
+      "sha256": "4e7dc301b8758959dc4db605d4a85e24356e3151efefe972e2a9cfa7cfc081bb",
+      "gitBlobSha": "1f452e8cc11cc0d4f8167b3e824f11cb291918a9"
+    },
+    {
+      "path": "qa/size-report.json",
+      "bytes": 598,
+      "sha256": "10c320a05b4c7abbd75d8cc3aa9c29aa88581a5a2241a92f6a0b04f6adc33641",
+      "gitBlobSha": "23051706429b9647f43d7d11968eb4df57ccc1b7"
+    },
+    {
+      "path": "qa/stress-report.json",
+      "bytes": 1111,
+      "sha256": "f97968d151ee802321f6d36e4770a7de1174feed4f5b56f315955c1e4981619d",
+      "gitBlobSha": "c021de64bef4fefe9c3664ba91812d231d647038"
+    },
+    {
+      "path": "qa/unit-results.tap",
+      "bytes": 8250,
+      "sha256": "09759b7c257f648abf7f4695e818ba7384d3d7c4288738aa878fc9ab4bed7443",
+      "gitBlobSha": "f1595746664394523dbe609a0b725c3de751262f"
+    },
+    {
+      "path": "qa/upload-package-command.log",
+      "bytes": 176,
+      "sha256": "f227881712b27a65152964bfa92b7e44f3c664c51f262b4c51242b5da6bf5be9",
+      "gitBlobSha": "cfc8072403760bade19f201e471271240c2466d3"
+    },
+    {
+      "path": "qa/upload-report-command.log",
+      "bytes": 82,
+      "sha256": "368bef9f3573258f1f7b2cfffd0ca45d460124a176e0b198a4ddb4f72f38c3a4",
+      "gitBlobSha": "b2f5d1288c1bf6ca5850eef4bf6ba2c2ae706ed2"
+    },
+    {
+      "path": "qa/upload-unit-results.tap",
+      "bytes": 8254,
+      "sha256": "247703fc88a647b7c98a39d09ac19acde4e0575baa7c06666a3aea5004dbfd08",
+      "gitBlobSha": "08f6996d5b032270e15e8b9a71f967b3feead2f3"
+    },
+    {
+      "path": "releases/shape-shifting-vehicle-race-diagnostic.zip",
+      "bytes": 198348,
+      "sha256": "cd2d0e15c780d866c0b275cb883cfc3b217f7ff658f55cd0b5f808af087cd04a",
+      "gitBlobSha": "538e4422ff8e4750a8f7ef4f2245b19bab0eb1c7"
+    },
+    {
+      "path": "runtime/data/bank.json",
+      "bytes": 338099,
+      "sha256": "10d986225e8587eb497f84bd49332dda27d6f03f237eb87c8068c91ae2007728",
+      "gitBlobSha": "809250ac96723c9165a0454e79507c6c89d3337b"
+    },
+    {
+      "path": "runtime/data/foundations.json",
+      "bytes": 2466,
+      "sha256": "28c6c6c4f5415ed39ec137758e9430da7be24d05f63e299d9775607bf5feab98",
+      "gitBlobSha": "babb22f0cba805c1c1934f9f8e2b291a731e9f85"
+    },
+    {
+      "path": "runtime/index.html",
+      "bytes": 396250,
+      "sha256": "b4abd97e9673a4a16a8ee455e2bf1accd2c60df1bb22140f9996cd273d9e2e76",
+      "gitBlobSha": "fb95cd1618ddd7d7482df9fb54087c6116c6c554"
+    },
+    {
+      "path": "runtime/src/content.mjs",
+      "bytes": 6351,
+      "sha256": "07c001a7176990e25761dc9a09d9cfd85fafe83e0ccad8bdfec937ce0be21fcb",
+      "gitBlobSha": "bd5aeadcb7fae70645fd1eb93bcefd2154aec2fb"
+    },
+    {
+      "path": "runtime/src/harness.mjs",
+      "bytes": 9339,
+      "sha256": "52ed9db186729482ad567716f70fb9bb01512556226d6d5d23459e69f0cd7662",
+      "gitBlobSha": "ee6d004d955936b5ca8d4a897d825a1bd48f6b72"
+    },
+    {
+      "path": "runtime/src/race.mjs",
+      "bytes": 12494,
+      "sha256": "b87c230685f102575e9815ce9f9e73230b1f66a497a20966179fb1f6f3ebf471",
+      "gitBlobSha": "7aa6a9283da19ca085f45f46d3a45a78ff5fc3c1"
+    },
+    {
+      "path": "runtime/src/rules.mjs",
+      "bytes": 2612,
+      "sha256": "be197282fe9514b3096dd4a83f968528adf49e1929b9f83baf7f3ad68ab39a83",
+      "gitBlobSha": "349352ce5775417d53c4cb5ce48fe773c806978c"
+    },
+    {
+      "path": "runtime/src/session.mjs",
+      "bytes": 21081,
+      "sha256": "b15383e35988229c8a073340612e72b5cf482d92a7c08fefcb00490743f87edc",
+      "gitBlobSha": "6a1c0a24eddb032cf235a37e44a482934e900421"
+    },
+    {
+      "path": "runtime/src/solver.mjs",
+      "bytes": 1685,
+      "sha256": "9d891d0b3f0b9a611ca5eabd0d450ab52d608268b574ab7b213cf3f8fb206d8b",
+      "gitBlobSha": "99ea09eaec4eae5198cab0ddb28b07a8f4395c04"
+    },
+    {
+      "path": "source/content.mjs",
+      "bytes": 6351,
+      "sha256": "07c001a7176990e25761dc9a09d9cfd85fafe83e0ccad8bdfec937ce0be21fcb",
+      "gitBlobSha": "bd5aeadcb7fae70645fd1eb93bcefd2154aec2fb"
+    },
+    {
+      "path": "source/harness.mjs",
+      "bytes": 9339,
+      "sha256": "52ed9db186729482ad567716f70fb9bb01512556226d6d5d23459e69f0cd7662",
+      "gitBlobSha": "ee6d004d955936b5ca8d4a897d825a1bd48f6b72"
+    },
+    {
+      "path": "source/race.mjs",
+      "bytes": 12494,
+      "sha256": "b87c230685f102575e9815ce9f9e73230b1f66a497a20966179fb1f6f3ebf471",
+      "gitBlobSha": "7aa6a9283da19ca085f45f46d3a45a78ff5fc3c1"
+    },
+    {
+      "path": "source/rules.mjs",
+      "bytes": 2612,
+      "sha256": "be197282fe9514b3096dd4a83f968528adf49e1929b9f83baf7f3ad68ab39a83",
+      "gitBlobSha": "349352ce5775417d53c4cb5ce48fe773c806978c"
+    },
+    {
+      "path": "source/session.mjs",
+      "bytes": 21081,
+      "sha256": "b15383e35988229c8a073340612e72b5cf482d92a7c08fefcb00490743f87edc",
+      "gitBlobSha": "6a1c0a24eddb032cf235a37e44a482934e900421"
+    },
+    {
+      "path": "source/shared/foundation.mjs",
+      "bytes": 5117,
+      "sha256": "c87927cba9af37b058ba227d0de53284451b44b5614aad6d69de9ef185388b22",
+      "gitBlobSha": "f147d03d91f9675d17d0f03a0baa2d925bd94622"
+    },
+    {
+      "path": "source/shared/playgama-client.js",
+      "bytes": 18211,
+      "sha256": "c6c65dfc3451b51563f1e78c6f78766c587b0267ec6e986003eafa267f344ff1",
+      "gitBlobSha": "43ac5b726a5c4530ba720c6ae1f005d638fddfd5"
+    },
+    {
+      "path": "source/shared/shell.css",
+      "bytes": 895,
+      "sha256": "aafe2388df3776e7360ea4d17b51ff635dab0d4b3a1b295916cabee252cf9564",
+      "gitBlobSha": "99bfbabf1a94a99979a3beff4b0bdade98291061"
+    },
+    {
+      "path": "source/shared/viewport.mjs",
+      "bytes": 1565,
+      "sha256": "6ceb91e5b943d2899b2c4f42129ff0e6a091499d6593819ad2b95b9aea05de7f",
+      "gitBlobSha": "4c3190d3c6f73a37d22580f55fd55954991952c3"
+    },
+    {
+      "path": "source/solver.mjs",
+      "bytes": 1685,
+      "sha256": "9d891d0b3f0b9a611ca5eabd0d450ab52d608268b574ab7b213cf3f8fb206d8b",
+      "gitBlobSha": "99ea09eaec4eae5198cab0ddb28b07a8f4395c04"
+    },
+    {
+      "path": "tests/boundaries.test.mjs",
+      "bytes": 1588,
+      "sha256": "6507fbd16e91f578756f563e0e988502a0ceaa1607da68673a743ef24cf10073",
+      "gitBlobSha": "90c9a33321eb12901ebd9d682d738372f976231f"
+    },
+    {
+      "path": "tests/race.test.mjs",
+      "bytes": 7172,
+      "sha256": "4822e45eff50a38c9a6bc0f12908f2ffaca5dbd749531cf0fcfbc5bd2dd27fbe",
+      "gitBlobSha": "b7072d0068435039e96973ccdc5746e07e333732"
+    },
+    {
+      "path": "tests/session.test.mjs",
+      "bytes": 10231,
+      "sha256": "04adf5d44334ba54ed9415309027c91df802c39b399e9a28704ab76984164863",
+      "gitBlobSha": "afaa30127b3e850ebbf91dba254a26614b3f9378"
+    },
+    {
+      "path": "tools/audit.mjs",
+      "bytes": 6663,
+      "sha256": "c5cca0954d714b1887322ad3c4d26e68fccf931eb7f43a9802f223afc000b7c2",
+      "gitBlobSha": "3444530fc9d73ac79b48f9ef38e55d135f3ecc0b"
+    },
+    {
+      "path": "tools/build.mjs",
+      "bytes": 521,
+      "sha256": "fbe5a2eece28568610c69dee5b03d381e8b1c62af2e36293beba8c85de6cdcac",
+      "gitBlobSha": "7971f1011ab7c3759f75de9f7f1df0344c7f348d"
+    },
+    {
+      "path": "tools/check-all.mjs",
+      "bytes": 816,
+      "sha256": "3754abf81b634077d6193039c64c054acf27679d762df6ef914846a48313a15c",
+      "gitBlobSha": "dfb61bcd84fce7a66acc03743d8c9ae24f5b38b1"
+    },
+    {
+      "path": "tools/count.mjs",
+      "bytes": 1601,
+      "sha256": "bd1bbb77d2dd0f9a5933f476c6614de12704057701e31cd3cfa1a007564e768c",
+      "gitBlobSha": "7650dc3dbab02d099770ba70be65e357417b868f"
+    },
+    {
+      "path": "tools/dom.mjs",
+      "bytes": 7490,
+      "sha256": "e383a0fbe9f5e656c075e93d77143520ce73c45cbaf1aede90f6038fb16574db",
+      "gitBlobSha": "15529797465da13025ebf80353aabe385e7eec70"
+    },
+    {
+      "path": "tools/end-to-end.mjs",
+      "bytes": 3556,
+      "sha256": "5c55b0d5017a56006fcd1b6342d9dcfa19982fd7993c12953579a47bfa488115",
+      "gitBlobSha": "c388a8d01c509a2dac78da5858c5b7f5de38465e"
+    },
+    {
+      "path": "tools/foundations.mjs",
+      "bytes": 3600,
+      "sha256": "e6eb5c7ddb0cd09f1fb06934aaa6085eddf472389e775ee41f6a60504613488c",
+      "gitBlobSha": "b590c4919e3912d3edf28a7efd05d57b86f09cda"
+    },
+    {
+      "path": "tools/harness.mjs",
+      "bytes": 3761,
+      "sha256": "49cd73dd2f1682ce30553efd44b8e690e2bc10149a47a6f9e47ecacf1d960b7a",
+      "gitBlobSha": "b7ba830232f9b88b4350ec5403664fb0c6ea5759"
+    },
+    {
+      "path": "tools/layout-blocked.mjs",
+      "bytes": 282,
+      "sha256": "0a0e6a74e2792eb6173416836cf033823e1cc28c66998591f96a6c4c4435f35d",
+      "gitBlobSha": "bffd2b4e6e2da203e7862e50792d7684c3fec01f"
+    },
+    {
+      "path": "tools/package.py",
+      "bytes": 1497,
+      "sha256": "1969b4f0cce3eac3bb428f358d19fe41c18356d721ff688599590fa2ae6b5af0",
+      "gitBlobSha": "7a243ff62b60c66c718b1de8bba44f797b21384c"
+    },
+    {
+      "path": "tools/performance.mjs",
+      "bytes": 1690,
+      "sha256": "e05f81b622972ec51d18154d6e136e8cf5d977ad64c15f1ec5a489b25228e126",
+      "gitBlobSha": "ea421f8d60b532f7818bf128d7fb494229e2b157"
+    },
+    {
+      "path": "tools/rebuild.mjs",
+      "bytes": 166,
+      "sha256": "612212042086a06fa19c2c0ed83ba419f2c52cedbf8f3798c59e9fb456b632c0",
+      "gitBlobSha": "b49532ab54cc38c65a6d0fd0269289c6f7a58487"
+    },
+    {
+      "path": "tools/report.mjs",
+      "bytes": 10257,
+      "sha256": "3ad7d8dff227ce1696e8d64ab255efb40caea97c53004ed1ac3008cb7ebf1a6d",
+      "gitBlobSha": "c8d1de3267edfc06dae7a64181096b15a4ad3f84"
+    },
+    {
+      "path": "tools/safety.mjs",
+      "bytes": 3652,
+      "sha256": "3b4d022be7e647d8a7746479b011a6c4215dfe6764115704018846840751e7ed",
+      "gitBlobSha": "60fa957cf6d0ef6da2ecbc597222100651254193"
+    },
+    {
+      "path": "tools/source-package.py",
+      "bytes": 2397,
+      "sha256": "e753164c9a0a70dd2903b30e82b624f5b90ff9dddf63f7c9d767d7dc2cbb1486",
+      "gitBlobSha": "e80adfa43ef9d9ae53ac5d2888ba92ff5363208b"
+    },
+    {
+      "path": "tools/stress.mjs",
+      "bytes": 5009,
+      "sha256": "9ea0d9b892d76d126e0ee7257488fb79a84867b85ac03f05eecce1d2b7fb0ee3",
+      "gitBlobSha": "83db23b6863136e7adc099fccdb9ad416662f076"
+    }
+  ]
+}

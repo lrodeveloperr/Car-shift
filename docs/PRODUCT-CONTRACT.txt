@@ -1,0 +1,638 @@
+SHAPE SHIFTING: VEHICLE RACE
+Non-graphics game and AI build contract — revision 5.0
+Evidence-led product redesign, 18 October 2026, WorksBien Studios Inc.
+
+STATUS AND AUTHORITY
+
+The user authorized deep competitor study, all eight transports, endless continuation, prebuilt logical levels, implementation of the level tests and all feasible end-to-end checks. Revision 5.0 adds an executable presentation-independent engine, prevalidated bank, save/reload and monetization fixtures, and actual automated evidence. A standalone diagnostic exists. No production game, publication, genuine hosted test, human enjoyment score or release certification is claimed. This updates the same contract and preserves the prior research and platform requirements.
+
+Labels: U = explicit user direction; S = inherited studio practice; P = concrete proposed design; H = untested behavioral/commercial hypothesis; V = external verification still required; Y = official platform rule. Proposed decisions are not retrospectively approved. Graphics remain UNSPECIFIED: no visual style, palette, rendering technology, lighting, resolution, effects or graphic assets are prescribed.
+
+U: endless course continuation without a designed last level; include Car, Dirt bike, Snowmobile, Train, Boat, Submarine, Helicopter and Plane; support for expanding transportation types; one-finger operation; an original and better product informed by competitor strengths and weaknesses; maximize engagement, enjoyment and monetization; leave graphics unspecified. S: no banners, account requirement, own backend, personal data or external analytics. Use host cloud saves and host ads. The subsequent user instruction authorizes the level-engine/QA implementation reported here. It does not authorize publication or an unannounced live change to another game's monetization.
+
+All eight named transports and endless continuation are user-directed scope. Their exact physics, teaching schedule and generator parameters remain concrete design proposals, not measured mechanics. Presentation-independent source and a diagnostic harness are now implemented. No production live configuration is changed.
+
+Revenue proposal D is recommended for review: first interstitial after two meaningful full finishes AND 120 active racing seconds; subsequent opportunities after two fresh finishes AND 120 active seconds since any in-game full-screen reservation. This changes provisional B's first finish count from four to two, preserves the time/cooldown guards, and adds one optional next-transport-set reward after the foundations. The checkpoint-rematch reward remains. D is implemented only in disabled-by-default standalone test fixtures; no live SDK or ad configuration is approved or changed. Earlier provisional live ad plans are not retroactively approved. A later instruction to build this reviewed revision can select its concrete scope; ask only about genuinely unresolved material changes. No other game's monetization is affected.
+
+COMMERCIAL OBJECTIVE AND RESEARCH FINDINGS
+
+Optimize actual developer net revenue from enjoyable acquired and returning play. The mechanism hypothesis is: understood first race -> visible competence -> credible competition -> another materially different race -> mastery/return -> sustainable served-ad opportunities. Do not equate starts, players, sessions, rounds, requests, served impressions or earned rewards.
+
+Demand evidence, refreshed 18 October 2026:
+- E1, independent Playables catalogue: Shift Shapes Car about 10M cumulative plays, listed since 17 September; Shape Transforming: Shifting Run about 16M, listed since 24 April. These are rounded global counters, not unique players, exact daily traffic or earnings.
+- E2, official Google Play: Sixcube's Shape-shifting: Race 3D shows 100M+ cumulative Android downloads. E5, official Apple listing: Shift Race by Mirols OU describes the exact helicopter/car/motorboat loop and shows 8.7K US ratings. Neither measures Playables demand or current daily activity.
+- E3, retained studio research: about 460K nominal daily counter growth for Shift Shapes Car across its 7–17 October snapshot comparison. The baseline was not independently recollected in this revision; preserve its date and rounding limitations. Do not forecast our unbuilt game's traffic from it.
+- Important source correction: Lagged's own E4 description names car/boat/runner; the independent E1 description names car/boat/helicopter. Treat the large counter as evidence for terrain-based transformation racing, not verified proof of that title's exact three forms or physics. E5 independently establishes that a helicopter/car/boat interpretation already exists. Our originality must come from our actual course/control/progression execution, not claiming that trio was invented here.
+
+Research method and limits:
+- Read direct Lagged and Playgama listings, Sixcube Google Play, Sixcube US/UK App Store, Shift Race US App Store, and additional official transformation-game listings/reviews E6–E8.
+- In the official Google Play review UI, inspected the first 20 Most relevant positions, first 20 Newest positions, first 20 Newest three-star positions and first 20 Newest one-star positions. These are 80 displayed positions with overlap, not 80 unique players or a representative survey. The English page was accessed from a Canada browser storefront; no country-specific prevalence is inferred.
+- Newest general reviews ran from 17 October to 28 August 2026 and were mostly brief praise/noise. Useful selected 2026 critical feedback concerned ads, internet use and boredom; a June 2025 three-star review specifically criticized weak CPUs and the factory. Historical 2021–2023 complaints are retained as failure modes, not assertions all current builds still have those faults. Incoherent text, a positive comment with a low star and a negative label without an explanation are not classified as a specific mechanic defect.
+- Live-play access was attempted. YouTube's actual title required sign-in in this browser; the public Lagged and Playgama games could not initialize WebGL here, confirmed by their console errors. Lagged's portal also displayed ad media failures. These are this browser's access limitations, not proof of general game failure. No race was successfully completed, no touch/latency comparison was measured and no live ad yield was established. The linked publisher video opened but did not deliver usable gameplay frames in the attempted capture. This is source/review research plus a contract audit, not a completed hands-on competitor audit.
+
+What players value and what can fail (paraphrases, not incidence estimates):
+R01 Transforming across environments is enjoyable: preserve that immediate agency. E2/E5 and US App Store praise, February 2024.
+R02 Weak or stopping rivals remove the race: Google Play feedback March 2025 and June 2025, plus older complaints. Use fair fixed rivals and an explicit harder option.
+R03 Predictable repeats reduce interest: UK App Store May 2023 and December 2025; older Google Play feedback. Vary decision topology and continuation content.
+R04 Ads can outweigh playing: Google Play June/May 2026; UK December 2025; E7 August 2026. Protect racing and finish payoffs, measure post-ad continuation.
+R05 Factories/upgrades can feel pointless: June 2025 Google Play and UK May 2023. Progress should unlock actual race decisions/mastery, without an unrelated idle economy.
+R06 Arbitrary form availability constrains agency: US App Store June 2022. Keep our three core forms available from entry; add specialized transport through free teaching/progression, never an ad required to finish a course.
+R07 Shift-at-wall bugs can trap a run: May 2022 Google Play, historical only. Add boundary/adversarial tests and safe flight transitions.
+R08 Rewards can disappoint: E5 describes frustration with a short opponent-freeze benefit; its visible date omits a year, so no year is inferred. Promise an exact recoverable race state, not a vague advantage.
+R09 Progress/content endpoints can break return: E6 includes a September 2023 report that play stopped after maximum levels. Keep clear milestone feedback, then ordinary endless Next and Replay.
+
+These findings support concrete hypotheses; they do not prove a revenue optimum. Positive descriptions of ease also exist. Preserve a forgiving default rather than converting every race into a reflex test.
+
+AUDIT OF OUR PREVIOUS CONTRACT AND RESULTING CHANGES
+
+V1/V2 weakness -> current proposal -> intended player/commercial effect -> acceptance IDs:
+- Every course had six legs and all three terrains -> varied 4–10-leg races, deliberate two-form and three-form courses, 36 authored foundation courses followed automatically by endless validated generation -> fewer repeated decisions; longer useful content horizon -> DOMAIN04, CONTENT01–04.
+- One slow AI ladder -> Standard and optional Expert with published fixed profiles and seeded strengths -> a genuine race for competent players without hidden rubber-banding -> DOMAIN10, FAIR01–03.
+- Race ended as soon as both rivals finished -> allow the player to finish; Bronze preserves completion and unlocks the next course -> protect payoff and avoid forced-repeat stalls -> DOMAIN02/09.
+- Cars/boats could advance through an air interval -> wrong form waits safely at takeoff; airborne invalid transforms do not strand or float a car -> understandable physical continuity -> DOMAIN01, INPUT01.
+- V2 continued through a finite remix pool -> one continuous numbered journey, authored foundations then generated courses with no designed last level; queue and recent replays survive reload -> no content-end wall -> CONTENT02–07, ENDLESS01/02, SAVE04.
+- V2 fixed the transport roster at three -> three stable ground/water/air slots with freely taught specialized vehicles between races -> broader transport experiences without an expanding in-race toolbar -> FORMS01/02.
+- Only failed players could want a reward -> optional one-video checkpoint rematch for Silver/Bronze, with explicit durable terms -> a voluntary mastery offer without deliberately causing losses -> AD05–09; included in proposed D.
+- A numerical 10/10 label stood in for quality evidence -> comparative novice/experienced-player gates, observed choices and retention/revenue definitions -> superiority must be demonstrated -> COMPARE01–03, MEASURE01/02.
+
+All eight transports belong in this build scope, not a deferred train/plane backlog. Keep the valuable foundations: three active transport slots, one finger, automatic forward motion, free normal racing/restarts, meaningful branches, exact saves, honest AI, protected host lifecycle, small package, result-before-ad and no banners. The active race has exactly three fixed family slots. Its transport set is fixed before racing and never swaps automatically at a terrain edge. An extensible transport registry supports future types. Purchases, a collection shop, leagues, online multiplayer and an idle factory remain outside this revision. Expert is an optional between-race difficulty. Endless validated-bank selection is the ordinary Next flow, not a separate mode the player must discover.
+
+1. PROMISE, AUDIENCE AND CORE LOOP [U/P/H]
+
+Selected English title for YouTube Playables / MediaCube: Shape Shifting: Vehicle Race (28 characters including spaces/punctuation). This replaces the former working title, Vehicle Shift: Land Sea Air. Use the selected title consistently in the product-facing contract, implementation display name, listing and future cover briefing. Do not rebrand it during later graphic work without a material reason or user direction.
+
+Complementary description opener: “Transform into 8 vehicles and race endless courses across land, sea and sky.” (76 characters). This is description copy, not a claim that YouTube supplies an App Store-style subtitle field. Follow with truthful transport names: car, dirt bike, snowmobile, train, boat, submarine, helicopter and plane; quick one-finger switching; route choices and computer opponents. Avoid an eight-vehicle keyword list in the title. “Endless” describes ongoing generated courses, not one unbroken survival run or infinitely unique layouts.
+
+Naming status: PROVISIONAL selected recommendation, pending the actual MediaCube/YouTube metadata field validation and final rights/name-confusion screen. The checked public Playables requirements require truthful metadata and rights, but did not expose a game-title character maximum; do not misapply YouTube's video-title/channel-title limits or claim an assumed 30-character Playables rule. The chosen 28-character length is a compact design choice. No measured English search volume, relative Trends ranking, trademark clearance or search-placement guarantee is claimed. Native-market title research/QA for the other launch locales remains a release task; do not mechanically translate this English title and call the result search-optimized.
+
+Naming evidence, checked 18 October 2026:
+Evidence area              Observation                                            Meaning / limit
+Google game-query intent   Vehicle-transform queries surface transformation racers. Relevant intent exists; query results are not keyword-volume data.
+Google Play terminology    N1 Shape-shifting:Race 3D shows 100M+ cumulative installs. Established genre wording and product demand; not traffic caused by its title.
+Adjacent phrase relevance  N2 Vehicle Transform Challenge shows 10M+ cumulative.   Vehicle-transform terminology is relevant; no measured volume comparison with shape shifting.
+Browser-store terminology  N3 Playgama lists Shape Transform Race.                 Browser racing relevance, not proof of YouTube ranking or measured click-through.
+White space / collision    Exact/near-exact candidate searches returned related titles; no exact candidate listing was established in the inspected results. This limited screen does not prove uniqueness, legal availability or weak competition. The category is crowded.
+Ambiguity / comprehension  Shape Shifting + Vehicle + Race states mechanic/object/activity. This is the editorial zero-explanation judgment; standalone shape/shift terms also have unrelated uses. Validate with unfamiliar players.
+Relative search interest   Attempted public Google Trends comparison was inaccessible. No numeric popularity order or evidence of highest-volume wording is invented.
+
+Ranked rejected alternatives (audit trail only, not competing current names):
+2. Shape Shifting: Endless Race (28): captures continuation but omits vehicles, making the object of transformation less explicit.
+3. Vehicle Transform: Endless Race (31): highly accurate but longer, with less direct use of the observed shape-shifting genre phrase; no evidence proves that phrase has greater search volume.
+4. Vehicle Shift: Land Sea Air (27): communicates environments, but the race/transformation activity is less explicit and the product now also includes rail, snow and diving.
+5. Shape Shifting: Car Race (24): plausible genre phrase but narrows the promise to cars despite the eight-transport roster.
+Exclude unsupported “3D”, “multiplayer”, “best”, “No.1”, competitor brands and fixed ad-free/free claims. Graphics are unspecified and opponents are local AI.
+
+Propagation checklist: [DONE] contract heading and product-facing references; [DONE] standalone contract filename changed to shape-shifting-vehicle-race-ai-build-contract.txt while preserving file identity/history; [DONE diagnostic; production metadata unbuilt] implementation display name and test expectations; [PENDING LISTING] publisher title/description and native-market localized titles; [PENDING ASSETS] use the selected title in later cover/store briefs without choosing graphics here. The standalone engine/diagnostic now use the selected title. No production repository, listing, graphic assets or policy files were renamed. Historical research/source titles are evidence and remain exact. The legacy technical namespace/reward IDs below remain stable non-public identifiers; they are not a competing marketed name.
+
+General audience 13+, not specifically made for children. Primary visit: a few short races; longer visit: a new transport chapter, medal improvement or more generated stages. First action is Play followed by a consequential transform within five active seconds. One contextual cue teaches a new rule; no forced tutorial carousel, shop, account or upgrade sequence precedes the first race.
+
+Core experience: read the approaching section -> choose a form -> feel the resulting progress relative to rivals -> choose an occasional understandable route -> finish -> inspect rank, clean changes and record -> Next, Replay or optional rematch.
+
+Distinct product hypothesis: accessible transformation racing with route-reading and credible opponents, then expanding transportation, endless course selection and optional harder mastery. Do not sell it as online multiplayer or invent claims that its mechanics have no precedent. Own the layouts, decision sequences, implementation, balancing, audio/asset rights and progression. Do not reproduce a competitor's course graphs, UI, names or assets.
+
+2. EXACT MECHANICS, FAIRNESS AND READABILITY [P]
+
+2.1 Race model and clocks
+
+Presentation-independent course graph: acyclic ordered legs with 4–10 legs for ordinary courses. Up to two two-way forks; each merges before the next fork/checkpoint. Tutorial exceptions are in section 4. Branches encode length, terrain/support, modifier intervals, cues and stable IDs. All entrants obey the same graph rules.
+
+Fixed 20 ms simultaneous simulation ticks; record positions to 0.0001 abstract unit. Distance/time/rank never depends on rendering update order. Resolve same-tick finish by earliest within-tick crossing; an indistinguishable player/AI tie favors the player. Stable AI ID resolves their ties.
+
+Three clocks are explicit: simulation active ms (actual racing ticks, used for pacing and meaningful-round minima), monotonic unpaused race stopwatch ms (records, includes dropped time due to ordinary slow frames), and permitted unpaused waiting ms (startup/ad recovery notices). None accrues during host/menu/recovery pause. A frame advances at most five ticks; discard excess simulation accumulation rather than render an unseen burst, but include the unpaused time in the record stopwatch so slowing the device cannot improve a record. A resource-loss recovery is an explicit pause owner, not an unrecorded slowdown. Performance validation must address persistent stalls.
+
+2.2 Eight transports, three active slots and traversal
+
+Three stable input slots: 1 Ground, 2 Water, 3 Air. The full included roster is Car, Dirt bike, Snowmobile, Train, Boat, Submarine, Helicopter and Plane. Core first-race set: Car / Boat / Helicopter. Ground variants replace Ground; Submarine replaces Boat; Plane replaces Helicopter. There are eight types across the game and exactly three controls in any race. Communicate the exact equipped names/capabilities before Play and keep that set fixed for the entire run, Replay, Restart and rematch. No loadout shop, eight-button toolbar or compulsory configuration step.
+
+Six launch course families:
+- Coastal: Car / Boat / Helicopter.
+- Rough: Dirt bike / Boat / Helicopter.
+- Rail: Train / Boat / Helicopter.
+- Snow: Snowmobile / Boat / Helicopter.
+- Deep water: Car / Submarine / Helicopter.
+- Flight: Car / Boat / Plane.
+Use one family per ordinary race. This gives all eight vehicles real course roles. Future combined specialty sets require complete legal connections/teaching/tests; this does not remove any named vehicle from the included roster.
+
+Exact base speed proposal (units/active second; 0 = incompatible, not death):
+Support             Car   Bike   Snowmobile   Train   Boat   Submarine   Helicopter   Plane
+Land                 12    10        4          0      4        0            8          0
+Surface water         4     2        0          0     12        6            8          0
+Air transfer          0     0        0          0      0        0           12          0
+Snow                  4     4       12          0      0        0            8          0
+Underwater            0     0        0          0      0       12            0          0
+Rail                  4     4        0         18      0        0            8          0
+Flight corridor       0     0        0          0      0        0           10         18
+
+Only supports allowed by the equipped family may occur. Snow requires Snow; Underwater requires Deep water; Rail requires Rail; Flight corridor requires Flight. Existing Air transfers require a Helicopter-equipped set and never occur in Flight. A course cannot demand an unprovided vehicle. Land/surface-water wrong-form recovery occurs only where this table gives positive speed and a comprehensible functional connection. Helicopter's positive supported-terrain speeds represent flight above it. Apply section-2.4 modifiers after this table.
+
+At an incompatible entry, wait safely at the boundary while the race continues. A selection must have positive speed on the current support or the awaited entry support when stopped. Otherwise reject it with feedback, retain the current vehicle and queue no later surprise. Airborne Ground/Water commands retain Helicopter/Plane; submerged Ground/Air commands retain Submarine. At a supported exit, compatible changes are valid again. No floating cars, drowning, irreversible fall, repair charge or permanent stuck state. Every route must have an equipped legal continuation through its finish.
+
+Train's role is fast connected Rail, with clearly cued junction routes and supported signal stops. Rail paths are continuous, branch and merge legally; no off-track drifting, derailment, manual steering or braking button. A signal uses the same section-2.4 gate cycle/maximum wait for every entrant; no hidden train-specific random delay. At a Rail end incompatible with Train, stop at the safe interchange until the player switches. Rail/Water or Rail/Air branches can trade length and signal timing. Do not call an always-worse route a meaningful choice. Cue a junction and needed change separately by >=800 ms at maximum legal speed.
+
+Plane's role is a long straight Flight corridor between declared runway entry/exit boundaries on Land. Minimum corridor length 72 units. It takes off through the normal Air-slot command at a legal entry; automatic course-following handles the corridor. No extra pitch, lift, fuel or steering control. At corridor exit, land safely at its boundary; if the next support is incompatible, wait there for Ground/Water selection. Plane cannot hover over short helicopter transfers or fly under water. Flight-family courses use Land/Surface water/Flight corridor, with no helicopter-only gaps, Snow, Rail or Underwater. Wind later changes corridor speed under section 2.4. Plane therefore enables different course geometry, speed/read-ahead and landing rhythm from Helicopter, with no new in-race control.
+
+Dirt bike is faster on rough Land, Snowmobile crosses Snow and Submarine crosses Underwater; Train and Plane add the actual rules above. The registry remains extensible beyond eight; adding more requires a useful decision/terrain distinction and the same acceptance coverage. A name/asset swap alone does not count as mechanical diversity.
+
+A valid different-slot action applies next 20 ms tick with no cooldown/resource/speed tax. Same-slot taps do nothing. Latest valid action in one tick wins. Presentation reflects committed domain state promptly; no animation lock delays it. Host interruption cancels pending gestures, not committed actions. Keyboard 1/2/3 always means Ground/Water/Air and identifies the actual equipped vehicle.
+
+2.3 One light mastery signal, no extra power system
+
+Count clean transitions for feedback and replay goals. A supported terrain change is clean when the useful form is already active on entry, or a valid matching-form action occurs within 250 ms of first arrival and no longer obstruction occurred. An air launch uses first arrival at the launch boundary, not a later departure time after waiting. Each boundary awards at most one clean credit. Repeated taps cannot farm credits. A fork result is recorded separately; it is not a required perfect-tap test.
+
+Display the per-run count and eligible total at the settled result. No speed boost, escalating multiplier, energy bar or progression lock is attached. Normal records improve through real route/switch choices. This supplies visible competence without adding an untested bonus economy. First two tutorial races emphasize understandable outcomes; the clean-change detail is optional to inspect, not an opening explanation wall.
+
+2.4 Modifiers and route choices
+
+Introduce each separately, and use at most one modifier at a location:
+- Rough land, only on Land: Car multiplier 0.60, Dirt bike multiplier 1.20, Snowmobile multiplier 0.60; other forms unchanged. Teach that a flight-capable alternative can sometimes be faster locally.
+- Water current: equipped Boat/Submarine multiplier 0.75 against / 1.25 with, only on Surface water/Underwater as legal; others unchanged. Underwater currents are introduced after the Submarine itself.
+- Wind: equipped Helicopter/Plane multiplier 0.65 against / 1.20 with on their legal supports; others unchanged. Favorable Plane speed can reach 21.6 units/second, which must be included in all cue/input-distance validation.
+- Gate/signal: on supported Land/Surface water/Rail only; 4,000 ms cycle, open 2,500 and closed 1,500, authored phase in 20 ms steps. Stop safely at its edge when closed. No crushing/pushing. Bypass routes are optional.
+
+Order: support legality -> base speed -> fixed difficulty factor -> modifier -> gate -> boundary/finish. Spend remaining tick time under the next interval's rule, never tunnel through a closed gate. No entrant collisions, hidden boosts or random damage. Authored cue lookahead >=2,500 ms at the fastest reachable relevant speed, including favorable modifiers.
+
+Forks offer two known destinations and a clearly indicated safe default. Swipe >=24 CSS px horizontally with horizontal displacement >=1.5 x vertical, or tap equivalent left/right choices. Last valid choice before lock wins; one gesture gives at most one choice. After lock, no backtracking. Both branches are passable. A poorer choice can lose time but cannot erase the run or require an ad.
+
+Separate a fork decision and a required transform by >=800 ms travel at the maximum reachable speed; include wind/current effects when validating. At most one fork active. No exact timing is required to select the safe default. A route's relative cost comes from actual path, form and gate arrival phase. Do not label an always-slower branch a useful shortcut. Across authored route-choice pairs, either side must be the better option somewhere; demonstrate legal examples, not random route swapping after selection.
+
+2.5 Rivals: real pressure without cheating
+
+Exactly two local AI rivals. Explicitly describe them as computer opponents where identity matters. They use the same traversal/safety/gate rules and cannot teleport, inspect future inputs, arbitrarily stop to gift a win or change strength after an ad. Seed their decisions and save all relevant state. Profiles are fixed at race creation, never position-dependent.
+
+Two named difficulties between races, using the same three in-race family-slot controls:
+- Standard, default: tutorial foundation stages 1–3 factors A=0.78/B=0.86; foundation stages 4–6 A=0.86/B=0.92; later A=0.94/B=0.98. Terrain reactions A=220 ms/B=160 ms, with the explicit skill differences below.
+- Expert, available after journey stage 6 completes: A=0.98/B=1.00. Reactions A=140 ms/B=100 ms. Expert records/medals are separate; it never becomes mandatory for Journey access, normal content or ad avoidance.
+
+Seeded personality: A uses a 100 ms shorter reaction on Land/Snow/Rail but 100 ms longer on Surface water/Underwater; B does the reverse. Both retain their listed Air reaction for Air transfer/Flight corridor. Minimum reaction 20 ms. AI chooses the best equipped legal form using the same speed/modifier table, including specialized supports. At a fork, A estimates gate wait correctly but chooses the default on one preselected fork in every three fork-bearing races; B chooses the lowest current cost but makes one preselected extra 200 ms reaction delay at a terrain change per ordinary race. Preselection derives solely from course/run seed, not player position. Tutorials can omit these mistakes when no relevant decision exists. Expert A never takes a deliberately suboptimal fork; Expert B's extra delay is 100 ms. These modest fixed differences are proposals, not a validated optimal AI.
+
+All entrants use the same equipped loadout and support rules. Every authored/generated course/profile and every checkpoint offered for rematch must have a legal first-place solution for a competent controller. Where that is impossible, reject/rebalance the course before offering it. Poor routes need not win, but every reachable route must be completable. A stronger course cannot simply require an upgrade. A perfect run can earn a large lead; never hide it with rubber-banding. Tune fixed profiles/course costs using novice/experienced traces, then freeze them per version.
+
+3. FINISH, MEDALS, RESTART, REMATCH AND CONTINUATION [P]
+
+Each run has a unique monotonic serial, mode, difficulty, course configuration/content version and seed. Replay creates a new run on the same configuration. Checkpoint rematch is an assisted continuation of the original run, not a new progression event.
+
+Let the player finish even if both AI have already crossed. Their rank is settled, not a reason to terminate the player's payoff. Every genuine finish awards Gold=1st, Silver=2nd or Bronze=3rd. A finish of the current uncleared Journey stage commits its clear and advances the next-stage index exactly once. Finishing a historical Replay or assisted rematch cannot advance that index again. Gold is mastery, not a gate to ordinary new content. No purchased advantage, life limit, mandatory ad or currency is required. This is a proposed revision from V1's top-two-only unlock and early defeat.
+
+A genuine finish requires crossing the authored/generated finish after actually starting and executing at least one valid different-slot action. A no-input traversal cannot silently award journey progression. Keep its result explanatory and Restart free. A meaningful finished round for proposed D ad pacing additionally requires >=15,000 simulation active ms. An unfinished Restart/abandon never counts. Best times require an unassisted genuine finish; rank and time are independent records.
+
+Results remain until Next/Replay/Select/rematch. Show achieved rank, record improvement if any, clean changes, and the next ordinary course identity. Next is usable as soon as the settled outcome is present; no mandatory result dwell, spin wheel or extra collect screen. Next always advances the ordinary journey after a new clear; after a historical Replay it returns to the preserved journey frontier. Explicit Replay retains the exact course graph, loadout, generator/content version and seed so learning a correction is possible.
+
+Restart is free through the race menu. Confirm only if discarding current-run work; preserve earned medals/records. It creates a new serial on the same configuration/seed, cannot reset pacing, does not reshuffle the future queue, and triggers no ad. Course selection preserves the existing run until the player explicitly starts a different one. Return to an acknowledged in-progress save offers Resume/Restart/Select while entrants stay still.
+
+One or two checkpoints per course: author the first at a supported merged boundary between 25–40% of optimal course time; the second, if used, between 60–75%. Minimum 10 active seconds apart; do not create a checkpoint inside a fork/air transfer/flight corridor/underwater/gate block. Short tutorial courses may have only one or none and must declare it. Snapshot all entrants, reactions, gate phase, choices and run stopwatch at the same simulation tick, without recursively copying older checkpoints.
+
+Optional rematch in proposal D: at a Silver/Bronze result, replay the final portion from the latest earned checkpoint with the entire race rewound consistently. The original medal/unlock is already earned and preserved. If the rematch is better, upgrade the medal, but record its time only in the assisted field. Never overwrite the original unassisted record or duplicate a unique-course completion. If it is worse, preserve the better original medal. AI remains unchanged; no opponent-freeze reward or paid guaranteed Gold. Free full Replay and ordinary Next stay available. Section 7 supplies exact ad/reward terms, including the separate optional next-set reward.
+
+An assisted rematch finish does not add a second meaningful-round/ad-completion credit for the same run serial. Its newly played simulation time can advance the non-rewinding active-time cooldown, while every finish/unique-clear grant remains idempotent. Persist the original full-finish commitment when rewinding.
+
+Finishing stage 36 settles its normal result and may say “Foundations complete”; Next continues directly to generated stage 37. There is no terminal campaign-complete screen, final numbered stage, finite recipe-unlock wall or required mode change. The ordinary numbered journey continues across launches. Generated stages are openly described as generated courses, not individually hand-authored new levels. Replay and exact Resume remain available. Bounded records and machine-counter safeguards must never end ordinary play.
+
+4. CONTENT: AUTHORED FOUNDATIONS AND ENDLESS JOURNEY [U/P/H]
+
+U: ordinary course progression must be endless. There is no designed last level. The first 36 stages are a proposed authored teaching/quality foundation, not the game's content limit. Stage 37 onward is generated automatically within the same Next flow. Remove V2's fixed 6x6x6 product, 216-candidate limit, 72-recipe endpoint and separate Race Mix mode. A seed space is finite in a machine; do not promise mathematically infinite unique layouts. “Endless” means ongoing generated races and continuation without a designed content endpoint, not guaranteed novelty forever.
+
+4.1 Foundation and transport teaching
+
+Opening targets (unmeasured):
+01 Land–Surface water–Land, 240 units, two consequential changes, no fork/modifier; matching traversal about 20 seconds. First water begins at 40–48 units for a useful switch within four base-speed active seconds.
+02 Land–Air–Land–Surface water, 300 units, launch/landing safety; no fork/modifier.
+03 Surface water–Land–Air–Land, 300 units, consolidation; no modifier.
+04 One clearly separated water/road route choice.
+05 One air/supported-route choice.
+06 Short synthesis; Expert becomes optional after completion.
+
+Later foundation teaching proposals:
+07 Dirt bike introduction on rough Land, with its new Ground slot explained before Play and a consequential rough section within five active seconds. No new fork or second modifier in this introduction. Stages 08–12 alternate Coastal/Rough, two-form and three-form races and different route decisions.
+13 Train and Rail introduced alone, with a consequential Ground-slot choice and connected rail route. Stage 14 consolidates Rail. Stage 15 introduces one signal/gate using an already taught set; 16–18 expand taught gates/routes, never more than two per race.
+19 Snowmobile and Snow introduced alone with the stable Ground slot. Stage 20 consolidates Snow. Stage 21 introduces Surface-water current using an already taught set; 22–24 mix taught sets and rules across distinct courses.
+25 Submarine and Underwater introduced alone; surface entry/exit and invalid interior transforms must be clear. Stage 26 consolidates it. Stage 27 may introduce Underwater current as a distinct contextual cue; 28–30 alternate previously taught transport families and routes.
+31 Plane and runway/corridor entry/exit introduced alone; 32 consolidates Flight. Stage 33 introduces wind using a taught aircraft with a contextual cue; 34 consolidates wind with the other aircraft. Stages 35–36 synthesize taught rules at the normal complexity ceiling, including one no-modifier and one no-fork course. Stage 36 is a foundation milestone, not a last level.
+
+Once taught, every transport family remains available through ordinary journey scheduling without ads or currency. A scheduled course states the exact set before Play. No rule appears before its teaching stage. Specialization access is not permission to replace every later race with the newest set.
+
+4.2 Procedural course grammar and exact limits
+
+Each graph has a supported start, 4–10 ordered legs on each reachable start-to-finish path, a declared equipped loadout, zero to two separated two-way forks and zero to two supported gates; each fork merges before the next fork/checkpoint. The default route must contain >=2 consequential different-slot decisions, and every reachable route must permit a genuine action-taking finish; reject an all-one-form auto-finish layout. Use 0/1/2 forks with a proposed bag of 3/5/2 occurrences per ten generated stages, seeded and saved. Ordinary default path 360–600 units; target competent completion 30–60 active seconds including ordinary waits. Do not stretch racing to manufacture an ad gate. Foundation exceptions above are explicit. Snow, Underwater, Rail and Flight corridor intervals require the corresponding equipped set. A finish is supported, never inside an Air/Flight-corridor/Underwater transfer.
+
+Generate a graph first, then realize terrain order, branch structure, lengths in 6-unit steps, gates/phases in 20 ms steps, legal modifiers, checkpoint boundaries and fixed AI seed. Parameters must create differences in useful switch rhythm, route cost, gate arrival or transport affordance. A new seed, changed color/name, small length jitter or reordered IDs alone is not a new meaningful structure. No 6-opening/6-middle/6-finale selection is the complete generator.
+
+Non-neutral intervals normally >=24 units. Later rhythm intervals may be 18 only after stage 12, while still passing maximum-speed lookahead >=2500 ms and required fork/transform separation >=800 ms. At most one modifier per location. Gate wait never exceeds 1500 ms. Underwater must enter/exit through surface water with a usable cue and no conflicting fork/transform demand. Connectors declare their actual support and continuous legality; no unspecified fourth-terrain bridge. An AI and legal player controller must be able to finish every route; each offered course/profile and reward checkpoint must have a lawful Gold solution.
+
+Randomness is local, deterministic and versioned. Input = generatorVersion, contentVersion, persistent world seed, stage index and candidate-attempt index. No network generation, downloaded courses, clock-dependent result or player-position/ad-dependent AI. Freeze exact generated graphs/loadouts/seeds for the current and next three stages. Reload, menu visits, ordinary ad outcomes and Replay do not reroll them. The sole explicit exception is consumption of an earned next-set choice under section 7.4, which replaces one unstarted generated course with the declared chosen-family graph; no hidden layout/difficulty improvement is attached. Restart is an exact retry. New generated configurations are reserved before their stage starts, not changed mid-race.
+
+4.3 Repetition, pacing and difficulty
+
+After the foundation, use a shuffled bag of all six taught transport families per six-stage block, with no immediate repeat at block boundaries when alternatives exist. Save bag/cursor. Vary 4–10-leg rhythms, two-form/three-form use, branch topology, modifier placement and consequential route trade-offs. Reject structural signatures in the last 12 stages when compatible alternatives exist; also reject a normalized layout identical to any of the last 64. Signatures include equipped set, support/decision sequence and meaningful route-cost pattern; phase/color/seed changes cannot evade the structure guard. No-fork races remain an intentional breather. Do not require all terrain types or all vehicles in every race.
+
+Long-run variety has an explicit ceiling in difficulty: after stage 36, do not keep increasing AI speed, shortening cues or piling on more forks/vehicles. Rotate taught challenge families within the same safe bounds. Standard retains its fixed post-foundation AI profile; Expert remains optional. Alternate more demanding configurations with simpler ones through the fork bag and fixed complexity bounds. A very late level must remain physically playable with one finger and ordinary free vehicles.
+
+4.4 Prebuilt bank and bounded selection [U/P; revision 5.0]
+
+Use prevalidated bank recipes for ordinary play, following the user's preference to code logical levels beforehand. Offline authoring enumerates exactly 5,580 restricted support sequences and tries at most 16 deterministic geometries per sequence. It admits 3,989 ordinary courses and rejects 1,591 sequences under the implemented gates. This is an engineering count within the declared 4–10-leg/family grammar, not the mathematical maximum of all possible racing games.
+
+The primary endless flow selects existing validated data; it does not invent new courses on the player's device. Keep next-three immutable recipes, seeded six-family bags, proposed 3/5/2 zero/one/two-fork counts per ten stages, recent 12 structural and recent 64 normalized-layout guards. Save all cursors/bags. Use feasibility lookahead to keep the family and fork bags compatible before consuming an entry. A naïve independent greedy implementation failed at stage 163 and was replaced. The final saved 10000-stage trace maintains both bag distributions, no guard violation and ordinary free continuation. Queue selection is bounded by the finite bank. A corrupted/unavailable production bank must enter explicit safe recovery, never accept an unvalidated course or erase progress.
+
+Measured bank diversity: Coastal 986, Rough 984, Rail 932, Snow 986, Deep 50, Flight 51. Selection deliberately balances families, not recipe counts. Deep/Flight have fewer decision patterns under their stricter legal connections; the engine must not pretend their seed/length variants are unlimited novelty.
+
+The 36 teaching stages include 21 exact layouts already in the bank. Across all teaching and bank data, there are 4004 geometric layouts but only 4001 distinct decision structures after excluding distance, gate-phase, modifier-sign, ID, seed and color variants. Only 12 teaching structures are additional to the 3989 ordinary structures; the remaining teaching differences do not inflate that count. The product headline is 3989 ordinary courses, or 4001 distinct structures including teaching, with the counting definition stated. Neither number certifies enjoyment.
+
+Executed automated selection gates:10000 deterministic bank-selection seeds per family across both difficulties,120000 profile cases,300000 entrant simulations and 113059 independently solved selected branch paths; zero seed failures. Saved 10000-stage progression reaches frontier 10001 with 102 reloads and 64-record eviction. The first 100 ordinary stages contain 99 distinct layouts/structures and all six families. Bank selection is the intended primary system, so the former <=5% procedural-fallback target is inapplicable; no runtime-generated candidates or unsafe fallbacks are used. The trace is evidence for those tested selections, not a proof of every possible future state or infinite unique content.
+
+An optional future offline content expansion must preserve legality, Gold solutions, cues, checkpoint rules, all-route completion and the conservative novelty count. Runtime generation is not needed for this product candidate. Human variety/enjoyment and native/host recovery gates remain required before release.
+
+5. PROGRESSION, OWNERSHIP AND RETURN REASONS [U/P]
+
+Start with Car/Boat/Helicopter. Free teaching unlocks Dirt bike at 7, Train at 13, Snowmobile at 19, Submarine at 25 and Plane at 31; these proposed roster/timing choices are adjustable after usability tests. A required new vehicle is available before the first course that needs it. No vehicle unlock requires a video, purchase, grind currency or random chest. The player can always continue ordinary racing without an ad being available. All eight named transports are included; additional types can extend the registry after their rules and quality gates are settled; no fixed total roster is implied.
+
+One main Journey, Standard by default, optional Expert after stage 6. Any genuine finish of the currently uncleared frontier stage advances it once regardless of medal/difficulty. Historical Replay, re-finishing a cleared stage, a rematch and duplicate callbacks cannot advance it again. Preserve stage index, reached teaching flags and transport access permanently. Stage 36 is a learning milestone; generated stage 37 and later are normal Next, with no terminal unlock wall.
+
+Keep the 36 foundation records plus at most 64 recent generated replay descriptors/records with deterministic least-recently-used eviction. A compact replay descriptor contains stage index, world seed, candidate/fallback ID, family, generator/content version, origin=ordinary/chosen-set, any bound choice seed, and normalized graph hash. Regenerate historical graphs with the supported pinned generator, then verify the hash before Replay; never silently substitute a different layout. Retain Standard/Expert medals, assisted/unassisted best times and optional bounded clean/branch details per retained configuration. Eviction may remove an old generated replay/time record, never journey progress, transport access, the live race/next-three queue or an earned claim. State the recent-history limit where it matters. Endless play uses bounded storage; it does not append one full course graph/save row per level forever. Keep old generator support for retained acknowledged descriptors or explicitly migrate/protect them under section 9.
+
+Return resumes the exact acknowledged run or the preserved next frontier course. Replay uses the exact original graph/loadout/seed, not a newly rolled same-number course. Opening an old record does not replace a newer in-progress race without an explicit Start. No shop, idle factory, life cap, streak obligation, timed unlock or daily-new-content claim. Retention hypotheses are next-stage curiosity, different transport experiences, route mastery, honest competition and improved records; they must earn voluntary replay in tests.
+
+Two optional reward types are proposed in section 7: one checkpoint rematch, and one chosen next transport set for a generated race. They share a single offer/claim/request policy and do not stack on one transition. Essential transports, normal progression, ordinary Next and full Replay stay free. Transport teaching milestones create no separate interstitial trigger. A Gold result may show the next-set offer only when eligible; it never launches an ad without explicit selection.
+
+6. FUNCTIONAL STATES AND SINGLE-FINGER INPUT [U/P/S]
+
+Host pause overlays every base state and can only be released by the host. Base states:
+
+State               Inputs and exit                              Durable effect                          Eligible ads
+BOOT                To READY or RECOVERY                         Shared protected load                    None
+READY               Play/Resume/Select                           Run/config/queue reserved                None
+RACING              Form tap; occasional fork choice; race menu  Tick/checkpoint snapshots                 None
+MENU                Resume/Restart/Select                        Preserve committed run                    None
+RESULT              Next/Replay/Select; one eligible reward offer Once-only finish/medal/record/pacing     Next/Replay interstitial or chosen reward
+AD_PREP             One selected operation, safe early cancel    Acknowledged reservation + snapshot      Selected request only
+AD_PENDING          No second request                            Process outcome only when host permits   None
+AD_RECOVERY         Keep playing after unresolved wait           Preserve original claim/checkpoint       None until settled
+RECOVERY            Retry or clearly unsaved isolated practice   Protect source and latest dirty state    None
+
+RESULT distinguishes rank, meaningful-round eligibility and assistance. An aborted or untouched non-qualifying result cannot request an interstitial. Difficulty and historical Replay selection happen between races, with an existing run preserved until a replacement is explicitly started. Default Play uses Standard and the next Journey stage; there is no mandatory mode selector or Campaign-complete state.
+
+All actions dispatch domain commands; no rendering callback or button bypasses the save/ad/lifecycle coordinator. One active pointer owns a gesture. A vehicle tap commits on release inside its target with <=12 CSS px movement. Extra fingers are ignored until release/cancel. Dedicated fork swipes cannot also trigger a form button. All fork decisions have equivalent tap choices; no compulsory swipe, hold or precise steering is introduced. Quick ordinary tap controls should require no two-finger reach.
+
+Lost capture, pause, resize, navigation or recovery cancels only uncommitted gestures and key-repeat intent. Already committed form/branch/state remains. Repeated result taps generate one next-run/ad transaction. Mouse has equivalent clicks/drags; keyboard proposal remains 1/2/3 for Ground/Water/Air slots, arrows for fork, Tab focus, Enter/Space actions, Escape closes an open race menu without preventing host default. Do not claim a keyboard tag until actual actions are tested.
+
+Responsive usability: functional targets normally >=44x44 CSS px, clearly named/selected, within safe insets and separate from host controls. Extreme ratios may use a compact functional arrangement, never remove a required action. Layout changes preserve domain progress and cancel stale gestures. No orientation lock. A zero viewport waits for usable geometry without division errors or false gameReady. Feedback/cues must be understandable muted and without color as the only discriminator; no art direction is specified.
+
+7. REVENUE CONTRACT AND EXPLICIT CHANGE PROPOSAL [P/H/Y]
+
+7.1 Placement and recommended starting schedule
+
+Use only YouTube-provided ads; no banners/off-platform ads/IAP. YouTube handles pre-roll automatically during initial loading; make no manual pre-roll request. Official Y4/Y11 allow interstitials at natural breaks and explicitly requested rewarded experiences; the checked pages prescribe no universally optimal two-race/120-second cadence. Those numbers are our untested starting proposal. Actual access/fill/receipts depend on host/publisher arrangements, not an API call.
+
+Recommended D [P, not implemented]:
+- Pre-roll: host-controlled, automatic where eligible. No added game-controlled startup ad.
+- Interstitial: after the result payoff, only on explicit ordinary Next/Replay. First: >=2 meaningful full finishes AND >=120000 simulation active ms from first racing action. If an in-game full-screen reservation already happened, also require >=120000 active ms since it. Later: >=2 fresh meaningful finishes AND >=120000 active ms since any last in-game full-screen reservation. All conditions must hold.
+- Checkpoint reward: one optional ad for one precise checkpoint rematch after eligible Silver/Bronze; original result/progress kept.
+- Next-set reward: after foundations, one optional ad to choose the equipped transport family for one upcoming generated journey race; ordinary scheduled Next remains free. Suitable for eligible Gold results and others without an eligible rematch.
+
+Keep results immediately usable. No request during racing/transformation/landing, on result arrival, at transport teaching/unlock, from menu/selection/resume/Restart, for an untouched/abandoned attempt, or because a reward was declined. No spin wheel/forced dwell. Never elongate a race to reach the timer. With consistently 30/45/60-second meaningful races and no other ads, first D eligibility arrives after 4/3/2 races respectively; later opportunities follow the same active-time/finish conditions. These are arithmetic opportunities, not served-ad or revenue forecasts. Pre-roll/ad viewing/menu/host pause do not accrue active-racing time.
+
+Change register: old A was top-two-only 4/120 then 2/120 with failed-run recovery. Provisional B broadened full-finish credit to every rank, kept 4/120 then 2/120 and added the Silver/Bronze rematch. D retains B's genuine-finish definition and later cadence; changes ONLY the first finish threshold 4->2, and adds the distinct next-set reward. Earlier rewards/requests still delay the next interstitial by the same 120-active-second guard. Compare components separately before claiming causal or empirical optimality. User authorized all eight transports and asked for the optimal placement plan, not a silent live ad-rule change.
+
+7.2 Counters, cooldown and request ownership
+
+A meaningful finish is a genuine full finish with >=15000 simulation active ms and a valid different-slot action; one credit per original run serial. Replay can earn one fresh round credit, but no extra frontier clear. Rematch cannot earn a second round credit; its new racing time can advance cooldown. Histories, menu/resume/reload, generator fallback and checkpoint rewind never reset pacing.
+
+Persist adConfigId=vehicle-shift-ad-D-v1; firstInterstitialAttempted; firstMeaningfulFinishes capped2; initialActiveMs capped120000; finishesSinceAnyAd capped2; activeSinceAnyAdMs capped120000; hadAnyAdReservation; consumed transition ID; and one outstanding reservation/outcome/typed reward claim. First-entry totals remain through rewards. Every full-screen reservation resets later counters/anchor even on no fill/cancellation/error. An unknown outcome on reload is spent for pacing and earns nothing; never auto-replay it. One in-flight lock covers both reward types and interstitials.
+
+Prepare an acknowledged reservation containing all material progress before SDK invocation. The race is frozen while preparing, so the active-time anchor equals invocation. Failed/pending pre-ad save makes no SDK call. Duplicate taps consume one transition. A full-screen reward invocation consumes that result's ad transition and suppresses its interstitial, including false/error outcomes; no immediate replacement ad after an unavailable/failed reward. Explicitly declining an opened reward offer suppresses ads on that result transition without resetting the active clock/finish counters; it invokes nothing. Merely rendering an optional offer does not consume eligibility or suppress the ordinary direct Next interstitial. Persist the declined/consumed transition ID so reload cannot change that choice. Subsequent genuine races return to the ordinary schedule.
+
+7.3 Checkpoint-rematch reward
+
+Stable reward ID vehicle-shift-checkpoint-rematch-v1, with an internal token bound to its original run. Offer: “Watch 1 ad to replay from your last checkpoint and try for a better medal. Your result is kept. Full replay is free.”
+
+Eligible: meaningful Silver/Bronze finish with >=20000 simulation active ms; latest supported checkpoint has >=10 seconds of remaining optimal play and a legal Gold solution; no request/rematch already used for that run; no pending/unused typed reward claim; and >=120000 active ms since any previous in-game full-screen reservation, or none yet. One SDK attempt for that offer/run even on no fill/error. Hide ineligible offers; never add a wait timer to make an offer eligible.
+
+Quantity: one rematch from the exact latest checkpoint. Restore all entrants, form/loadout, reactions, choices, gate/signal phase and race stopwatch at the same tick. Do not rewind global ad active time, original finish/ad credit or earned progress. Original medal/frontier clear is kept; a better medal may replace it. Rematch time is assisted only. No winner freeze, guaranteed Gold, permanent stat, second video, partial credit or calendar expiry. The assisted continuation cannot offer another rematch.
+
+7.4 Next-transport-set reward
+
+Stable reward ID vehicle-shift-next-transport-set-v1. Offer: “Watch 1 ad to choose the vehicles for your next generated race.” Show the exact three vehicles in the selected set before confirmation. Explain that it applies to one race and all vehicles unlock through ordinary free play. No permanent vehicle unlock, extra vehicle slot, speed advantage, level skip or guaranteed win is promised.
+
+Eligible: meaningful settled result with >=20000 simulation active ms; the journey frontier is >=37; >=2 taught transport families are available; no eligible checkpoint offer is being shown (checkpoint takes precedence for Silver/Bronze); no reward attempt consumed this result; no pending/unused typed claim; and the shared >=120000 active-ms cooldown since any previous full-screen reservation, or none yet. Gold and other results with no eligible rematch may receive it. Exclude the already scheduled next family; at least one genuine alternative is needed. One optional offer and at most one SDK attempt per result. The between-race selection is one-finger operable and can close freely without an ad. It is never a new eight-button in-race toolbar.
+
+Before requesting, select one taught family and reserve a legal validated alternative graph for the then-next generated frontier; preserve the original queue until earning/consumption. The same length/complexity/AI/Gold/input/repetition limits apply. Do not show several rolled layouts or let repeated selection/reload reroll a seed for an easier record. This is a chosen transport experience, not hidden course or opponent shopping.
+
+Quantity: one persistent non-expiring credit for that chosen family on the next unstarted generated Journey stage. On verified earning, save a typed claim before consumption. Consuming it atomically replaces only the next frontier graph/loadout with the reserved validated choice and marks the credit used; retain the following queue, all progression, records, teaching and global ad counters. The normal family bag step is consumed once; mark the intentional player override as exempt from automatic family-frequency counts. The selected layout becomes that stage's immutable graph for free Restart, Resume and ordinary Replay. The one-race reward selects the stage once; normal replay of the resulting saved course remains free. It neither permanently fixes future transport sets nor charges again to resume an unfinished selected race.
+
+If the player continued while SDK settlement was unresolved, late earning is never applied to a started race. Keep one chosen-family credit and use it at the next natural result before the next unstarted generated stage; validate/reserve there from the bound credit seed, then acknowledge before replacing the queue. Do not overwrite a newer run or claim the exact original upcoming graph was preserved when its stage has already been played. Failed/cancelled/unearned outcome leaves the ordinary queue unchanged. An earned claim may be retained or explicitly discarded with confirmation. No second reward is offered until it is consumed/discarded.
+
+7.5 Verification, late settlement and host recovery
+
+For either reward, grant only when the genuine SDK Promise resolves boolean true with a live matching request token/epoch. False/undefined/rejection/pending intent grants nothing. Duplicate settlement grants once. First persist the earned typed claim and await acknowledgement, then consume it atomically. Merely viewing/selecting an offer earns/consumes nothing. Next/full Replay remain free. A successful or failed reward invocation suppresses an interstitial on the same transition.
+
+Deep-copy and acknowledge the complete progress/reservation snapshot before ads; serialize writes. Pending/failed save is not “Saved.” On a settlement during host pause, retain the outcome and process it only when the host permits. Ad completion clears its own wait, never host/menu/recovery pause. Game/audio/timers/normal network stay host-controlled.
+
+After 10000 ms of unpaused unresolved ad wait, Keep playing may start the free ordinary next/replay run while preserving the one pending request/original snapshot. Block all other ads until settlement. Late true creates only its bound typed claim and is presented at a natural break; never forcibly rewind a newer run. Late non-earned settlement frees the lock. Unused earned claim blocks additional offers. Keep at most one typed claim/snapshot/descriptor; no unbounded ad log.
+
+If earned persistence fails, retain the claim in memory with truthful unsaved state and retry on allowed events; it may be used locally but only acknowledged state survives termination. Host supplies no durable game-readable receipt: a crash between earning and receiving/acknowledging can lose the reward. Do not grant from intent or promise crash-proof exactly-once delivery. Free ordinary racing stays available on every no-fill/error path.
+
+7.6 Placement experiments and revenue judgment
+
+D is the recommended starting hypothesis, not a proven maximum. Earlier first eligibility can recover opportunities from 45–60-second races, while the 120-active-second gate limits interruption. Next-set choice gives longer-term players who already win an optional experience worth requesting. Actual take-up, served impressions, post-ad continuation and net receipts must decide whether either helps. Do not assume rewarded eCPM or fill is higher in every region.
+
+Preserve B as control when possible. Test D1 only: first count 4/120 ->2/120, with later 2/120 and rewards held fixed. Separately test D2: add the next-set offer with existing pacing/checkpoint rules fixed. Do not change AI, course difficulty, traffic and both ad factors together and attribute results to one slot. A later 3/150 interstitial alternative may be tested separately if continuation suffers. No variant self-activates.
+
+Use section-13 permitted data/registered window, developer-net revenue per acquired player where possible, D1/round-two guardrails, uncertainty and rollback. Without permitted cohort/randomization data, call a phased comparison observational/inconclusive as appropriate. Never manufacture losses or withhold essential transport to sell rewards. This planning proposal requires selecting its concrete configuration before implementation; it does not silently change any existing game.
+
+8. SAVE INVENTORY, CHECKPOINTS AND ACKNOWLEDGEMENT [P/S]
+
+One hosted UTF-8 JSON envelope, namespace vehicle-shift-land-sea-air; envelopeVersion=1, domainVersion=1, contentVersion=1. Use a game-specific namespace and validators. Never import Barber session/wardrobe keys or saves.
+
+Durable inventory:
+- Monotonic save revision and nextRunSerial; integers with explicit bounds.
+- 36 bounded foundation records plus at most 64 compact recent generated replay descriptors/records, not 64 full graphs: Standard/Expert medals, assisted/unassisted times, clean-transition bests and optional bounded branch details. Stage/seed/candidate-or-fallback/family/version/hash reconstruct and verify the historical course; difficulty defines record compatibility.
+- Journey frontier/reached-stage counter, free transport access and contextual teaching flags. No terminal campaign flag; foundation-complete is only a milestone. Safe-integer overflow cannot wrap progress or end racing: saturate optional counters and continue fresh validated runs with a separate bounded epoch/seed; define/display that rollover honestly before reaching the limit.
+- Current run: serial, Journey/historical-Replay origin, original stage index, Standard/Expert difficulty, immutable course graph/hash/content ID, generator version, equipped loadout, seed, simulation tick, simulation-active ms, monotonic race-stopwatch ms, valid transforms and clean-boundary credits/denominator, first-arrival timestamps for current boundaries, vehicle, leg/branch/progress, locked/pending choices, full seeded AI state/reaction timers, finish rank/result/assistance flags, and committed full-finish/unique-completion/ad-credit flags. Restoring a checkpoint cannot clear original finish/ad-credit commitment.
+- Up to two authored supported/merged checkpoints per run at the section-3 bounds, each a deep immutable race snapshot without recursive checkpoint embedding.
+- One optional typed pending/earned reward claim: checkpoint-rematch with original checkpoint/result, OR chosen-next-set with family/credit seed/reserved frontier graph/consumption status. Both include a live request token and retained original progression; no unbounded request log or simultaneous claims.
+- Queue: next three immutable bank course IDs/content hashes/loadouts/versions; bank selection seed/cursors; family/fork bags and cursors; last 12 structural signatures and last 64 normalized graph hashes; bounded fallback-selection state. Transport/Expert teaching flags and frontier are independent of historical records. Selecting Replay cannot randomize the future queue. Full immutable graphs are stored only for the current run, next three stages and any separately pending original-run rematch claim or reserved next-set replacement; checkpoints reference their shared graph rather than recursively copying it. Historical records use compact replay descriptors. Apply section-5 64-record eviction with clear record-history notices and verify the complete worst-case UTF-8 save against section 14.
+- Ad pacing and last transition/reservation outcomes from section 7.
+- Last acknowledged score value, if reporting is enabled.
+
+Do not persist audio host state, browser locale, wall-clock elapsed-race calculations, runtime object references, external identifiers, credentials, frame/image caches or personal data. All lists have fixed maxima; token/ID strings <=96 ASCII characters; branches <=2 choices per course; all numeric values finite and validated against course/run bounds. Count/serial values must be safe integers. Stop incrementing at a documented maximum rather than overflow; reject hostile values rather than allocating from them.
+
+Snapshot locally every 1,000 active ms. Coalesce normal cloud flushes to at most one write per 5,000 active ms unless a milestone requires earlier flush. Flush on checkpoint, legitimate result, newly selected run, earned/consumed reward, and allowed host final-save opportunity. Snapshot before pause; final-save is best effort. Keep local snapshots separate from acknowledged durable state. Do not display “Saved” until the corresponding revision is acknowledged.
+
+Save coordinator serializes merged writes. If revision r is pending and r+1 is created, acknowledgement of r cannot clear r+1's dirty flag. Deep-copy snapshots when enqueuing, not after delayed serialization. A failed write retains the latest merged state. On unpaused later milestones/explicit Retry, retry once through the same coordinator; no tight background retry loop. Pre-ad flush waits for the snapshot that includes its reservation and all prior material progress.
+
+Restore exact domain equality for acknowledged native-input state: entrant positions and form, tick/gate phase, chosen branch, checkpoints, records, queue, ad counters and reward ownership. Resuming never rolls pacing backward with a race checkpoint. In-memory progress since the last acknowledged write may be lost on abrupt termination; do not describe final-save as guaranteed.
+
+9. DATA PROTECTION, MIGRATIONS AND RECOVERY [P/S]
+
+Start with exactly one shared hosted load per bootstrap epoch, reused by every consumer. No write/delete before successful load. Recognized empty values: SDK empty string/undefined/null and decoded null or truly empty object/array. A nonempty malformed string, nonempty unknown object/array, future envelope/domain/content version or invalid field is protected, not normalized to a new game.
+
+Accept the official serialized string; tolerate a decoded recognized envelope in test/adapter compatibility paths using the same validation. Whitespace-only string is empty only after an explicit empty-string normalization; strings such as 'broken' are not empty. Limit raw input to 65,535 UTF-8 bytes for this game's supported envelope before expensive validation; larger nonempty data is protected for recovery, never overwritten. Use bounded JSON depth <=12 and no compressed/packed save codec in version 1.
+
+Schema v1 is the first shipped schema; there is no fabricated v0 migration. Future releases must retain fixtures and migrations for every actually shipped supported version. Migration is copy/validate/commit, preserving the old source until a valid new envelope is acknowledged. Never downgrade a future save. Do not discard unknown nonempty fields by accidentally re-creating an older envelope.
+
+Load/API failure or protected data: show Retry. Optional “Practice without saving” uses an isolated volatile state, visibly discloses that it will not save, disables ads/rewards/reporting, and never writes over the unresolved hosted account. Retry must read the actual source again; leaving practice cannot merge its progress into unread data. No silent localStorage fallback in hosted mode.
+
+If later content removes a course, preserve its historical clear/medal data under the known migration and return an in-progress removed course to the selector with an explanation; never overwrite its run with another course while pretending it resumed. A change that alters a course's timing rules increments contentVersion and keeps old bests distinguishable; do not compare incompatible times as one record.
+
+The current game has no own multi-device conflict service. Guarantee serialized same-runtime writes, not conflict-free simultaneous play across two devices. Before claiming cross-device conflict resolution, verify what the host provides; last-write host behavior is not an additive-merge guarantee. No prohibited multi-tab pause ownership is introduced to address this limit.
+
+10. STARTUP, DIRECT SDK, READINESS AND RETRY [S/Y/P]
+
+Route: direct official YouTube SDK through the selected MediaCube publishing route. Separate any future Playgama/Android wrappers. Readiness and protected-save practices are inherited from the pinned Haircut reference in section 15; its haircut mechanics and assets are not.
+
+Production entry: root index.html. First executable script loads unchanged https://www.youtube.com/game_api/v1 before game/bootstrap scripts; no async/defer ordering race and no overwritten/fabricated ytgame. Register onPause/onResume/onAudioEnabledChange before asynchronous startup. Initialize sound permission from isAudioEnabled.
+
+After the real SDK is available, present an actual loading state and signal firstFrameReady once. Begin getLanguage and the single cloud load concurrently when host execution is allowed; initialize independent necessary local work without duplicate asset requests. Restore required state before removing the blocking loader and signaling gameReady once. READY must already accept its promised controls. Do not wait for optional caches, score reporting, ad availability or unrelated content before readiness.
+
+If initially host-paused, register callbacks but defer game initialization/host reads until resume. Missing SDK, failed required load or invalid required runtime data reaches a bounded recovery state with a short code and Retry. At 8,000 ms of unpaused pending startup, offer Retry without falsely reporting failure of a still-pending operation. Retire old bootstrap epochs/listeners; ignore their late results and never let them write. No automatically repeated reload loop.
+
+Real-SDK off-platform preview is selected only when the present genuine SDK explicitly reports IN_PLAYABLES_ENV === false. Use separately namespaced preview data; host ads/cloud/reporting are disabled. If preview storage access fails, continue in isolated memory without later overwriting disk data that was not read. A standalone developer preview is a separately labeled artifact, with no production fake SDK. A missing official SDK is not preview permission.
+
+11. HOST LIFECYCLE, AUDIO AND RESOURCE OWNERSHIP [S/Y/P]
+
+Pause ownership is the union of host pause, race menu, waiting transition/save/ad and recovery. Only host callbacks control the authoritative host owner. Menu pauses the race but remains interactive; host pause stops all game execution/input/timers/audio/normal network. Use only the documented final-save opportunity during host pause, not unrelated retries or reporting. Do not add Page Visibility or multi-tab pause owners to the direct YouTube target.
+
+An ad Promise result can clear its own waiting owner, never host/menu/recovery ownership. On allowed resume, discard stale gestures, reflow without resetting the race, reset clock accumulation, then resume at the saved tick. Terrain, gate cycles, AI reactions and active-time ads cannot advance while paused. No delayed input burst or autoplaying sound on return.
+
+Every sound path follows current host audio permission and device/system volume. No duplicate overall game mute control in this target. Sound is optional feedback, never a necessary cue. There are no haptics in v1; introducing them requires a disable option and validation.
+
+Teardown unregisters SDK callbacks using available removal handles, cancels game loops/timers and releases resources/listeners. Repeated Retry must not accumulate owners, requests or audio nodes. A presentation-resource interruption freezes domain input and preserves the last safe snapshot; rebuild presentation resources and resume only when usable. If restoration fails, Retry preserves progress. This requirement specifies behavior without choosing a rendering technology.
+
+12. LANGUAGES, ACCESSIBILITY AND HOST BOUNDARIES [P/S/Y]
+
+Proposed launch locales: en, es, pt-BR, fr, de, ja, ko, zh-Hant, tr, ar. English is required by the platform; the other nine are a studio launch proposal. Use the SDK getLanguage source, exact locale -> declared language fallback -> English. Map pt to pt-BR; zh-TW/zh-HK/zh-Hant to zh-Hant; unsupported Chinese variants fall back to English unless a reviewed mapping is added. Never read navigator.language/languages, guess from geography or save an account-level locale override.
+
+All declared locales cover all eight vehicle names and Ground/Water/Air slot names, Snow/Underwater/Rail/Flight-corridor and other support names, fork choices, teaching, start/resume, Gold/Silver/Bronze, Standard/Expert, Journey/foundation/generated-stage/transport-unlock notices, clean changes, records and record-history limits, the precise checkpoint-rematch and one-race chosen-set promises/video count, free normal unlocks, unavailable/cancelled reward, save/load failure, unsaved practice, protected/newer data, foundation milestone/continued Next and typed-reward/discard confirmation. Use placeholders rather than concatenating word fragments. Arabic must work with proper reading order and stable physical left/right route semantics; a left branch remains physically left. Numerals/times use a consistent locale-aware formatter without consulting prohibited locale discovery APIs.
+
+Gameplay must be understandable muted. Terrain/destination cannot depend only on color. Provide functional names/selected states for controls, a logical keyboard order, and visible focus. Do not claim full screen-reader gameplay, one-button access or any official accessibility tag without testing its actual criteria. Best-effort WCAG AA is a platform recommendation; the one-finger interaction here is a design commitment, not automatically an official tag qualification.
+
+Use a single-page application, no required account, personal-data entry, own analytics, external service calls, external clickable links, in-game sharing, QR code, additional agreement or Quit button. Do not copy the Android app's external privacy icon into this YouTube game. Portal disclosures are handled in the listing workflow. Production reviewable code may be minified but not concealed with extra obfuscation.
+
+13. PROGRESS REPORTING, MEASUREMENT AND EXPERIMENTS [P/H/V]
+
+Optional host score proposal: acknowledged Journey stages genuinely cleared at any earned medal, a positive integer. Historical Replay, Expert repeats of already cleared stages, rematches and duplicate callbacks add no progress. Label it “Stages cleared”; do not represent it as time or a count of unique hand-authored layouts. Before enabling reporting, verify the current SDK accepted integer range and clamp only the reported score to that supported positive maximum, without truncating save progress or ending racing. No manufactured zero is sent. This revises the old finite 1..36 proposal because the product is now endless.
+
+Google currently makes sendScore optional. If selected MediaCube validation needs it, enable the truthful dimension above. Report only after gameReady, successful material-save acknowledgement and host resume. Empty account sends no manufactured zero. Failed reporting never blocks saving/readiness/play; retry on a later legitimate acknowledged event or positive-progress restore, not a paused timer. If reporting is disabled, make no call. Publisher acceptance of this dimension remains V.
+
+Funnel definitions for permitted publisher data, if available:
+- Launch/start: use the publisher's documented definition, not an invented round counter.
+- First meaningful action: first accepted transformation after Play; local testing can time it.
+- Meaningful completion: genuine full finish at any rank, >=15000 simulation active ms and a valid different-form action, credited once per original run serial. Distinguish foundation/generated frontier clears, historical replays and rematches where permitted. Continuation: another ordinary race starts after a settled result; distinguish Next, full Replay and rewarded rematch rather than merging them into repeat-session claims.
+- D1: cohort of first-time players on UTC date D who return on D+1, divided by that cohort; D7 similarly D+7. Only report if permitted publisher data supports stable cohort/player counts. Returning-user share is not D1.
+- Daily net revenue: actual developer receipts attributable to the stated period/currency, with reconciliation basis.
+- Net session RPM = developer net revenue / publisher-defined sessions x 1,000.
+
+Do not ship external analytics or identifiers to obtain unavailable metrics. Local QA event traces may record action/transition timing and export through the test runner; exclude those exporters from release. Publisher fields, granularity, reporting delay and commercial terms must be recorded before interpreting performance. If only aggregate plays/revenue are available, state that round conversion, D1/D7 and ad-causal exit effects cannot be measured from them.
+
+Revenue model, not forecast:
+Gross ad value = sum over formats(served impressions / 1,000 x format-specific gross eCPM).
+Developer net = apply the actual signed revenue/payment terms, fees and currency treatment once.
+Daily developer net = daily sessions x observed developer-net session RPM / 1,000.
+Requests or accepted requests are not served impressions. Earned rewards do not by themselves reveal ad price. Do not assume a pre-roll for every launch, universal ad availability, an unverified MediaCube share or an already-net RPM needing a second share deduction. Profit requires costs separately.
+
+Initial prototype usability gate, proposed: at least 8 of 10 consenting adult novice testers complete an intended transformation within five active seconds without verbal coaching; at least 8 understand why a wrong form slowed them and how free Restart works. Run the sequence muted and with one finger. This preliminary gate precedes the stricter comparative candidate gate below. This small qualitative sample is a design check, not a retention estimate. Log failures and revise the interaction before adding complexity.
+
+Comparative product-quality gate, all NOT RUN [P]:
+- A 10/10 investment judgment is not a measured experience score. The outstanding sign-in/WebGL limitations mean this revision has not demonstrated a head-to-head win. Run actual incumbent play on supported physical devices before claiming superiority.
+- Recruit separate novice and experienced adult participants; proposed discovery sample 12 in each group, then expand where ambiguity remains. Use counterbalanced order for our exact candidate and the strongest available direct comparator; the same device/input conditions and a matched 10-active-minute budget per game. Record device, version, course progression and portal/host differences. A small convenience sample identifies problems, not population retention or significance.
+- Observe first meaningful action without coaching; correct explanation of the three slots and equipped transport set; native one-finger fork plus transform, and comprehension of a newly introduced specialty vehicle; no control-error/stuck state; time to ordinary replay; meaningful route differences; whether a player voluntarily chooses another race and why. Capture successful and failed runs, not only polished demonstrations.
+- Ask which game they would choose for another ten minutes and why, before showing the study hypothesis. Proposed quality gate: >=10/12 novices perform the useful first switch within five active seconds; >=9/12 in each group can finish an intended course without control assistance; >=8/12 in each group prefer our repeat-race experience, with preference reasons matching actual decisions/competition rather than just novelty. Failure to reach a threshold means revise and retest; do not convert these small-sample preferences into a success probability.
+- Compare entry/load delay, race/idle ratio, repetition complaints, credible overtaking, clear losses, record comprehension and ad-promise understanding. The build must pass both the functional tests and experience test; more features or a larger recipe count is not a substitute.
+
+Ad experiment registration, before any changed implementation:
+1. Obtain user selection/authorization for the intended control and exactly one change from section 7.6 (D1 first-count threshold or D2 next-set reward; any later cadence change separately). Preserve control values, source and artifact SHA. Do not claim the combined V2 gameplay and ad changes isolate the effect of one monetization choice.
+2. Primary outcome: developer-net revenue per first-time player over seven days, only if publisher cohorts support it. Secondary: net session RPM, sessions/player and served ads by format. If cohorts are unavailable, use aggregate net session RPM with daily plays as a weaker observational guardrail, and explicitly abandon the cohort claim.
+3. Guardrail: D1 no worse by more than 2 percentage points and round-two reach no worse by more than 5 percentage points where supported. These are provisional tolerance choices, not proven revenue optima. Any stuck play/save/ad problem triggers immediate rollback regardless of sample.
+4. Randomization requires an authorized host/publisher capability; do not add tracking or a backend to implement it. Without it, use a documented phased comparison and call it observational, controlling for geography/source/day mix as far as data permits.
+5. Fix the evaluation window at 14 days with complete seven-day follow-up for the included acquisition cohort. Before launch, estimate exposure/sample from measured baseline variance; do not invent a universal sample guarantee. If insufficient exposure, report inconclusive and retain control. Do not stop early on a favorable small sample.
+6. Adopt only with evidence that the primary improvement survives uncertainty and guardrails. Retention-adjusted value matters more than request density. Otherwise restore the exact approved control; do not silently compensate with new rewards or altered AI.
+
+14. NUMERICAL BUDGETS, CACHE SAFETY AND ARTIFACT IDENTITY [S/P/Y]
+
+Studio budgets for this game (stricter than many host maxima):
+- Release ZIP strictly <5,000,000 bytes; expanded release strictly <5,000,000 bytes.
+- Initial compressed/transferred game payload target <=2,000,000 bytes; record actual transfer and stored bytes separately. Official SDK/pre-roll transfer/timing is separate, not silently omitted from end-to-end startup results.
+- Each game runtime file target <512 KiB; no file >=5,000,000 bytes under the expanded cap. Prefer <=128 packaged files; official count maximum is separately noted below.
+- Normal/max valid game save <=32,768 UTF-8 bytes; hard game-supported envelope <65,536 bytes. Enforce bounded snapshots/histories and report measured maximum, not character count.
+- Test target for game-controlled startup: p95 <=1,500 ms from usable real SDK plus required cloud response to genuinely interactive READY. End-to-end cold/warm gameReady target <5,000 ms; report SDK/cloud/host-ad delay separately. Budgets never justify early gameReady.
+- Input-to-domain response target <=100 ms p95; simulation at 20 ms ticks while running. Measure actual input-to-observable response separately; source command timestamps alone are insufficient.
+- Peak JavaScript heap target <128 MiB under supported measurement; steady-state growth after warmup <5 MiB across 50 completed/restarted race transitions and >=10 active minutes. Record tools and platform exclusions; do not claim unavailable iOS heap readings.
+- Performance measurement profiles: desktop Chromium, four-times CPU slowdown and 10 Mbps down/1 Mbps up/100 ms RTT, 20 cold plus 20 warm runs; physical Android/iOS on recorded device/OS/network with at least five cold and five warm runs each. Small device samples are ranges/descriptive results, not a confident p95. Exclude no failed loads from the failure-rate report.
+
+Current official stability body, checked 18 October 2026 (source Y2): initial bundle MUST <30 MiB and SHOULD <15 MiB; total MUST <250 MiB; each file MUST <30 MiB and SHOULD <512 KiB; saves MUST <3 MiB and SHOULD <500 KiB; file count <=8,000; recommended interaction <5 seconds; peak JS heap MUST NOT exceed 512 MB. The page's autogenerated summary conflicts with its body; use the English body. MB, MiB and UTF-8 bytes are not interchangeable.
+
+Package root index.html, safe relative game paths and allowed filename characters. Include all runtime assets/dependencies and required licenses. No credentials, source maps containing secrets, test fixtures/mock SDK, QA exporters, external analytics, remote game assets or unused publisher SDK/config. Recheck current response-header CSP from Y5; a permissive local server or a meta tag alone is not equivalent to the host test.
+
+Use actual content digests in game runtime asset identities, including transitive imports, dynamically loaded files and worker URLs if any. Do not put an unbounded derived-cache read on the startup critical path. Caches contain rebuildable content, never player saves. Version entry manifests atomically; a cache from A plus HTML/modules from B cannot form a mixed release. Preserve necessary SDK/entry query parameters and test query-bearing base URLs. Do not intercept host-owned SDK delivery or replace it with a locally packaged copy.
+
+Build immutable versioned deterministic ZIPs. Record tool versions, source commit, archive SHA-256, each runtime digest, ZIP/expanded/initial/largest-file/count/save measurements and budget dispositions. Rebuild twice byte-for-byte, extract the intended upload, and run release tests on those extracted bytes. A source-tree test does not prove the packaged game. Reuse evidence only for identical bytes/relevant environment; changes require affected reruns.
+
+15. ACCEPTANCE MATRIX, REFERENCE, RELEASE AND HANDOFF
+
+15.1 Integration reference actually checked
+
+Repository: https://github.com/lrodeveloperr/Haircut
+Main ref rechecked 18 October 2026: ed50f09c8b3fed4dda3c5a4f7ab0fc6f9006520c.
+Read: mediacube/README.md and mediacube/BUILD-v3.101.json at that commit.
+Reference candidate: releases/asmr-barber-fade-master-v3.101-mediacube-youtube.zip.
+Recorded reference SHA-256: 3a482e55e6317ad34260938daa65642c8b68367447f02fbfbaaf907e582558e0.
+Recorded reference sizes: ZIP 410,921 bytes; expanded 1,089,471 bytes. These are the Haircut build manifest's figures, not newly measured Shape Shifting: Vehicle Race results or a new byte audit here.
+Reference status: CI-verified candidate; actual McPlay/YouTube-host and physical-device checks remain pending in its record.
+
+Before reusing actual implementation code, read that pinned source's source/youtube/client.js, loader.js, package.py, build/release/cache integration, qa/youtube-contracts.cjs, youtube-browser.cjs, youtube-cache-urls.py and .github/workflows/youtube-release.yml. Re-resolve if the selected reference changes. Reuse SDK order, protected cloud state, pause ownership, acknowledged writes, content hashes and exact-archive testing; adapt to this game. Do not import haircut selectors, wardrobe rules, model data, monetization values, licenses by assumption or historical pass counts. This planning task did not inspect all those implementation files and does not claim their code has already been ported.
+
+15.2 Test protocol and status
+
+The75 cases below are assessed in qa/acceptance-matrix.json:20 pass their stated standalone sub-scope,51 remain NOT RUN for their complete required method, and4 are inapplicable to this diagnostic revision. For each execution retain ID, source/artifact hashes, exact diagnostic or release SHA, stimulus/fixture, expected result, method, observed result and evidence path. No production/native/host/human PASS follows from a standalone subcheck. Use PASS/FAIL/NOT RUN; N/A needs a written reason. “Contract present” is not “test executable” or “passed.” Unit tests supplement native input and hosted/device procedures.
+
+ID          Stimulus / expected result                                         Method
+DOMAIN01    All vehicle/terrain/modifier pairs; bounds and precedence match.     Deterministic table/property tests
+DOMAIN02    Tick ties; player finishes after both AI; one earned result/clear.      Domain boundary tests
+DOMAIN03    Duplicate finalize/Next/Replay/Restart; exact progress/counters.      Domain and native input
+DOMAIN04    Foundation/generated graphs, loadouts, all branch paths and solver.       Manifest enumerator + legal solver; reject unwinnable checkpoints
+DOMAIN05    Rematch rewinds race, keeps original medal/finish/ad credit/pacing.         Deep snapshot equality tests
+DOMAIN06    Actual tap/swipe alternatives finish every course/rule family.       Native touch + mouse browser paths; no direct model-only pass
+DOMAIN07    Lost capture/extra fingers/resize/pause cancel pending gestures.      Native event sequences
+DOMAIN08    One finger completes fork then switch; >=800 ms separation.          Authoring proof + novice/physical-device observation
+DOMAIN09    First visit, any-medal frontier clear, Expert, records and continuation.            End-to-end native flow; free continuation after reward decline
+DOMAIN10    Both difficulty/personality profiles, seeded fixed mistakes, fair rules.      Seeded trace equality; frame-rate variation tests
+BOOT01      Block SDK; Retry, no fake SDK, no write or silent preview.            Network faults + genuine SDK case
+BOOT02      Once-only firstFrame/gameReady; restore precedes interactive ready.   Ordered API/input trace
+BOOT03      Delayed locale/load, early pause, shared read, concurrent work.       Controllable SDK fixture outside release
+BOOT04      Zero viewport, late stale response, Retry 20 times; bounded state.    Browser lifecycle/fault procedures
+SAVE01      Empty forms vs corrupt/unknown/future/oversized source.               Fixture matrix; no overwrite/deletion on protected data
+SAVE02      String/decoded v1; future actually shipped migrations.               Schema fixtures; no fabricated historic PASS
+SAVE03      Delayed r/r+1 acknowledgements, failure, merged isolated snapshots.   Async fault injection and dirty-state assertions
+SAVE04      Native play -> acknowledged snapshot -> reload exact equality.       Browser persisted-data comparison, including queue/reward/ad state
+SAVE05      Maximum inventory, hostile numbers/depth/IDs/tick.                    Bounded validators; UTF-8 size report
+SAVE06      Exit/pause final-save limits and material milestones.                Host-aware trace; last acknowledged revision identifiable
+LIFE01      Pause during boot/race/menu/save/ad/score; correct execution stop.    Trace timers/audio/input/network and resume clock
+LIFE02      Ad completion before host resume/menu close; no owner released.      Delayed callback order matrix
+LIFE03      Teardown/retry resources; no visibility/multi-tab pause listener.     Listener/timer audit and repeated teardown
+AD01        D first/later 1/2 meaningful finishes and 119999/120000 ms; B control4.           Controlled clock; ALL conditions and no premature request
+AD02        Reward before first interstitial, replay/menu/reload/reset.           Persisted counter/transition matrix
+AD03        Finish payoff -> explicit Next; menu/abort/reward decline no ad.       Native flow and captured call order
+AD04        Pre-ad save pending/failure; SDK not called until acknowledged.       Deferred Promise faults
+AD05        Reward true/false/undefined/rejection/no-fill/double callback.         Strict grant/token tests; exactly one live-runtime grant
+AD06        Double taps and duplicate Next; one reservation/in-flight request.   Native rapid-input plus async concurrency
+AD07        Late true after Keep playing; rematch claim saved, no forced rewind. Delayed callback then reload/consume test
+AD08        Crash before/after grant acknowledgement; pending grants nothing.    Simulated process termination; document unreceipted crash window
+AD09        Failed/cancelled/unsupported ads; free Restart and normal play.       Host fixture + authorized host test inventory
+AD10        Accepted request vs impression vs reward counters stay distinct.     Adapter/API trace and reporting reconciliation
+METRIC01    Positive Journey-stage clears; zero/replay/Expert-repeat/rematch no inflation.  Domain/save/API trace; no calls when disabled
+METRIC02    Pending/rejected score cannot block save/play/readiness.              Deferred callbacks and host-pause ordering
+PACK01      Two builds identical; root/path/name/count/license/size closure.     Deterministic packager + archive audit
+PACK02      No secrets/mocks/exporters/remote assets/other publisher runtime.     Allowlist/static scan and network capture
+PACK03      Changed transitive payload/query entry; digest identity correct.     Dependency traversal + response-byte comparison
+PACK04      Cache A then serve B with existing save; no mixed-release loop.      Browser cached-update procedure
+PACK05      Exact extracted ZIP, current response CSP, genuine SDK.              CSP server + separate no-fixture official-SDK test
+PACK06      Hosted vs explicit off-platform vs standalone; denied storage.      Three target procedures; no overwrite of unread disk
+BROWSER01   Native flow/save/ad/lifecycle in Chromium/Firefox/WebKit/Edge.        Current recorded versions, exact archive
+LAYOUT01    Controls/state at all required ratios and resized mid-gesture.       Viewport matrix below plus native sequences
+SOAK01      >=50 race transitions AND >=10 active minutes, including rewards.    Error/resource snapshot comparison; no stuck locks
+PERF01      Cold/warm input/startup/heap/save/size budgets and failed loads.       Recorded desktop/device profiles, honest exclusions
+RECOVERY01  Applicable presentation-resource loss and restoration.               Fault test without domain reset; justify unavailable mechanism
+DEVICE01    Physical Android+iOS touch/audio/background/rotation/save return.    Actual YouTube-app authorized test route; device/OS evidence
+HOST01      Exact SHA uploaded only when authorized; inspect every warning.      McPlay pre-flight evidence and warning dispositions
+HOST02      Real test-route save/pause/mute/earned/cancelled/unavailable ads.      Authorized host test inventory; local fixture not enough
+HOST03      Listing/rights/audience/locale/accessibility claims match build.      Submission answers traced to actual evidence
+MEASURE01   Metrics source, denominators, time/geography/granularity recorded.    Publisher-field inventory; no tracking introduced
+MEASURE02   Only approved ad experiment, fixed window and rollback evidence.     Experiment registration and comparison report
+
+Additional product-quality cases; actual scoped outcomes are in the same75-case evidence matrix:
+INPUT01     Wrong form at air edge/midair/landing; no floating car or stuck state.  Native input + domain boundary tests
+FAIR01      Lawful controller can earn Gold on each offered loadout/profile.      Exhaustive manifest/seed solver with route legality
+FAIR02      Fixed AI has no position/ad-dependent speed or teleporting.            Seeded trace comparison before/after ads and player errors
+FAIR03      Novice/competent traces show credible competition and clear mistakes. Counterbalanced physical-device observation; do not force a fixed gap
+CONTENT01   36 foundation manifests differ meaningfully; eight-vehicle teaching order.   Catalogue enumeration; reject cosmetic/seed duplicates
+CONTENT02   >=10000 bank-selection seeds/family/both difficulties, routes solvable.  Bank/solver report with failures and actual reuse distribution
+CONTENT03   Queue3/history12/hash64/bags/loadouts restore exactly across reload.   Domain + native save/reload; Replay/ad outcomes cannot reroll
+CONTENT04   Generated-record64 eviction keeps frontier/access/claim/live queue.   Forced eviction/migration; no infinite-storage or infinite-novelty claim
+CONTENT05   >=10000-stage sequence; 36->37 and later stages have no content cap.  Saved sequential progression test; all constraints and queue ownership
+CONTENT06   100-stage diversity/family/fork/fallback gates meet section 4.4.       Signature report; no counting cosmetic/seed changes as novelty
+CONTENT07   Former runtime16-reject/fallback generator; superseded by bank-first.   N/A for removed generation; bank/critical-load faults remain a BOOT concern
+FORMS01     Eight vehicles, six loadouts, all support/modifier/invalid pairs.      Deterministic table + native entry/interior/exit and exact replay tests
+FORMS02     Ground/Water/Air slots remain stable across specialty introductions. Adult one-finger comprehension test; no surprise mid-race loadout swap
+ENDLESS01   Clear/replay/rewind/double callback advance frontier exactly once.   Domain/native/save acknowledgement and high-counter boundary tests
+ENDLESS02   Stage1000/10000, reload/record eviction keep fair solvable Next.       Long-run deterministic trace; no speed/cue creep or last-level state
+FORMS03     Train continuous rails/junctions/signal/exit; no off-track movement. Native/domain/solver tests including boundary gestures and pause
+FORMS04     Plane runway/corridor>=72/landing/wind21.6; no helicopter-only gap. Native/domain/solver tests and max-speed cue/input distances
+AD11        Chosen-set true/false/pending/double/late; one typed durable credit. SDK fixtures + native flow; failed outcomes leave queue identical
+AD12        Consume next-set once, future queue/frontier/replay/ad counts exact. Save/reload/ack faults; one override, no speed or completion grant
+AD13        Gold reward eligibility, rematch priority, cooldown/no stacked ads. Result/decline/late claim boundary matrix + authorized host checks
+COMPARE01   Real direct-comparator sessions captured on supported devices.       Hands-on run report; browser WebGL block cannot be marked PASS
+COMPARE02   First-action/eight-transport control/replay/preference quality gates.       Counterbalanced novice/experienced protocols, honest sample limits
+COMPARE03   Reward terms understood; declines/ads preserve continuation.          Adult usability sessions + authorized host test inventory
+
+Viewport functional matrix, CSS px: 320x568, 360x640, 390x844, 412x915, 568x320, 640x360, 844x390, 600x600, 768x1024, 1024x768, 1280x720, 1440x900, 320x1138 (approximately 9:32), 320x747 (9:21), 2100x900 (21:9), 1920x540 (32:9), plus the smallest embed the host actually supports. Zero-sized/hidden-to-sized transition is a recovery test, not a playable layout. Test safe-inset variants and real orientation changes. This matrix specifies usability, not graphic composition.
+
+Required suites must actually collect nonzero tests and run their selected cases. A skipped suite is not passed. CI should build once, extract once and run parallel independent QA against those exact immutable bytes; do not rebuild a slightly different upload after certification evidence. Preserve failing traces and fix code/tests without deleting a genuine acceptance requirement.
+
+15.3 Release gates and material unknowns
+
+Gate 1 — Design: this contract is available for review. Proposed ad pacing/reward terms and additional mechanics are not retroactively marked approved. The next build instruction can approve the concrete scope; ask only about genuinely unresolved material changes, not routine implementation choices.
+Gate 2 — Engine/content: legal solver, one-finger prototype, 36-foundation manifest, all eight specified vehicles/six loadouts, validated ongoing generator/fallbacks and both AI profiles pass, with both reward variants covered. Run the comparative quality gate before claiming a better experience. If forks, specialty slots, Expert or generation add confusion, revise their between-race entry/teaching before expanding further; preserve user-approved core and report material scope effects.
+Gate 3 — Local/CI: all applicable matrix cases, numerical budgets and reproducible archive identity pass. No historical Haircut pass transfers.
+Gate 4 — Authorized host/device: current SDK/test suite, McPlay warnings, physical Android/iOS, real test-route ads/save and metadata reviewed. Compliance cannot be guaranteed from this document alone.
+Gate 5 — Authorized publication: correct exact archive/title/languages/rights, configured host monetization, MediaCube access/revenue participation and actual commercial terms. API integration alone is not a payment entitlement.
+
+Material V items: selected new-game repository/source instructions; actual art and asset rights chosen later; MediaCube's current game acceptance and score expectations; monetization access/terms/portal settings; permitted analytics fields; actual physical-device/host performance and ad availability. None blocks writing the contract. Each blocks only its dependent release claim/action.
+
+Highest-impact risks: generated courses that differ structurally but feel the same; optional Expert becoming an unwanted difficulty wall; forks competing with switching; inconsistent rematch snapshots/medal credit or chosen-set queue replacement; host startup delay; and ad exits outweighing extra opportunities. First prototype: foundation stages 1, 2, 4, 7, 13, 15, 19, 25, 31 and 33; the foundation-36 to generated-37 handoff; all six loadout families; bounded generator/fallbacks; both difficulties; clean-change feedback and both proposed rewards under fixtures. Complete real supported-device competitor sessions and novice tests before claiming superiority. Do not test live ads off an authorized host route.
+
+Handoff: implement the presentation-independent engine and content manifests from the selected contract; retain graphics unspecified until separately directed. Port only verified integration patterns after reading the actual source files. Use the builder workflow for implementation and the selected shipping workflow for packaging/certification. This deliverable contains a specification and test plan; executable game tests, engine, source commit, release ZIP, device/host passes and publication do not yet exist for Shape Shifting: Vehicle Race.
+
+SOURCE REGISTER AND REQUIREMENT FRESHNESS
+
+All web sources below accessed 18 October 2026. Source IDs are internal to this document, not platform telemetry. Recheck primary English bodies before release; preserve MUST/SHOULD/MAY. No single game's design values are claimed as official requirements.
+
+N1 https://play.google.com/store/apps/details?id=com.game.shape.shift&hl=en_US — official English US listing, naming pass 18 October: Shape-shifting:Race 3D and 100M+ cumulative downloads. Confirms relevant category wording, not keyword volume or naming causality.
+N2 https://play.google.com/store/apps/details?id=com.fcg.shape.transform.shifting.games&hl=en_US — official English US listing: Vehicle Transform Challenge, 10M+ cumulative downloads. Adjacent product/naming evidence; not current daily velocity.
+N3 https://playgama.com/game/shape-transform-race — primary browser-game listing, Shape Transform Race. Genre vocabulary, not a YouTube discovery metric.
+N4 https://developers.google.com/youtube/gaming/playables/certification/requirements_trustsafety — current English truthfulness/third-party rights requirements read for naming; game-title field length was not established from this page. Public search also surfaced video/channel API limits, which are not substituted for game limits.
+N5 Public Google game-query and exact/near-exact candidate search pass on 18 October; multiple results were unrelated/noisy, and the Google Trends comparison URL could not be retrieved. Qualitative screen only; no numerical search-volume, exclusivity or legal-clearance claim.
+
+E1 https://playables.games/games/shift-shapes-car/ and https://playables.games/games/shape-transforming-shifting-run/ — independent catalogue, 18 October snapshot about 10M and 16M cumulative plays; descriptions are secondary and may disagree with primary publisher pages.
+E2 https://play.google.com/store/apps/details?id=com.game.shape.shift&hl=en_US — official Sixcube Android listing; cumulative download threshold and interaction analogy.
+E3 youtube-playables-10-and-9-out-of-10-ideas-2026-10-08.md, version 4, and playables-cross-platform-validation-2026-10-18.md — retained editorial rationale; 7–17 October rounded-counter estimate not remeasured here.
+E4 https://lagged.com/en/g/shift-shapes-car and https://playgama.com/game/shape-transforming-shifting-run — primary public listings; first says car/boat/runner, second describes land/air/sea transformation. Portal skins/builds are not assumed identical to YouTube's.
+E5 https://apps.apple.com/us/app/shift-race-fun-racing-3d-game/id1543891119 — Mirols OU official listing and visible reviews. Exact helicopter/car/boat precedent; selected repetition/ad/short-freeze complaints, with dates retained.
+E6 https://apps.apple.com/us/app/shape-shifting-race/id6451258616?platform=iphone&see-all=reviews — official indexed review result; September 2024 praise of upgrades/leagues and September 2023 endpoint complaint. Direct alternate URL could not be fetched; treat these as selected indexed primary-source excerpts, not a full review audit.
+E7 https://play.google.com/store/apps/details?id=com.vng.police.car.shape.shifting.games&hl=en_US — official listing with selected August 2026 ad/stuck-control complaints. These concern a different game, not Sixcube or a YouTube build.
+E8 https://apps.apple.com/us/app/shape-shifting-race-game/id6445832433?platform=watch&see-all=reviews — official indexed selected 2023/2024 reviews of stuck controls and a distrusted reward pointer. The platform query is a storefront route, not evidence the app supports Apple Watch. No copying of its reward system is recommended.
+E9 https://apps.apple.com/gb/app/shape-shifting/id1560620818 and https://apps.apple.com/us/app/shape-shifting/id1560620818 — Sixcube official regional listings and selected dated reviews. Google Play expanded-review observations came from E2's public UI with the sampling method above.
+E10 https://www.youtube.com/watch?v=_RRoYhbVk4k — Playgama publisher video linked from E4; page metadata inspected, usable gameplay frames not obtained. No footage-based mechanics claim.
+
+ACCESS/AUDIT STATUS (18 October 2026): public listing/review research completed; contract audit completed; live gameplay comparison NOT RUN successfully. Browser evidence showed WebGL initialization failure in public Lagged/Playgama games and a YouTube sign-in wall. This limits the present superiority claim and is explicitly a required downstream COMPARE01 gate. No browser loading/ad error is generalized to ordinary players.
+R1 https://github.com/lrodeveloperr/Haircut/blob/ed50f09c8b3fed4dda3c5a4f7ab0fc6f9006520c/mediacube/README.md
+R2 https://github.com/lrodeveloperr/Haircut/blob/ed50f09c8b3fed4dda3c5a4f7ab0fc6f9006520c/mediacube/BUILD-v3.101.json
+Y1 https://developers.google.com/youtube/gaming/playables/certification/requirements_integration — SDK/readiness/cloud/audio/pause rules; score MAY, not mandatory Google scoring.
+Y2 https://developers.google.com/youtube/gaming/playables/certification/requirements_stability — normative size/performance/compatibility/path/count rules; English body controls over summary.
+Y3 https://developers.google.com/youtube/gaming/playables/reference/sdk — rechecked 18 October: request success does not guarantee a served ad; rewarded boolean true earns; stable IDs identify reward types without user data; score integer <=Number.MAX_SAFE_INTEGER; cloud/environment/lifecycle semantics.
+Y4 https://developers.google.com/youtube/gaming/playables/reference/monetization — rechecked 18 October for this revision: host automatic pre-roll; interstitial natural breakpoints; explicitly requested rewarded items/experiences; access limits and revenue-sharing pilot. The guide does not specify our numerical cadence. Body last updated 1 June 2026.
+Y5 https://developers.google.com/youtube/gaming/playables/reference/test_suite_guide — current host response-header CSP and test route.
+Y6 https://developers.google.com/youtube/gaming/playables/certification/requirements_design — input/responsiveness, exhaustion and disallowed host-conflicting elements.
+Y7 https://developers.google.com/youtube/gaming/playables/certification/requirements_i18n_l10n — English required; no browser language discovery APIs; host locale optional API.
+Y8 https://developers.google.com/youtube/gaming/playables/certification/requirements_privacydata — personal data/external services/reviewability/single-page restrictions.
+Y9 https://developers.google.com/youtube/gaming/playables/certification/requirements_trustsafety — general 13+ audience, truthful metadata, rights, distinct original content and staging-link restrictions.
+Y10 https://developers.google.com/youtube/gaming/playables/certification/requirements_accessibility — best-effort accessibility and truthful AGI tags.
+Y11 https://developers.google.com/youtube/gaming/playables/certification/requirements_monetization — rechecked 18 October, English body: host-provided ads allowed; off-platform monetization prohibited; portal configuration required. Its autogenerated summary conflicts with its English body; use the body.
+
+END OF CONTRACT
+
+
+REVISION 5.0 — EXECUTED COURSE/ENGINE EVIDENCE, 18 OCTOBER 2026
+
+Scope: original source, deterministic offline bank authoring, independent continuous-time reference, separate simultaneous 20 ms engine, actual legal slot/branch command integration, saved progression, optional monetization fixtures and a standalone semantic diagnostic. Graphics stay UNSPECIFIED. No real SDK, host cloud/ads/score, backend, account, telemetry, external analytics or production publication is added. Proposal D stays disabled by default outside tests.
+
+The 38 domain/session/boundary tests plus the deferred pre-ad-acknowledgement test (39 total) pass. The command-level integration completes 8050 full races (all 4025 bank/teaching IDs on both difficulties), each with exact mid-race acknowledged save/reload; all 8050 lawful controllers earn Gold. It separately completes 7725 branch routes through the actual legal command API. A lawful poor route need not win. The controller leaves >=820 ms between entering a previous section and committing its upcoming fork choice; actual native one-finger comprehension still needs testing.
+
+The ordinary-content audit executes 27951 entrant simulations plus 7679 route simulations, all-path independent checks, safety/pacing/checkpoint and anti-repetition gates. Rejects include repeated motifs, unsupported checkpoint timing and unsuitable length. All accepted ordinary gate pairs have phase-dependent value. Teaching stages 1/2/3/6 explicitly use short 20–26-second introductory exceptions; introductory terrain-choice branches demonstrate recovery/transform tradeoffs rather than being added to the ordinary gate-pair count.
+
+Fixed opponents share the legal speed/modifier/gate graph. They have published immutable factors/reactions and seeded mistakes; no player-position or ad-dependent boost, collision or teleport exists. Synthetic 250 ms reaction players and 450 ms players with one 700 ms delay are diagnostic difficulty probes, not observations of people. Median ordinary perfect completion is about 42.75 seconds; the actual distributions and rank counts are retained in qa/course-audit.json.
+
+Persistence/fault evidence includes exact replay origin, once-only progression, two nonrecursive checkpoints, late acknowledgement isolation, integer-boundary guards, protected unknown/corrupt/hostile/newer data,20 failing load retries with zero writes to unread source, a 15016-byte complete maximum-state fixture including 64 records/36 teaching records/history 64/signatures 12/queue 3/two checkpoints/a typed rematch, delayed/failed reservations, strict true-only claims, one in-flight request, original-result preservation and late claims that do not rewind newer races. The unreceipted crash window is explicit: completion before durable reward acknowledgement can lose a reward without a genuine host reconciliation facility.
+
+A ten-elapsed-minute synthetic DOM RAF soak and diagnostic handler integration are recorded separately with exact harness hash and memory samples. JSDOM uses disclosed pointer-capture/rectangle adapters and is not a native browser, CSS layout or human session. The final exact outcomes appear in the accompanying QA report; no incomplete run is marked passed.
+
+Native browser coverage is BLOCKED: the official browser download returned an unavailable HTML page; browser security denied the local QA file. No alternate browser route was attempted after denial. Native layout/input/storage, physical Android/iOS, genuine YouTube readiness/cloud/ads/mute, production presentation/locales, adult novice enjoyment and comparator preference remain NOT RUN. Therefore this is not a proven 10/10 game, a release-ready product, a monetization optimum or a measured engagement/revenue result.
+
+Artifact files: source/tests/data/tools/evidence are delivered together; qa/package-report.json identifies the deterministic diagnostic ZIP. qa/product-count.json defines the deduplicated count; docs/QA-RESULTS.md summarizes actual outcomes; qa/acceptance-matrix.json assesses all 75 cases. A normal local-framework release check is intentionally allowed to fail on unresolved production gates. No promote/publish/upload-to-game-host action is performed.
