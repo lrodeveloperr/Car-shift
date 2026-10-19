@@ -19,6 +19,7 @@ let pixelRatio=Math.min(2,devicePixelRatio||1);renderer.setPixelRatio(pixelRatio
 const world=new World(renderer);
 const sound=new Sound({muted:(()=>{try{return localStorage.getItem(SOUND_KEY)==='off';}catch{return false;}})()});
 const buzz=pattern=>{try{navigator.vibrate?.(pattern);}catch{}};
+const pad=n=>String(n).padStart(2,'0'),today=()=>{const d=new Date();return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;};
 
 let session=null,mode='boot',ghost=null,preview=null,acc=0,last=0,hostPaused=false,finishAt=0,saveAt=0,busy=false,iconFamily=-1,slowFrames=0,cue=null;
 const shown={};
@@ -28,7 +29,7 @@ function resize(){const w=root.clientWidth||innerWidth,h=root.clientHeight||inne
 new ResizeObserver(resize).observe(root);addEventListener('resize',resize);
 addEventListener('error',()=>host.logError());addEventListener('unhandledrejection',()=>host.logError());
 
-function show(id,visible){$(id).hidden=!visible;}
+function show(id,visible){$(id).toggleAttribute('hidden',!visible);} // attribute, so it also works on SVG elements
 function save(){if(session?.loaded&&!hostPaused&&session.unsaved)session.flush().catch(()=>{});}
 function syncSoundButtons(){for(const b of document.querySelectorAll('.sound'))b.setAttribute('aria-pressed',String(!sound.muted));}
 
@@ -43,10 +44,11 @@ function prepareCourse(course){
   }
 }
 function showTitle(){
-  // A saved unfinished race resumes; otherwise the title previews the next queued course.
-  const saved=session.race?.state==='RACING'?session.race:null,course=saved?.course??session.catalog.course(session.data.queue[0]);
+  // A saved unfinished race resumes; otherwise the title previews today's course if it is waiting, else the next queued one.
+  const saved=session.race?.state==='RACING'?session.race:null,daily=saved?null:session.dailyAvailable(today());
+  const course=saved?.course??session.catalog.course(daily??session.data.queue[0]);
   preview=saved??new Race(course,{stage:session.data.frontier});prepareCourse(course);
-  $('play').disabled=false;show('title',true);mode='title';
+  $('play').classList.toggle('daily',!!daily);$('play').disabled=false;show('title',true);mode='title';
 }
 // Per-race memory of what the player last heard and saw, so cues fire on changes only.
 function freshCue(race){
@@ -58,15 +60,21 @@ function startRace(race){
   if(!race)return;
   prepareCourse(race.course);race.resume('menu');ghost=null;acc=0;mode='racing';cue=freshCue(race);
   show('title',false);show('result',false);show('paused',false);show('hud',true);
-  sound.play('go');
+  show('dailyMark',race.origin==='daily');sound.play('go');if(race.origin==='daily')sound.play('daily');
 }
 async function run(task){
   if(busy)return;busy=true;
   try{startRace(await task());}catch(e){console.error(e);show('title',true);mode='title';}
   finally{busy=false;}
 }
-const play=()=>run(()=>session.race?.state==='RACING'?session.race:session.race?.state==='RESULT'?session.next():session.start());
-const next=replay=>run(()=>session.next({replay}));
+// No level picking: Play resumes, or starts today's course if it is waiting, or the next journey course.
+const play=()=>run(()=>{
+  const race=session.race,day=today();
+  if(race?.state==='RACING')return race;
+  if(race?.state==='RESULT')return session.next({day});
+  return session.dailyAvailable(day)?session.startDaily(day):session.start();
+});
+const next=replay=>run(()=>session.next({replay,day:today()}));
 
 function finish(now){
   const race=session.race,rank=race.result.rank;mode='finishing';finishAt=now;acc=0;
@@ -79,8 +87,11 @@ function finish(now){
 function showResult(){
   const r=session.race.result;
   $('medal').style.setProperty('--medal',r.genuine?MEDALS[r.rank-1]:'var(--none)');
+  const daily=session.race.origin==='daily',streak=session.data.daily.streak;
+  show('streak',daily);if(daily)$('streak').querySelectorAll('i').forEach((dot,i)=>dot.classList.toggle('on',i<Math.min(7,streak)));
+  $('next').classList.toggle('daily',!!session.dailyAvailable(today()));
   show('result',true);show('hud',false);mode='result';$('next').focus({preventScroll:true});
-  if(r.genuine)sound.play('medal',r.rank);
+  if(r.genuine)sound.play('medal',r.rank);if(daily&&r.genuine)setTimeout(()=>sound.play('streak',streak),700);
 }
 function pause(){
   const race=session?.race;if(mode!=='racing'||!race||race.pauses.has('menu'))return;

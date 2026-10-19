@@ -1,7 +1,7 @@
 import fs from 'node:fs';import path from 'node:path';import {fileURLToPath} from 'node:url';import {FAMILIES} from '../source/rules.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const bank=fs.readFileSync(path.join(root,'runtime/data/bank.json'),'utf8'),foundations=fs.readFileSync(path.join(root,'runtime/data/foundations.json'),'utf8');
-const code=['rules','solver','content','race','session','harness'].map(name=>fs.readFileSync(path.join(root,`source/${name}.mjs`),'utf8').replace(/^import .*;\s*$/gm,'').replace(/^export /gm,'')).join('\n');
+const code=['rules','solver','content','race','audit','daily','session','harness'].map(name=>fs.readFileSync(path.join(root,`source/${name}.mjs`),'utf8').replace(/^import .*;\s*$/gm,'').replace(/^export /gm,'')).join('\n');
 const html=`<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Shape Shifting: Vehicle Race — level QA</title>
 <style>body{font-family:system-ui;margin:12px;max-width:100%;overflow-wrap:anywhere}h1{font-size:1.2rem}button,select{font:inherit;min-height:44px;min-width:44px;margin:3px;padding:6px}button[aria-pressed=true]{outline:3px solid currentColor}#controls{display:flex;flex-wrap:wrap}#controls button{flex:1;min-width:85px}progress{width:min(90%,600px)}pre{white-space:pre-wrap;font-size:12px}summary{min-height:44px;cursor:pointer}</style>
 <h1>Shape Shifting: Vehicle Race — standalone level QA</h1><p>This is a diagnostic surface. Production graphics, host services and human enjoyment are not certified.</p>

@@ -1,16 +1,20 @@
 import {FAMILIES,VERSION,hash,maxSpeed,bestSlot,SUPPORTED,TRANSFERS,FLIGHT,CURRENT_TERRAINS,WIND_TERRAINS,within} from './rules.mjs';
 import {referenceCourse,gateTradeoffs,estimatedTime} from './solver.mjs';
 
+// A family's course grammar: it must contain the family's special terrain, must not start or end in a
+// transfer, and the special terrain needs its edge terrain on both sides.
+export function sequenceAllowed(f,s){
+  const {special,edge}=FAMILIES[f].pattern,transfer=c=>TRANSFERS.has(c==='G'?FAMILIES[f].ground:c);
+  if(!s.includes(special)||transfer(s[0])||transfer(s.at(-1)))return false;
+  if(edge){for(let i=0;i<s.length;i++)if(s[i]===special&&(s[i-1]!==edge||s[i+1]!==edge))return false;}
+  return true;
+}
 export function* patterns(){
   let ordinal=0;
   for(let f=0;f<FAMILIES.length;f++)for(let n=4;n<=10;n++){
-    const {alphabet,special,edge}=FAMILIES[f].pattern,transfer=c=>TRANSFERS.has(c==='G'?FAMILIES[f].ground:c);
+    const {alphabet}=FAMILIES[f].pattern;
     function* visit(s){
-      if(s.length===n){
-        if(!s.includes(special)||transfer(s[0])||transfer(s.at(-1)))return;
-        if(edge){for(let i=0;i<n;i++)if(s[i]===special&&(s[i-1]!==edge||s[i+1]!==edge))return;}
-        yield s;return;
-      }
+      if(s.length===n){if(sequenceAllowed(f,s))yield s;return;}
       for(const c of alphabet)if(c!==s.at(-1))yield* visit(s+c);
     }
     for(const sequence of visit(''))yield {family:f,sequence,ordinal:++ordinal};

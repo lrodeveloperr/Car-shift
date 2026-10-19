@@ -4,8 +4,7 @@ import crypto from 'node:crypto';
 import {performance} from 'node:perf_hooks';
 import {fileURLToPath} from 'node:url';
 import {patterns,buildRecipe,expand,quality,repetitive,signature} from '../source/content.mjs';
-import {simulateEntrant,Race} from '../source/race.mjs';
-import {referenceCourse} from '../source/solver.mjs';
+import {simulationAudit} from '../source/audit.mjs';
 import {FAMILIES} from '../source/rules.mjs';
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
@@ -15,31 +14,6 @@ const counters={rawCandidates:0,geometryAttempts:0,fullRaceSimulations:0,routeSi
 const reasons={};const familyCounts=Object.fromEntries(FAMILIES.map(f=>[f.id,{candidates:0,accepted:0,rejected:0}]));
 const exact=new Set(),structural=new Set();
 
-function simulationAudit(c){
-  const failures=[];const paths=referenceCourse(c);counters.referencePaths+=paths.length;
-  const perfect=simulateEntrant(c,'player',{latency:0});counters.fullRaceSimulations++;
-  if(perfect.finish===null||perfect.validTransforms<2)failures.push('perfect_cannot_finish');
-  if(perfect.finish+1<paths[0].time||perfect.finish-paths[0].time>1800)failures.push('reference_integrator_disagreement');
-  const allAI={};let standardLead=0,expertLead=0;
-  for(const difficulty of ['standard','expert']){
-    const opponents=['A','B'].map(id=>{counters.fullRaceSimulations++;return simulateEntrant(c,id,{difficulty});});
-    if(opponents.some(e=>e.finish===null))failures.push('opponent_stuck');
-    const fastest=Math.min(...opponents.map(e=>e.finish??Infinity));
-    if(fastest<perfect.finish-1e-6)failures.push(`perfect_cannot_gold_${difficulty}`);
-    if(difficulty==='standard')standardLead=fastest-perfect.finish;else expertLead=fastest-perfect.finish;
-    allAI[difficulty]=opponents.map(e=>e.finish);
-  }
-  if(standardLead>4500||expertLead>3000)failures.push('weak_race_pressure_proxy');
-  for(const route of paths){
-    const e=simulateEntrant(c,'player',{latency:0,choices:Object.fromEntries(route.choices.map((x,i)=>[i,x]))});counters.routeSimulations++;
-    if(e.finish===null||e.finish>65000||e.validTransforms<1)failures.push('unplayable_alternate_route');
-  }
-  const competent=simulateEntrant(c,'player',{latency:250});
-  const novice=simulateEntrant(c,'player',{latency:450,mistakeMs:700});counters.fullRaceSimulations+=2;
-  if(novice.finish===null||novice.finish>90000)failures.push('novice_recovery_stuck');
-  const rank=time=>1+allAI.standard.filter(x=>x<time-1e-6).length;
-  return {ok:failures.length===0,failures:[...new Set(failures)],perfectMs:perfect.finish,competentMs:competent.finish,noviceMs:novice.finish,standardAI:allAI.standard,expertAI:allAI.expert,standardLead,expertLead,competentRank:rank(competent.finish),noviceRank:rank(novice.finish),routes:paths.length};
-}
 
 for(const p of patterns()){
   counters.rawCandidates++;const family=familyCounts[FAMILIES[p.family].id];family.candidates++;
@@ -49,7 +23,7 @@ for(const p of patterns()){
     attempts++;counters.geometryAttempts++;
     const recipe=buildRecipe(p,variant),course=expand(recipe),q=quality(course);
     if(!q.ok){lastReasons=q.reasons;continue;}
-    const a=simulationAudit(course);if(!a.ok){lastReasons=a.failures;continue;}
+    const a=simulationAudit(course,counters);if(!a.ok){lastReasons=a.failures;continue;}
     const contentKey=JSON.stringify(recipe.slice(1,6));
     if(exact.has(contentKey)){lastReasons=['exact_duplicate'];continue;}
     exact.add(contentKey);structural.add(signature(course));

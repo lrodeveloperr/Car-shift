@@ -116,16 +116,20 @@ function estimatedTime(course){return course.blocks.reduce((n,b)=>n+b.options[0]
 
 
 
+// A family's course grammar: it must contain the family's special terrain, must not start or end in a
+// transfer, and the special terrain needs its edge terrain on both sides.
+function sequenceAllowed(f,s){
+  const {special,edge}=FAMILIES[f].pattern,transfer=c=>TRANSFERS.has(c==='G'?FAMILIES[f].ground:c);
+  if(!s.includes(special)||transfer(s[0])||transfer(s.at(-1)))return false;
+  if(edge){for(let i=0;i<s.length;i++)if(s[i]===special&&(s[i-1]!==edge||s[i+1]!==edge))return false;}
+  return true;
+}
 function* patterns(){
   let ordinal=0;
   for(let f=0;f<FAMILIES.length;f++)for(let n=4;n<=10;n++){
-    const {alphabet,special,edge}=FAMILIES[f].pattern,transfer=c=>TRANSFERS.has(c==='G'?FAMILIES[f].ground:c);
+    const {alphabet}=FAMILIES[f].pattern;
     function* visit(s){
-      if(s.length===n){
-        if(!s.includes(special)||transfer(s[0])||transfer(s.at(-1)))return;
-        if(edge){for(let i=0;i<n;i++)if(s[i]===special&&(s[i-1]!==edge||s[i+1]!==edge))return;}
-        yield s;return;
-      }
+      if(s.length===n){if(sequenceAllowed(f,s))yield s;return;}
       for(const c of alphabet)if(c!==s.at(-1))yield* visit(s+c);
     }
     for(const sequence of visit(''))yield {family:f,sequence,ordinal:++ordinal};
@@ -370,7 +374,7 @@ class Race{
 function validateRaceSnapshot(s,depth=0){
   const bad=message=>{throw new Error(`invalid race ${message}`);};
   if(depth>1||!s||!within(s.ms,0,86400000)||!within(s.stopwatch,0,86400000)||!Number.isSafeInteger(s.serial)||s.serial<1||!Number.isSafeInteger(s.stage)||s.stage<1)bad('clocks/serial');
-  if(!['standard','expert'].includes(s.difficulty)||!['journey','replay','rematch'].includes(s.origin)||typeof s.assisted!=='boolean'||typeof s.assistedCommitted!=='boolean')bad('identity');
+  if(!['standard','expert'].includes(s.difficulty)||!['journey','replay','rematch','daily'].includes(s.origin)||typeof s.assisted!=='boolean'||typeof s.assistedCommitted!=='boolean')bad('identity');
   const c=s.course;
   if(!c||!Number.isInteger(c.family)||c.family<0||c.family>=FAMILIES.length||!Number.isSafeInteger(c.seed)||!Array.isArray(c.blocks)||c.blocks.length<3||c.blocks.length>10||!Array.isArray(s.entrants)||s.entrants.length!==3)bad('shape');
   if(!['RACING','RESULT'].includes(s.state)||!Array.isArray(s.checkpoints)||s.checkpoints.length>2)bad('state');
@@ -406,6 +410,75 @@ function validateRaceSnapshot(s,depth=0){
 
 
 
+// Simulation gates every course passes before a player can see it. Offline authoring and the on-device
+// daily course share them; pass a counters object to tally the simulations run.
+function simulationAudit(c,counters={}){
+  const count=(key,n=1)=>{counters[key]=(counters[key]??0)+n;};
+  const failures=[];const paths=referenceCourse(c);count('referencePaths',paths.length);
+  const perfect=simulateEntrant(c,'player',{latency:0});count('fullRaceSimulations');
+  if(perfect.finish===null||perfect.validTransforms<2)failures.push('perfect_cannot_finish');
+  if(perfect.finish+1<paths[0].time||perfect.finish-paths[0].time>1800)failures.push('reference_integrator_disagreement');
+  const allAI={};let standardLead=0,expertLead=0;
+  for(const difficulty of ['standard','expert']){
+    const opponents=['A','B'].map(id=>{count('fullRaceSimulations');return simulateEntrant(c,id,{difficulty});});
+    if(opponents.some(e=>e.finish===null))failures.push('opponent_stuck');
+    const fastest=Math.min(...opponents.map(e=>e.finish??Infinity));
+    if(fastest<perfect.finish-1e-6)failures.push(`perfect_cannot_gold_${difficulty}`);
+    if(difficulty==='standard')standardLead=fastest-perfect.finish;else expertLead=fastest-perfect.finish;
+    allAI[difficulty]=opponents.map(e=>e.finish);
+  }
+  if(standardLead>4500||expertLead>3000)failures.push('weak_race_pressure_proxy');
+  for(const route of paths){
+    const e=simulateEntrant(c,'player',{latency:0,choices:Object.fromEntries(route.choices.map((x,i)=>[i,x]))});count('routeSimulations');
+    if(e.finish===null||e.finish>65000||e.validTransforms<1)failures.push('unplayable_alternate_route');
+  }
+  const competent=simulateEntrant(c,'player',{latency:250});
+  const novice=simulateEntrant(c,'player',{latency:450,mistakeMs:700});count('fullRaceSimulations',2);
+  if(novice.finish===null||novice.finish>90000)failures.push('novice_recovery_stuck');
+  const rank=time=>1+allAI.standard.filter(x=>x<time-1e-6).length;
+  return {ok:failures.length===0,failures:[...new Set(failures)],perfectMs:perfect.finish,competentMs:competent.finish,noviceMs:novice.finish,standardAI:allAI.standard,expertAI:allAI.expert,standardLead,expertLead,competentRank:rank(competent.finish),noviceRank:rank(novice.finish),routes:paths.length};
+}
+
+
+
+
+// Daily course: generated on the device from the date, so everyone on the same day and progress tier gets the
+// same race without a download. It must pass the same gates as the prevalidated bank, or there is no daily.
+const DAILY_FROM=4; // offered once the first three teaching stages are done
+const DAILY_ID=/^D(\d{4}-\d{2}-\d{2})\.(\d{1,2})$/;
+const dailyId=(day,family)=>`D${day}.${family}`;
+const rng=seed=>{let a=seed>>>0;return ()=>{a=a+0x6D2B79F5>>>0;let t=Math.imul(a^a>>>15,1|a);t^=t+Math.imul(t^t>>>7,61|t);return((t^t>>>14)>>>0)/4294967296;};};
+
+// The day's family comes from those the player has unlocked, so a daily never needs a vehicle they lack.
+function dailyFamily(day,frontier){
+  const open=FAMILIES.map((f,i)=>f.unlock<=frontier?i:-1).filter(i=>i>=0);
+  return open[hash(`daily-family:${day}`)%open.length];
+}
+function previousDay(day){const d=new Date(`${day}T00:00:00Z`);d.setUTCDate(d.getUTCDate()-1);return d.toISOString().slice(0,10);}
+function dailyRecipe(day,family){
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(day)||!FAMILIES[family])return null;
+  const random=rng(hash(`daily:${VERSION}:${day}:${family}`)),{alphabet,special,edge}=FAMILIES[family].pattern;
+  for(let attempt=0;attempt<60;attempt++){
+    // Random walk that respects the edge rule as it goes: a special terrain only follows its edge and is followed by it.
+    const n=5+Math.floor(random()*4);let s='';
+    while(s.length<n){
+      if(edge&&s.at(-1)===special){s+=edge;continue;}
+      const options=[...alphabet].filter(c=>c!==s.at(-1)&&!(edge&&c===special&&(s.at(-1)!==edge||s.length>n-2)));
+      s+=options[Math.floor(random()*options.length)];
+    }
+    if(!sequenceAllowed(family,s)||repetitive(s))continue;
+    // The bank keeps the first passing geometry among variants 0–15; variants from 16 up are new layouts in nearly every case.
+    for(let v=0;v<4;v++){
+      const recipe=buildRecipe({family,sequence:s,ordinal:0},16+Math.floor(random()*100000));recipe[0]=dailyId(day,family);
+      if(quality(expand(recipe)).ok&&simulationAudit(expand(recipe)).ok)return recipe;
+    }
+  }
+  return null;
+}
+
+
+
+
 
 class ProtectedSaveError extends Error{}
 class MemoryStorage{
@@ -420,7 +493,9 @@ class Catalog{
     this.keys=new Map([...this.map].map(([id,r])=>[id,JSON.stringify(r.slice(1,6))]));
     this.signatures=new Map([...this.map].map(([id,r])=>[id,signature(expand(r))]));
   }
-  course(id){const r=this.map.get(id);if(!r)throw new ProtectedSaveError('unknown course version');return expand(r);}
+  course(id){const r=this.map.get(id)??this.daily(id);if(!r)throw new ProtectedSaveError('unknown course version');return expand(r);}
+  // Daily courses are regenerated from their id (date and family), so saves can refer to them like bank courses.
+  daily(id){const m=DAILY_ID.exec(id),r=m?dailyRecipe(m[1],Number(m[2])):null;if(r)this.map.set(id,r);return r;}
   pick(family,cursor=0,history=[],{forks=null,signatures=[],strict=false}={}){
     const list=this.families[family];if(!list?.length)throw new Error('empty validated family');
     const exact=new Set(history.map(id=>this.keys.get(id))),structures=new Set(signatures);
@@ -444,7 +519,8 @@ function drawFamily(state,stage,last){
   return state.bag.shift();
 }
 function initialData(){return {schema:1,revision:0,frontier:1,nextSerial:1,lastCreditedSerial:0,queue:[],history:[],signatures:[],familyCursor:FAMILIES.map(()=>0),familyBag:[],bagRound:0,forkBag:[],forkRound:0,records:[],foundationRecords:{},run:null,
-  pacing:{firstAttempted:false,firstFinishes:0,initialActive:0,finishesSinceAd:0,activeSinceAd:0,hadReservation:false,consumed:[]},adPending:null,claim:null};}
+  pacing:{firstAttempted:false,firstFinishes:0,initialActive:0,finishesSinceAd:0,activeSinceAd:0,hadReservation:false,consumed:[]},adPending:null,claim:null,
+  daily:{last:null,streak:0,rank:null,time:null}};}
 function encodeRace(snapshot){
   if(!snapshot)return null;
   const {course,checkpoints,...rest}=snapshot;
@@ -461,7 +537,7 @@ function decodeRace(snapshot,catalog,depth=0){
 function validateData(d,catalog){
   if(!d||d.schema!==1)throw new ProtectedSaveError('unknown save schema');
   // Schema 1 was diagnostic-only; absent scheduling fields migrate without touching the source.
-  d.forkBag??=[];d.forkRound??=0;
+  d.forkBag??=[];d.forkRound??=0;d.daily??={last:null,streak:0,rank:null,time:null};
   // Saves from before the later vehicle families start those families' course cursors at zero.
   if(Array.isArray(d.familyCursor)&&d.familyCursor.length<FAMILIES.length)d.familyCursor=[...d.familyCursor,...Array(FAMILIES.length-d.familyCursor.length).fill(0)];
   for(const k of ['revision','frontier','nextSerial','lastCreditedSerial','bagRound','forkRound'])if(!Number.isSafeInteger(d[k])||d[k]<0||(['frontier','nextSerial'].includes(k)&&d[k]<1))throw new ProtectedSaveError(`bad ${k}`);
@@ -482,6 +558,9 @@ function validateData(d,catalog){
   for(const k of ['firstAttempted','hadReservation'])if(typeof d.pacing[k]!=='boolean')throw new ProtectedSaveError('bad pacing flags');
   if(d.pacing.consumed.some(x=>!Number.isSafeInteger(x)||x<1||x>=d.nextSerial))throw new ProtectedSaveError('bad consumed reservation');
   if(d.claim){if(!Number.isSafeInteger(d.claim.serial)||d.claim.serial<1||d.claim.serial>=d.nextSerial||typeof d.claim.token!=='string'||d.claim.token.length>96)throw new ProtectedSaveError('bad claim');}
+  const day=d.daily;
+  if(!day||typeof day!=='object'||Array.isArray(day)||day.last!==null&&!/^\d{4}-\d{2}-\d{2}$/.test(day.last)||!Number.isSafeInteger(day.streak)||day.streak<0||
+    day.rank!==null&&(!Number.isInteger(day.rank)||!within(day.rank,1,3))||day.time!==null&&!within(day.time,0,86400000))throw new ProtectedSaveError('bad daily');
   if(d.adPending&&(!['interstitial','set','rematch'].includes(d.adPending.kind)||typeof d.adPending.token!=='string'||d.adPending.token.length>96))throw new ProtectedSaveError('bad ad reservation');
   return true;
 }
@@ -556,12 +635,12 @@ class Session{
     this.chain=job;return job.catch(e=>{this.unsaved=true;throw e;});
   }
   start(options={}){if(this.startPromise)return this.startPromise;this.startPromise=this.startRun(options).finally(()=>{this.startPromise=null;});return this.startPromise;}
-  async startRun({id=null,difficulty='standard',replay=false,latency=null}={}){
+  async startRun({id=null,difficulty='standard',replay=false,latency=null,origin=null}={}){
     if(!this.loaded||this.protected||this.hostPaused)throw new Error('not playable');
     if(!['standard','expert'].includes(difficulty)||difficulty==='expert'&&this.data.frontier<=6)throw new Error('difficulty locked');
     if(this.data.nextSerial>=Number.MAX_SAFE_INTEGER||this.data.frontier>=Number.MAX_SAFE_INTEGER)throw new Error('progress migration required');
     this.fillQueue();const target=id??this.data.queue[0];
-    this.race=new Race(this.catalog.course(target),{difficulty,stage:this.data.frontier,serial:this.data.nextSerial++,latency});this.origin=replay?'replay':'journey';this.race.origin=this.origin;
+    this.race=new Race(this.catalog.course(target),{difficulty,stage:this.data.frontier,serial:this.data.nextSerial++,latency});this.origin=origin??(replay?'replay':'journey');this.race.origin=this.origin;
     this.dirty();await this.flush();return this.race;
   }
   step(delta=20){
@@ -578,14 +657,28 @@ class Session{
     if(r.serial<=this.data.lastCreditedSerial)return false;
     this.data.lastCreditedSerial=r.serial;
     if(r.meaningful){const p=this.data.pacing;p.firstFinishes=Math.min(2,p.firstFinishes+1);p.finishesSinceAd=Math.min(2,p.finishesSinceAd+1);}
-    if(this.race.origin!=='replay'&&this.race.stage===this.data.frontier){
+    if(this.race.origin==='daily')this.settleDaily(r);
+    else if(this.race.origin!=='replay'&&this.race.stage===this.data.frontier){
       this.data.history.push(this.race.course.id);if(this.data.history.length>64)this.data.history.shift();
       this.data.signatures.push(signature(this.race.course));if(this.data.signatures.length>12)this.data.signatures.shift();
       this.data.frontier++;this.data.queue.shift();this.fillQueue();
     }
     this.record(r);this.dirty();return true;
   }
+  // A daily counts once per day, extends the streak when yesterday's was also cleared, and never moves the journey.
+  settleDaily(r){
+    const day=DAILY_ID.exec(this.race.course.id)?.[1],d=this.data.daily;if(!day||d.last===day)return;
+    d.streak=d.last===previousDay(day)?d.streak+1:1;d.last=day;d.rank=r.rank;d.time=r.time;
+  }
+  // The day's course id when it is still waiting for this player, otherwise null.
+  dailyAvailable(day){
+    if(!this.loaded||this.protected||this.data.frontier<DAILY_FROM||this.data.daily.last===day)return null;
+    const id=dailyId(day,dailyFamily(day,this.data.frontier));
+    try{this.catalog.course(id);return id;}catch{return null;}
+  }
+  startDaily(day){const id=this.dailyAvailable(day);return id?this.start({id,origin:'daily'}):Promise.resolve(null);}
   record(r){
+    if(DAILY_ID.test(this.race.course.id))return; // dailies keep their own result; records hold bank courses only
     const item={id:this.race.course.id,difficulty:this.race.difficulty,time:r.time,rank:r.rank,assisted:r.assisted,clean:r.clean};
     const index=this.data.records.findIndex(x=>x.id===item.id&&x.difficulty===item.difficulty&&x.assisted===item.assisted);
     if(index>=0){const old=this.data.records.splice(index,1)[0];item.time=Math.min(old.time,item.time);item.rank=Math.min(old.rank,item.rank);item.clean=Math.max(old.clean,item.clean);}
@@ -596,14 +689,16 @@ class Session{
     return p.firstAttempted?p.finishesSinceAd>=2&&p.activeSinceAd>=120000:p.firstFinishes>=2&&p.initialActive>=120000&&(!p.hadReservation||p.activeSinceAd>=120000);
   }
   next(options={}){if(this.nextPromise)return this.nextPromise;this.nextPromise=this.nextRun(options).finally(()=>{this.nextPromise=null;});return this.nextPromise;}
-  async nextRun({replay=false,latency=null}={}){
+  async nextRun({replay=false,latency=null,day=null}={}){
     if(this.race?.state!=='RESULT')throw new Error('result required');
     const oldId=this.race.course.id,difficulty=this.race.difficulty;
     if(this.interstitialEligible())await this.requestAd('interstitial');
     if(this.hostPaused)return false;
-    return this.start({id:replay?oldId:null,difficulty,replay,latency});
+    // The first race of a new day is that day's course; Replay and the rest of the day follow the journey.
+    const daily=!replay&&day?this.dailyAvailable(day):null;
+    return this.start({id:replay?oldId:daily,difficulty:daily?'standard':difficulty,replay,latency,origin:daily?'daily':null});
   }
-  async restart({latency=null}={}){if(!this.race||this.hostPaused)throw new Error('not restartable');return this.start({id:this.race.course.id,difficulty:this.race.difficulty,replay:this.race.origin==='replay',latency});}
+  async restart({latency=null}={}){if(!this.race||this.hostPaused)throw new Error('not restartable');return this.start({id:this.race.course.id,difficulty:this.race.difficulty,replay:this.race.origin==='replay',latency,origin:this.race.origin==='daily'?'daily':null});}
   rematchOffer(){
     const r=this.race?.result,p=this.data.pacing;
     if(!this.enableAdFixtures||!r?.meaningful||r.rank===1||this.race.ms<20000||this.race.assisted||!this.race.checkpoints.length||this.data.claim||this.inFlight||this.hostPaused||p.consumed.includes(r.serial)||p.hadReservation&&p.activeSinceAd<120000)return null;

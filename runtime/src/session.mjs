@@ -1,6 +1,7 @@
 import {FAMILIES,hash,clone,within,bestSlot} from './rules.mjs';
 import {expand,signature} from './content.mjs';
 import {Race,validateRaceSnapshot} from './race.mjs';
+import {DAILY_FROM,DAILY_ID,dailyId,dailyFamily,dailyRecipe,previousDay} from './daily.mjs';
 
 export class ProtectedSaveError extends Error{}
 export class MemoryStorage{
@@ -15,7 +16,9 @@ export class Catalog{
     this.keys=new Map([...this.map].map(([id,r])=>[id,JSON.stringify(r.slice(1,6))]));
     this.signatures=new Map([...this.map].map(([id,r])=>[id,signature(expand(r))]));
   }
-  course(id){const r=this.map.get(id);if(!r)throw new ProtectedSaveError('unknown course version');return expand(r);}
+  course(id){const r=this.map.get(id)??this.daily(id);if(!r)throw new ProtectedSaveError('unknown course version');return expand(r);}
+  // Daily courses are regenerated from their id (date and family), so saves can refer to them like bank courses.
+  daily(id){const m=DAILY_ID.exec(id),r=m?dailyRecipe(m[1],Number(m[2])):null;if(r)this.map.set(id,r);return r;}
   pick(family,cursor=0,history=[],{forks=null,signatures=[],strict=false}={}){
     const list=this.families[family];if(!list?.length)throw new Error('empty validated family');
     const exact=new Set(history.map(id=>this.keys.get(id))),structures=new Set(signatures);
@@ -39,7 +42,8 @@ function drawFamily(state,stage,last){
   return state.bag.shift();
 }
 export function initialData(){return {schema:1,revision:0,frontier:1,nextSerial:1,lastCreditedSerial:0,queue:[],history:[],signatures:[],familyCursor:FAMILIES.map(()=>0),familyBag:[],bagRound:0,forkBag:[],forkRound:0,records:[],foundationRecords:{},run:null,
-  pacing:{firstAttempted:false,firstFinishes:0,initialActive:0,finishesSinceAd:0,activeSinceAd:0,hadReservation:false,consumed:[]},adPending:null,claim:null};}
+  pacing:{firstAttempted:false,firstFinishes:0,initialActive:0,finishesSinceAd:0,activeSinceAd:0,hadReservation:false,consumed:[]},adPending:null,claim:null,
+  daily:{last:null,streak:0,rank:null,time:null}};}
 function encodeRace(snapshot){
   if(!snapshot)return null;
   const {course,checkpoints,...rest}=snapshot;
@@ -56,7 +60,7 @@ function decodeRace(snapshot,catalog,depth=0){
 function validateData(d,catalog){
   if(!d||d.schema!==1)throw new ProtectedSaveError('unknown save schema');
   // Schema 1 was diagnostic-only; absent scheduling fields migrate without touching the source.
-  d.forkBag??=[];d.forkRound??=0;
+  d.forkBag??=[];d.forkRound??=0;d.daily??={last:null,streak:0,rank:null,time:null};
   // Saves from before the later vehicle families start those families' course cursors at zero.
   if(Array.isArray(d.familyCursor)&&d.familyCursor.length<FAMILIES.length)d.familyCursor=[...d.familyCursor,...Array(FAMILIES.length-d.familyCursor.length).fill(0)];
   for(const k of ['revision','frontier','nextSerial','lastCreditedSerial','bagRound','forkRound'])if(!Number.isSafeInteger(d[k])||d[k]<0||(['frontier','nextSerial'].includes(k)&&d[k]<1))throw new ProtectedSaveError(`bad ${k}`);
@@ -77,6 +81,9 @@ function validateData(d,catalog){
   for(const k of ['firstAttempted','hadReservation'])if(typeof d.pacing[k]!=='boolean')throw new ProtectedSaveError('bad pacing flags');
   if(d.pacing.consumed.some(x=>!Number.isSafeInteger(x)||x<1||x>=d.nextSerial))throw new ProtectedSaveError('bad consumed reservation');
   if(d.claim){if(!Number.isSafeInteger(d.claim.serial)||d.claim.serial<1||d.claim.serial>=d.nextSerial||typeof d.claim.token!=='string'||d.claim.token.length>96)throw new ProtectedSaveError('bad claim');}
+  const day=d.daily;
+  if(!day||typeof day!=='object'||Array.isArray(day)||day.last!==null&&!/^\d{4}-\d{2}-\d{2}$/.test(day.last)||!Number.isSafeInteger(day.streak)||day.streak<0||
+    day.rank!==null&&(!Number.isInteger(day.rank)||!within(day.rank,1,3))||day.time!==null&&!within(day.time,0,86400000))throw new ProtectedSaveError('bad daily');
   if(d.adPending&&(!['interstitial','set','rematch'].includes(d.adPending.kind)||typeof d.adPending.token!=='string'||d.adPending.token.length>96))throw new ProtectedSaveError('bad ad reservation');
   return true;
 }
@@ -151,12 +158,12 @@ export class Session{
     this.chain=job;return job.catch(e=>{this.unsaved=true;throw e;});
   }
   start(options={}){if(this.startPromise)return this.startPromise;this.startPromise=this.startRun(options).finally(()=>{this.startPromise=null;});return this.startPromise;}
-  async startRun({id=null,difficulty='standard',replay=false,latency=null}={}){
+  async startRun({id=null,difficulty='standard',replay=false,latency=null,origin=null}={}){
     if(!this.loaded||this.protected||this.hostPaused)throw new Error('not playable');
     if(!['standard','expert'].includes(difficulty)||difficulty==='expert'&&this.data.frontier<=6)throw new Error('difficulty locked');
     if(this.data.nextSerial>=Number.MAX_SAFE_INTEGER||this.data.frontier>=Number.MAX_SAFE_INTEGER)throw new Error('progress migration required');
     this.fillQueue();const target=id??this.data.queue[0];
-    this.race=new Race(this.catalog.course(target),{difficulty,stage:this.data.frontier,serial:this.data.nextSerial++,latency});this.origin=replay?'replay':'journey';this.race.origin=this.origin;
+    this.race=new Race(this.catalog.course(target),{difficulty,stage:this.data.frontier,serial:this.data.nextSerial++,latency});this.origin=origin??(replay?'replay':'journey');this.race.origin=this.origin;
     this.dirty();await this.flush();return this.race;
   }
   step(delta=20){
@@ -173,14 +180,28 @@ export class Session{
     if(r.serial<=this.data.lastCreditedSerial)return false;
     this.data.lastCreditedSerial=r.serial;
     if(r.meaningful){const p=this.data.pacing;p.firstFinishes=Math.min(2,p.firstFinishes+1);p.finishesSinceAd=Math.min(2,p.finishesSinceAd+1);}
-    if(this.race.origin!=='replay'&&this.race.stage===this.data.frontier){
+    if(this.race.origin==='daily')this.settleDaily(r);
+    else if(this.race.origin!=='replay'&&this.race.stage===this.data.frontier){
       this.data.history.push(this.race.course.id);if(this.data.history.length>64)this.data.history.shift();
       this.data.signatures.push(signature(this.race.course));if(this.data.signatures.length>12)this.data.signatures.shift();
       this.data.frontier++;this.data.queue.shift();this.fillQueue();
     }
     this.record(r);this.dirty();return true;
   }
+  // A daily counts once per day, extends the streak when yesterday's was also cleared, and never moves the journey.
+  settleDaily(r){
+    const day=DAILY_ID.exec(this.race.course.id)?.[1],d=this.data.daily;if(!day||d.last===day)return;
+    d.streak=d.last===previousDay(day)?d.streak+1:1;d.last=day;d.rank=r.rank;d.time=r.time;
+  }
+  // The day's course id when it is still waiting for this player, otherwise null.
+  dailyAvailable(day){
+    if(!this.loaded||this.protected||this.data.frontier<DAILY_FROM||this.data.daily.last===day)return null;
+    const id=dailyId(day,dailyFamily(day,this.data.frontier));
+    try{this.catalog.course(id);return id;}catch{return null;}
+  }
+  startDaily(day){const id=this.dailyAvailable(day);return id?this.start({id,origin:'daily'}):Promise.resolve(null);}
   record(r){
+    if(DAILY_ID.test(this.race.course.id))return; // dailies keep their own result; records hold bank courses only
     const item={id:this.race.course.id,difficulty:this.race.difficulty,time:r.time,rank:r.rank,assisted:r.assisted,clean:r.clean};
     const index=this.data.records.findIndex(x=>x.id===item.id&&x.difficulty===item.difficulty&&x.assisted===item.assisted);
     if(index>=0){const old=this.data.records.splice(index,1)[0];item.time=Math.min(old.time,item.time);item.rank=Math.min(old.rank,item.rank);item.clean=Math.max(old.clean,item.clean);}
@@ -191,14 +212,16 @@ export class Session{
     return p.firstAttempted?p.finishesSinceAd>=2&&p.activeSinceAd>=120000:p.firstFinishes>=2&&p.initialActive>=120000&&(!p.hadReservation||p.activeSinceAd>=120000);
   }
   next(options={}){if(this.nextPromise)return this.nextPromise;this.nextPromise=this.nextRun(options).finally(()=>{this.nextPromise=null;});return this.nextPromise;}
-  async nextRun({replay=false,latency=null}={}){
+  async nextRun({replay=false,latency=null,day=null}={}){
     if(this.race?.state!=='RESULT')throw new Error('result required');
     const oldId=this.race.course.id,difficulty=this.race.difficulty;
     if(this.interstitialEligible())await this.requestAd('interstitial');
     if(this.hostPaused)return false;
-    return this.start({id:replay?oldId:null,difficulty,replay,latency});
+    // The first race of a new day is that day's course; Replay and the rest of the day follow the journey.
+    const daily=!replay&&day?this.dailyAvailable(day):null;
+    return this.start({id:replay?oldId:daily,difficulty:daily?'standard':difficulty,replay,latency,origin:daily?'daily':null});
   }
-  async restart({latency=null}={}){if(!this.race||this.hostPaused)throw new Error('not restartable');return this.start({id:this.race.course.id,difficulty:this.race.difficulty,replay:this.race.origin==='replay',latency});}
+  async restart({latency=null}={}){if(!this.race||this.hostPaused)throw new Error('not restartable');return this.start({id:this.race.course.id,difficulty:this.race.difficulty,replay:this.race.origin==='replay',latency,origin:this.race.origin==='daily'?'daily':null});}
   rematchOffer(){
     const r=this.race?.result,p=this.data.pacing;
     if(!this.enableAdFixtures||!r?.meaningful||r.rank===1||this.race.ms<20000||this.race.assisted||!this.race.checkpoints.length||this.data.claim||this.inFlight||this.hostPaused||p.consumed.includes(r.serial)||p.hadReservation&&p.activeSinceAd<120000)return null;

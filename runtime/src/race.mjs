@@ -145,7 +145,7 @@ export class Race{
 export function validateRaceSnapshot(s,depth=0){
   const bad=message=>{throw new Error(`invalid race ${message}`);};
   if(depth>1||!s||!within(s.ms,0,86400000)||!within(s.stopwatch,0,86400000)||!Number.isSafeInteger(s.serial)||s.serial<1||!Number.isSafeInteger(s.stage)||s.stage<1)bad('clocks/serial');
-  if(!['standard','expert'].includes(s.difficulty)||!['journey','replay','rematch'].includes(s.origin)||typeof s.assisted!=='boolean'||typeof s.assistedCommitted!=='boolean')bad('identity');
+  if(!['standard','expert'].includes(s.difficulty)||!['journey','replay','rematch','daily'].includes(s.origin)||typeof s.assisted!=='boolean'||typeof s.assistedCommitted!=='boolean')bad('identity');
   const c=s.course;
   if(!c||!Number.isInteger(c.family)||c.family<0||c.family>=FAMILIES.length||!Number.isSafeInteger(c.seed)||!Array.isArray(c.blocks)||c.blocks.length<3||c.blocks.length>10||!Array.isArray(s.entrants)||s.entrants.length!==3)bad('shape');
   if(!['RACING','RESULT'].includes(s.state)||!Array.isArray(s.checkpoints)||s.checkpoints.length>2)bad('state');

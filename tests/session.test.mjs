@@ -1,7 +1,8 @@
 import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';
 import {Catalog,Session,MemoryStorage,initialData} from '../source/session.mjs';
 import {Race} from '../source/race.mjs';
-import {FAMILIES} from '../source/rules.mjs';
+import {FAMILIES,bestSlot} from '../source/rules.mjs';
+import {dailyRecipe,DAILY_FROM} from '../source/daily.mjs';
 const recipes=JSON.parse(fs.readFileSync(new URL('../runtime/data/bank.json',import.meta.url))).recipes;
 const catalog=new Catalog(recipes);
 const setup=async(options={})=>{const data=initialData();data.frontier=37;const storage=new MemoryStorage(JSON.stringify(data));const s=new Session(catalog,storage,options);assert.equal(await s.load(),true);return {s,storage};};
@@ -94,4 +95,29 @@ test('later vehicle families debut on their unlock stage and six-family saves mi
  for(let i=1;i<seen.length;i++)assert.notEqual(seen[i],seen[i-1]);
  assert.equal(new Set(seen).size,FAMILIES.length);
  const locked=s.setOffer(FAMILIES.length);assert.equal(locked,null);
+});
+
+test('daily course: same recipe for the same day and family, fresh geometry, passes every gate',()=>{
+ const a=dailyRecipe('2026-10-19',3),b=dailyRecipe('2026-10-19',3),c=dailyRecipe('2026-10-20',3);
+ assert.deepEqual(a,b);assert.notDeepEqual(a.slice(1),c.slice(1));assert.equal(a[0],'D2026-10-19.3');assert.ok(a[7]>=16);
+ assert.equal(dailyRecipe('not-a-day',0),null);assert.equal(dailyRecipe('2026-10-19',99),null);
+});
+// Steers with the fastest legal vehicle, like the end-to-end tool, so restored races finish from any point.
+const drive=sess=>{while(!sess.race.result&&sess.race.ms<180000){const r=sess.race,e=r.player,leg=r.course.blocks[e.block]?.options[e.choice];if(leg&&e.slot!==bestSlot(r.course.family,leg))r.commandSlot(bestSlot(r.course.family,leg));sess.step(20);}assert.ok(sess.race.result);};
+test('daily course is offered once per day from stage 4, never moves the journey, and builds a streak',async()=>{
+ const early=initialData();early.frontier=DAILY_FROM-1;const e=new Session(catalog,new MemoryStorage(JSON.stringify(early)));await e.load();assert.equal(e.dailyAvailable('2026-10-19'),null);
+ const {s,storage}=await setup();const queue=[...s.data.queue],frontier=s.data.frontier,history=[...s.data.history],records=s.data.records.length;
+ const id=s.dailyAvailable('2026-10-19');assert.match(id,/^D2026-10-19\.\d+$/);assert.ok(FAMILIES[Number(id.split('.')[1])].unlock<=frontier);
+ await s.startDaily('2026-10-19');assert.equal(s.race.origin,'daily');for(let i=0;i<600;i++)s.step(20);await s.flush();
+ const reloaded=new Session(catalog,storage);assert.equal(await reloaded.load(),true,reloaded.error);assert.equal(reloaded.race.course.id,id);
+ drive(reloaded);await reloaded.flush();
+ assert.equal(reloaded.data.frontier,frontier);assert.deepEqual(reloaded.data.queue,queue);assert.deepEqual(reloaded.data.history,history);assert.equal(reloaded.data.records.length,records);
+ assert.deepEqual({last:reloaded.data.daily.last,streak:reloaded.data.daily.streak},{last:'2026-10-19',streak:1});assert.equal(reloaded.dailyAvailable('2026-10-19'),null);
+ await reloaded.next({latency:0,day:'2026-10-19'});assert.equal(reloaded.race.origin,'journey');assert.equal(reloaded.race.course.id,queue[0]);
+ drive(reloaded);
+ await reloaded.next({latency:0,day:'2026-10-20'});assert.equal(reloaded.race.origin,'daily');drive(reloaded);
+ assert.equal(reloaded.data.daily.streak,2);
+ await reloaded.next({latency:0,day:'2026-10-22'});drive(reloaded);assert.equal(reloaded.data.daily.streak,1);
+ await reloaded.restart({latency:0});assert.equal(reloaded.race.origin,'daily');
+ const next=new Session(catalog,new MemoryStorage((()=>{const d=JSON.parse(storage.value);delete d.daily;return JSON.stringify(d);})()));assert.equal(await next.load(),true,next.error);assert.equal(next.data.daily.streak,0);
 });
