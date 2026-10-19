@@ -44,11 +44,11 @@ function prepareCourse(course){
   }
 }
 function showTitle(){
-  // A saved unfinished race resumes; otherwise the title previews today's course if it is waiting, else the next queued one.
+  // A saved unfinished race resumes; otherwise the title previews whatever Play will start next.
   const saved=session.race?.state==='RACING'?session.race:null,daily=saved?null:session.dailyAvailable(today());
   const course=saved?.course??session.catalog.course(daily??session.data.queue[0]);
   preview=saved??new Race(course,{stage:session.data.frontier});prepareCourse(course);
-  $('play').classList.toggle('daily',!!daily);$('play').disabled=false;show('title',true);mode='title';
+  $('play').disabled=false;show('title',true);mode='title';
 }
 // Per-race memory of what the player last heard and saw, so cues fire on changes only.
 function freshCue(race){
@@ -60,14 +60,15 @@ function startRace(race){
   if(!race)return;
   prepareCourse(race.course);race.resume('menu');ghost=null;acc=0;mode='racing';cue=freshCue(race);
   show('title',false);show('result',false);show('paused',false);show('hud',true);
-  show('dailyMark',race.origin==='daily');sound.play('go');if(race.origin==='daily')sound.play('daily');
+  sound.play('go');
 }
 async function run(task){
   if(busy)return;busy=true;
   try{startRace(await task());}catch(e){console.error(e);show('title',true);mode='title';}
   finally{busy=false;}
 }
-// No level picking: Play resumes, or starts today's course if it is waiting, or the next journey course.
+// No level picking: Play resumes, or starts today's fresh course if it is waiting, or the next journey course.
+// The daily looks and sounds like any other race; to the player it is simply the next level.
 const play=()=>run(()=>{
   const race=session.race,day=today();
   if(race?.state==='RACING')return race;
@@ -87,11 +88,8 @@ function finish(now){
 function showResult(){
   const r=session.race.result;
   $('medal').style.setProperty('--medal',r.genuine?MEDALS[r.rank-1]:'var(--none)');
-  const daily=session.race.origin==='daily',streak=session.data.daily.streak;
-  show('streak',daily);if(daily)$('streak').querySelectorAll('i').forEach((dot,i)=>dot.classList.toggle('on',i<Math.min(7,streak)));
-  $('next').classList.toggle('daily',!!session.dailyAvailable(today()));
   show('result',true);show('hud',false);mode='result';$('next').focus({preventScroll:true});
-  if(r.genuine)sound.play('medal',r.rank);if(daily&&r.genuine)setTimeout(()=>sound.play('streak',streak),700);
+  if(r.genuine)sound.play('medal',r.rank);
 }
 function pause(){
   const race=session?.race;if(mode!=='racing'||!race||race.pauses.has('menu'))return;

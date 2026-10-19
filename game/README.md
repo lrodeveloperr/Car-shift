@@ -40,7 +40,7 @@ No words or numbers are shown; text exists only as `aria-label`s for screen read
 
 ## Daily course
 
-From stage 4, the first race of each day is that day's course, with no menu. Play starts it automatically and wears a spinning gold sun while it is waiting. A sun sits beside the position disc during the race, and the result shows seven streak dots, a bell and a streak chime. The course is generated on the device (`source/daily.mjs`), uses only unlocked vehicles, passes the same gates as the built-in levels, and never changes the journey.
+From stage 4, the first race of each day is that day's course. It has no marker, badge or special sound: to the player it is simply the next level after Play or Next. The course is generated on the device (`source/daily.mjs`), uses only unlocked vehicles, passes the same gates as the built-in levels, and never changes the journey. The engine still records a daily streak in the save, but nothing displays it.
 
 ## Sound
 
@@ -58,7 +58,6 @@ Every sound is tied to a real engine event, so the audio also teaches the game.
 | Gate ahead opens or closes | Blip or clack |
 | Stuck in a vehicle that can't move | Repeating soft warning, with the hint ripple |
 | Invalid tap | Low double bonk and a button shake |
-| Daily course start, streak |  Bell chord; a chime that climbs one note per streak day |
 | Race start, finish, medal reveal | "Go" sting, a fanfare sized to the place (confetti for gold), shimmer |
 
 The engine hum runs under the music, and the music ducks under the fanfare. All levels were measured offline; peaks stay below −6 dB.

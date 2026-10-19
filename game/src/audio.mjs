@@ -109,9 +109,6 @@ export class Sound{
   sfx_launch(){this.noise({dur:1.2,attack:.06,type:'lowpass',freq:400,to:3200,gain:.32});this.voice('sine',58,{to:190,glide:.9,dur:1,gain:.22});
     [79,84,91].forEach((n,i)=>this.voice('sine',midi(n),{t:.55+i*.08,dur:.5,gain:.05,send:.7}));}
   sfx_soar(){this.noise({dur:.9,attack:.3,type:'bandpass',freq:700,to:2000,q:.7,gain:.18});this.voice('sine',midi(72),{t:.15,to:midi(79),glide:.5,dur:.7,gain:.06,send:.6});}
-  // Daily course: a bright bell as it starts, and a chime that climbs one note per day of the streak.
-  sfx_daily(){[72,79,84,88].forEach((n,i)=>this.voice('sine',midi(n),{t:.25+i*.05,dur:1,gain:.07,send:.8}));this.voice('triangle',midi(96),{t:.25,dur:1.2,gain:.04,send:.9});}
-  sfx_streak(days=1){for(let i=0;i<Math.min(7,days);i++)this.voice('sine',midi(76+PENTA[i]),{t:.2+i*.09,dur:.45,gain:.07,send:.6});}
   sfx_hoop(n=0){const m=72+PENTA[Math.min(n,PENTA.length-1)];
     this.voice('sine',midi(m),{dur:.65,gain:.16,send:.6});this.voice('triangle',midi(m+12),{dur:.3,gain:.05,send:.6});this.noise({dur:.18,type:'highpass',freq:7000,gain:.04,send:.4});}
   sfx_checkpoint(){this.voice('triangle',midi(79),{dur:.3,gain:.1,send:.5});this.voice('triangle',midi(84),{t:.09,dur:.45,gain:.1,send:.5});}

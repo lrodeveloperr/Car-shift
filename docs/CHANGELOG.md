@@ -1,3 +1,7 @@
+# 19 October 2026 — daily course made invisible
+
+At the user's direction (players just want to press Play and race), removed every daily-specific detail. The sun badge on Play and Next, the sun beside the position disc, the streak dots and the daily bell and streak chime are gone. The daily course still runs as the first race of each day from stage 4 and still records its streak in the save.
+
 # 19 October 2026 — daily course
 
 Added a daily course with no new screen: from stage 4, Play starts the day's course first. A spinning gold sun on Play marks it, a sun sits beside the position disc during the race, and seven streak dots show on the result. The course is generated on the device from the date (`source/daily.mjs`) from families the player has unlocked, using geometry variants the bank never uses. It must pass the same simulation gates as the bank. Those gates moved from `tools/audit.mjs` to `source/audit.mjs` so authoring and the daily share one copy; the regenerated bank is byte-identical. Dailies never change the journey frontier, queue, history or records, and are excluded from saves' record lists. Restart keeps a daily a daily. Saves without the daily field migrate. Fixed SVG visibility toggling in the game shell, which had also kept the unreadable-save warning icon hidden. Bundle is about 364 KB gzipped.
