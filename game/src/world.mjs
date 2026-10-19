@@ -4,10 +4,11 @@ import {Scene,PerspectiveCamera,Color,Fog,HemisphereLight,DirectionalLight,Buffe
   ConeGeometry,CylinderGeometry,DodecahedronGeometry,Matrix4,Vector2,Vector3,Quaternion} from 'three';
 import {mergeGeometries} from 'three/addons/utils/BufferGeometryUtils.js';
 import {FAMILIES,hash} from '../../source/rules.mjs';
-import {buildLayout,entrantTrack,gateState,pointAt,straightPath,LANE_X,ROAD,SLAB_HALF} from './track.mjs';
+import {buildLayout,entrantTrack,gateState,pointAt,straightPath,hoopDistances,LANE_X,ROAD,SLAB_HALF} from './track.mjs';
 import {createVehicle,entrantMaterials,spin,ENTRANT_COLORS} from './vehicles.mjs';
 
-const DEPTH=-9,HELI_Y=2.7,PLANE_Y=4.6;
+const DEPTH=-9,HELI_Y=2.7,PLANE_Y=4.6,MAX_SPARKS=220;
+const CONFETTI=[0xffcf33,0xff7a1a,0x37e06a,0x2f80ed,0xd83f87,0xffffff];
 const TOP={L:0,R:0,S:0,T:0,W:-.35,U:-.35};
 const THEMES=[
   {sky:[0x3a9cf5,0xd8f1ff],sea:true,floor:0x1f8bd6,cliff:0xd9c08a,tree:'palm',land:0x6fc45a},
@@ -20,7 +21,7 @@ const THEMES=[
 const C=hex=>new Color(hex);
 const COL={asphalt:C(0x434957),dash:C(0xf7f7f2),rut:C(0x8b5a33),rough:C(0xc99561),groomed:C(0xd5e6f6),snow:C(0xf2f6fb),ballast:C(0x7b746c),
   sleeper:C(0x6b4a2e),rail:C(0xd0d4da),basinW:C(0x1a6b99),basinU:C(0x0e3a5e),waterW:C(0x37b4ea),waterU:C(0x1f74b8),
-  assist:C(0x4cff7a),against:C(0xff5a4c),black:C(0x22252c),white:C(0xf7f7f2),post:C(0x3a3f4b),start:C(0xff7a1a),flag:C(0xffd23f)};
+  assist:C(0x4cff7a),against:C(0xff5a4c),black:C(0x22252c),white:C(0xf7f7f2),post:C(0x3a3f4b),flag:C(0xffd23f)};
 const rng=seed=>{let a=seed>>>0;return ()=>{a=a+0x6D2B79F5>>>0;let t=Math.imul(a^a>>>15,1|a);t^=t+Math.imul(t^t>>>7,61|t);return((t^t>>>14)>>>0)/4294967296;};};
 const damp=(k,dt)=>1-Math.exp(-k*dt);
 const easeOutBack=t=>{t=Math.min(1,t);const c=1.9;return 1+(c+1)*Math.pow(t-1,3)+c*Math.pow(t-1,2);};
@@ -109,8 +110,8 @@ export class World{
     this.gateMats={open:new MeshBasicMaterial({color:0x37e06a}),warn:new MeshBasicMaterial({color:0xffc93c}),closed:new MeshBasicMaterial({color:0xff4040})};
     this.gateBarGeo=new BoxGeometry(2.7,.2,.2).translate(1.35,0,0);this.gateLampGeo=new SphereGeometry(.26,8,6);
     this.barMats={open:new MeshLambertMaterial({color:0xf7f7f2,flatShading:true}),closed:new MeshLambertMaterial({color:0xff4040,flatShading:true})};
-    this.particles=new InstancedMesh(new BoxGeometry(.34,.34,.34),new MeshBasicMaterial({color:0xffffff}),80);this.particles.count=0;this.particles.frustumCulled=false;
-    for(let i=0;i<80;i++)this.particles.setColorAt(i,new Color(1,1,1));
+    this.particles=new InstancedMesh(new BoxGeometry(.34,.34,.34),new MeshBasicMaterial({color:0xffffff}),MAX_SPARKS);this.particles.count=0;this.particles.frustumCulled=false;
+    for(let i=0;i<MAX_SPARKS;i++)this.particles.setColorAt(i,new Color(1,1,1));
     this.scene.add(this.particles);this.sparks=[];this.dummy=new Object3D();this.time=0;
   }
   setCourse(course){
@@ -172,7 +173,7 @@ export class World{
       }
     }else{
       for(let k=0;k<Math.ceil(seg.length/24);k++)props.cloud.push({x:(r()-.5)*2*H,y:-6-r()*1.5,z:-(seg.s+r()*seg.length),s:.45+r()*.35,ry:r()*6.28});
-      if(t==='F')for(let lane=0;lane<3;lane++)for(let d=10;d<seg.length-8;d+=16)props.hoop.push({x:LANE_X[lane],y:PLANE_Y+.95,z:-(seg.s+d),s:1,ry:0});
+      if(t==='F')for(let lane=0;lane<3;lane++)for(const d of hoopDistances(seg.length))props.hoop.push({x:LANE_X[lane],y:PLANE_Y+.95,z:-(seg.s+d),s:1,ry:0});
     }
     seg.options.forEach(o=>{if(o.m)this.arrows(solid,o,seg.s,t);});
   }
@@ -203,9 +204,10 @@ export class World{
     const y=top+.04,H=SLAB_HALF;
     for(let i=0;i<Math.round(2*H);i++)for(let row=0;row<2;row++)
       b.quad([-H+i,y,-(s+row)],[-H+i+1,y,-(s+row)],[-H+i+1,y,-(s+row+1)],[-H+i,y,-(s+row+1)],(i+row)%2?COL.black:COL.white,[0,1,0]);
+    if(!finish)return;
     for(const x of [-H+.6,H-.6])b.box(x-.35,x+.35,top,top+7.4,-(s+.35),-(s-.35),COL.post);
-    b.box(-H+.25,H-.25,top+6,top+7.4,-(s+.3),-(s-.3),finish?COL.black:COL.start);
-    if(finish)for(let i=0;i<Math.round(2*H-.5);i++)for(let row=0;row<2;row++)if((i+row)%2)
+    b.box(-H+.25,H-.25,top+6,top+7.4,-(s+.3),-(s-.3),COL.black);
+    for(let i=0;i<Math.round(2*H-.5);i++)for(let row=0;row<2;row++)if((i+row)%2)
       b.quad([-H+.25+i,top+6+row*.7,-(s-.31)],[-H+1.25+i,top+6+row*.7,-(s-.31)],[-H+1.25+i,top+6.7+row*.7,-(s-.31)],[-H+.25+i,top+6.7+row*.7,-(s-.31)],COL.white,[0,0,1]);
   }
   flag(b,x,y,z){
@@ -267,12 +269,15 @@ export class World{
   }
   // Interpolation: remember where entrants were before each fixed 20 ms tick.
   capture(entrants,ms){this.prev=entrants.map(e=>entrantTrack(this.layout,e,ms));}
-  burst(x,y,z,hex){
-    const c=new Color(hex);
-    for(let k=0;k<16;k++){const a=k/16*6.283,up=2+Math.random()*4;
-      if(this.sparks.length>=80)this.sparks.shift();
-      this.sparks.push({x,y:y+1,z,vx:Math.cos(a)*5,vy:up,vz:Math.sin(a)*5,life:.55,max:.55,c:c.clone().lerp(new Color(1,1,1),Math.random()*.5)});}
+  burst(x,y,z,hex,count=16,power=1,life=.55){
+    for(let k=0;k<count;k++){const a=k/count*6.283+Math.random()*.4,up=(2+Math.random()*4)*power,colour=new Color(Array.isArray(hex)?hex[k%hex.length]:hex);
+      if(this.sparks.length>=MAX_SPARKS)this.sparks.shift();
+      this.sparks.push({x,y:y+1,z,vx:Math.cos(a)*5*power*(.6+Math.random()*.6),vy:up,vz:Math.sin(a)*5*power*(.6+Math.random()*.6),life,max:life,
+        c:Array.isArray(hex)?colour:colour.lerp(new Color(1,1,1),Math.random()*.5)});}
   }
+  // Celebration and reward bursts at an entrant's current position.
+  sparkle(i,hex=0xffcf33){const p=this.entrants[i]?.root.position;if(p)this.burst(p.x,p.y+.6,p.z,hex,14,.8,.5);}
+  confetti(i){const p=this.entrants[i]?.root.position;if(p)this.burst(p.x,p.y+1,p.z-2,CONFETTI,120,2.1,1.6);}
   update(entrants,ms,alpha,dt,reducedMotion=false){
     this.time+=dt;const course=this.data,n=course.blocks.length,vehicles=FAMILIES[this.family].vehicles;
     this.waterTrack.userData.uniforms.uTime.value=this.time;this.waterFloor.userData.uniforms.uTime.value=this.time;
@@ -310,7 +315,7 @@ export class World{
   updateSparks(dt){
     const d=this.dummy;let k=0;
     this.sparks=this.sparks.filter(p=>(p.life-=dt)>0);
-    for(const p of this.sparks){p.vy-=14*dt;p.x+=p.vx*dt;p.y+=p.vy*dt;p.z+=p.vz*dt;
+    for(const p of this.sparks){p.vy-=(p.max>1?7:14)*dt;p.x+=p.vx*dt;p.y+=p.vy*dt;p.z+=p.vz*dt;
       d.position.set(p.x,p.y,p.z);d.rotation.set(p.life*9,p.life*7,0);d.scale.setScalar(p.life/p.max);d.updateMatrix();
       this.particles.setMatrixAt(k,d.matrix);this.particles.setColorAt(k,p.c);k++;}
     this.particles.count=k;this.particles.instanceMatrix.needsUpdate=true;if(this.particles.instanceColor)this.particles.instanceColor.needsUpdate=true;

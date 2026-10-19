@@ -67,6 +67,9 @@ export function entrantTrack(layout,e,ms){
   return {s:block.s+p.s,x:p.x,ds:p.ds,dx:p.dx};
 }
 
+// Flight hoops along a flight corridor (distances into the block); shared by the scene and the hoop chime.
+export function hoopDistances(length){const out=[];for(let d=10;d<length-8;d+=16)out.push(d);return out;}
+
 export function gateState(gate,ms){
   const phase=mod(ms+gate.phase,4000);
   return phase<2500?{open:true,remaining:2500-phase}:{open:false,remaining:4000-phase};

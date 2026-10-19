@@ -30,7 +30,7 @@ Live monetization proposal D is unapproved and disabled. Fixtures test optional 
 
 ## Three.js game build
 
-`game/` contains the production presentation: a low-poly three.js renderer, HUD and YouTube Playables lifecycle. It sits on top of the unchanged engine and course bank. Build it with `cd game && npm ci && npm run build`. The initial bundle is about 243 KB gzipped. See `game/README.md` for the layout and for what is still unverified. Ads remain disabled.
+`game/` contains the production presentation: a low-poly three.js renderer, a textless icon-only HUD, synthesized Web Audio sound and the YouTube Playables lifecycle. It sits on top of the unchanged engine and course bank. Build it with `cd game && npm ci && npm run build`. The initial bundle is about 248 KB gzipped, with no asset files. See `game/README.md` for the layout and for what is still unverified. Ads remain disabled.
 
 ## Repository handoff
 

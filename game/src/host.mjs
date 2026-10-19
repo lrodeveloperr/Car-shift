@@ -20,6 +20,9 @@ export function connectHost(){
       if(yt){call(yt.system?.onPause,pause);call(yt.system?.onResume,resume);return;}
       document.addEventListener('visibilitychange',()=>document.hidden?pause():resume());
     },
+    // YouTube owns the audio switch inside Playables; the game must stay silent while it is off.
+    audioEnabled(){return yt?call(yt.system?.isAudioEnabled)!==false:true;},
+    onAudioChange(callback){if(yt)call(yt.system?.onAudioEnabledChange,callback);},
     sendScore(value){Promise.resolve(call(yt?.engagement?.sendScore,{value})).catch(()=>{});},
     logError(){call(yt?.health?.logError);},
   };

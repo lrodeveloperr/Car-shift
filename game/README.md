@@ -13,7 +13,7 @@ npm test           # track-geometry tests against every bank course
 node build.mjs --preview   # also writes dist/preview.html (single file, no YouTube SDK tag)
 ```
 
-The initial bundle is about 960 KB raw and **about 243 KB gzipped**. That includes three.js, the engine and all 4,025 courses. There are no models, textures or fonts to fetch, and no network calls other than the YouTube SDK script.
+The initial bundle is about 980 KB raw and **about 248 KB gzipped**. That includes three.js, the engine, all 4,025 courses and every sound. There are no models, textures, audio files or fonts to fetch, and no network calls other than the YouTube SDK script.
 
 ## Layout
 
@@ -22,8 +22,40 @@ The initial bundle is about 960 KB raw and **about 243 KB gzipped**. That includ
 | `src/track.mjs` | Pure math, no three.js: maps an engine `block/choice/pos` to lane coordinates. Fork bypasses wiggle so their drawn length matches the engine leg to within 0.3%, so equal speeds look equal on screen. |
 | `src/world.mjs` | Scene: terrain slabs, low-poly animated water, roads, rails, gates, flight hoops, scenery, particles and the chase camera. One merged mesh draws the track; props are instanced. |
 | `src/vehicles.mjs` | The eight vehicles, built from primitives. Geometry is baked once and shared by all three entrants. |
-| `src/main.mjs` | Boot, the fixed-tick loop with render interpolation, HUD, input, pause and dynamic resolution. |
-| `src/host.mjs` | `ytgame` adapter: `firstFrameReady`, `gameReady`, `loadData`/`saveData`, `onPause`/`onResume`, `sendScore`, `health.logError`. Outside Playables it falls back to `localStorage` and page visibility. |
+| `src/main.mjs` | Boot, the fixed-tick loop with render interpolation, HUD, input, pause, dynamic resolution, and the sound, haptic and hint cues driven by engine state changes. |
+| `src/audio.mjs` | Web Audio synthesis: every effect, a per-vehicle engine hum that follows real speed, and a light music loop. Has a compressor and reverb send; no audio files. |
+| `src/host.mjs` | `ytgame` adapter: `firstFrameReady`, `gameReady`, `loadData`/`saveData`, `onPause`/`onResume`, `isAudioEnabled`/`onAudioEnabledChange`, `sendScore`, `health.logError`. Outside Playables it falls back to `localStorage` and page visibility. |
+
+## Textless UI
+
+No words or numbers are shown; text exists only as `aria-label`s for screen readers.
+
+- **Position:** a gold, silver or bronze disc, plus three racer dots on a thin progress bar that ends in a checkered flag.
+- **Vehicles:** three coloured tiles (green ground, blue water, sky air) showing the vehicle models. A tile dims when that vehicle can't move on the current terrain.
+- **Forks:** a left chevron with a red/green gate lamp, and a wavy line with a right chevron for the bypass.
+- **Screens:** a play button, a medal, and replay, next and sound icons. A grey medal means the race earned no credit because the player never switched vehicle.
+- **Tutorial:** a pulsing tap ripple marks the best vehicle. It appears after 0.6 s in a slower vehicle on stages 1–3, after 2.5 s on later stages, and at once when the current vehicle can't move.
+
+## Sound
+
+Every sound is tied to a real engine event, so the audio also teaches the game.
+
+| Event | Sound |
+|---|---|
+| Vehicle switch | Whoosh, pop and sparkle, pitched per slot. Also a light vibration where supported. |
+| Clean transition (engine `clean` credit) | Bright four-note "perfect" chime with a gold sparkle |
+| Entering water, diving, taking off, landing | Splash, dive bubbles, whoosh, thud |
+| Plane through a flight hoop | Chime that climbs a pentatonic scale with each hoop in a row |
+| Overtake | Rising arpeggio |
+| Checkpoint | Two-note chime |
+| Gate ahead opens or closes | Blip or clack |
+| Stuck in a vehicle that can't move | Repeating soft warning, with the hint ripple |
+| Invalid tap | Low double bonk and a button shake |
+| Race start, finish, medal reveal | "Go" sting, a fanfare sized to the place (confetti for gold), shimmer |
+
+The engine hum runs under the music, and the music ducks under the fanfare. All levels were measured offline; peaks stay below −6 dB.
+
+Audio starts on the first tap, as browsers require. It follows YouTube's audio switch, stops during a host pause, and has its own mute toggle on the title and pause screens.
 
 ## Behaviour notes
 
@@ -41,10 +73,11 @@ The initial bundle is about 960 KB raw and **about 243 KB gzipped**. That includ
 The build has only been tested in headless Chromium with SwiftShader:
 - races in all six families, portrait and landscape
 - the save round trip
-- the SDK call order against a mocked `ytgame`
+- the SDK call order and audio switch against a mocked `ytgame`
+- offline renders of every sound, measured for level and clipping
 
 Still untested:
 - real devices and frame rates
 - the YouTube Playables Test Suite
-- audio (there isn't any yet)
+- how the sounds feel on real phone speakers
 - human playtesting
