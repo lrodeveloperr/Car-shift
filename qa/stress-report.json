@@ -32,7 +32,7 @@
   "sequence": {
     "stages": 10000,
     "reloads": 102,
-    "maxSaveBytes": 14617,
+    "maxSaveBytes": 14674,
     "exactHistoryViolations": 0,
     "signatureViolations": 0,
     "forkBlocks": 996,
@@ -52,6 +52,6 @@
     "positionIndependent": true,
     "hiddenSpeedBoost": false
   },
-  "durationSeconds": 183.590587276,
+  "durationSeconds": 191.790262919,
   "passed": true
 }

@@ -1,6 +1,6 @@
 # Shape Shifting: Vehicle Race — tested product count
 
-19 October 2026 (six later vehicle families added). Scope: executable course/engine and standalone diagnostic QA. This is **not a production release or a proven 10/10 experience**.
+19 October 2026 (six later vehicle families and the daily course added). Scope: executable course/engine and standalone diagnostic QA. This is **not a production release or a proven 10/10 experience**.
 
 **9,577 ordinary race courses pass the implemented automated gates. Including teaching, the conservative total is 9,589 distinct decision structures.** The original six families keep their exact 3,989 courses; the six later families add 5,588.
 
@@ -13,19 +13,20 @@ The 36-stage teaching journey contains 12 structures additional to the ordinary 
 | Offline authoring | 12,843 restricted sequence candidates; 9,577 admitted, 3,266 rejected; <=16 geometries tried per non-motif candidate |
 | Ordinary race audit | 67,102 entrant simulations plus 18,863 alternate-route simulations; all admitted branches finish |
 | Teaching | 36 stages; all intended introductions have a useful switch within five simulated seconds; all perfect controllers can win |
-| Unit/session/boundary tests | 42/42 pass, plus 5/5 game track-geometry tests over every course |
+| Unit/session/boundary tests | 44/44 pass, plus 5/5 game track-geometry tests over every course |
 | Command-level integrated races | 19,226 full races across both difficulties, each with exact mid-race acknowledged reload; 19,226 lawful Gold finishes |
 | Actual legal command API, all branches | 18,891 route completions; poorer routes may lose |
 | Selection-seed stress | 10,000 seeds per family for all 12 families; 240,000 difficulty-profile cases, 600,000 entrant simulations and 230,917 independent selected-path checks; zero seed failures |
 | Saved progression | 10,000 stages -> frontier 10,001, 102 exact reloads,64-record eviction, all 36 teaching records retained |
 | Variety | First 100 ordinary stages: 99 distinct layouts/structures and all 12 families; recent 12 structure/recent 64 layout guards hold |
 | Scheduling | Each later family debuts on its unlock stage; no family repeats back to back; 826 checked 23-stage windows each hold all 12 families; 996 full 3/5/2 fork blocks hold; no scheduling dead end |
-| Complete-state save fixture | 15,042 UTF-8 bytes /32768 budget:64 records,36 teaching records, history 64, signatures 12, queue 3, two checkpoints and one typed rematch |
+| Complete-state save fixture | 15,099 UTF-8 bytes /32768 budget:64 records,36 teaching records, history 64, signatures 12, queue 3, two checkpoints and one typed rematch |
 | Read/save/ad faults |20 failed read retries -> zero writes to unread source; pre-ad ack/failure, strict earned results, single-flight requests, pause ordering and late claims tested |
 | Synthetic DOM input | 14 handler/flow cases passed with disclosed capture/rectangle adapters |
 | Ten-minute synthetic DOM RAF soak | 600.0 elapsed seconds, 56 race transitions, 0 errors |
-| Node heap during soak | Post-GC samples 38.09–38.36 MiB; final 38.35 MiB; bounded diagnostic run, not a browser/device memory claim |
-| Deterministic diagnostic ZIP | Two byte-identical builds; 424,298 archive bytes and 1,747,239 expanded bytes; both below 5,000,000 |
+| Node heap during soak | Post-GC samples 38.15–38.40 MiB; final 38.39 MiB; bounded diagnostic run, not a browser/device memory claim |
+| Deterministic diagnostic ZIP | Two byte-identical builds; 429,809 archive bytes and 1,760,891 expanded bytes; both below 5,000,000 |
+| Daily course | 366 days × 12 families: a passing course every time (about 3 ms each on a desktop CPU), using the same simulation gates as the bank; offered from stage 4, once per day; never changes the journey; streak, restart, replay and save/reload tested |
 
 The ten-minute run uses real elapsed wall time and JSDOM RAF callbacks with a 4 x synthetic controller. Its fixed rectangle/pointer-capture adapters do not measure native gestures, CSS geometry, accessibility, rendering or human play. It includes no actual ad impressions. Only this final harness-hash-matched run is current evidence; earlier attempt logs are historical.
 
@@ -70,8 +71,8 @@ Proposal D remains disabled by default and fixture-only. It tests first/later 2 
 
 See README.md and tools/check-all.mjs. The source package contains all original modules, bank/teaching recipes, offline authoring, independent solver, fixtures, locked DOM development dependencies, test commands and machine-readable evidence. Runtime files contain no external dependencies or requests.
 
-Diagnostic ZIP SHA-256: b3882f5181e2498ce1fbb982bf6e7b6ad53e9352ddc02493cda74459f0198d90
+Diagnostic ZIP SHA-256: 554f5757e1d9fbd0a004bfa045492a668ea98e5d3a2e7cee60c2ca8d75127e70
 Bank SHA-256: a3f7f6b622144918bad72c3708ce79448fe855519de3af0410948af94e09c06c
-Final soak harness SHA-256: 9e5e6b13415d5e6756e190ba48cb5ef9ad5f68330f9cd914a14742ad76296454
+Final soak harness SHA-256: a37dc5d61cda2b762536bd77912da5844eb6e7a9d8cc69659e87157a2b1cfa3e
 
 These hashes identify the diagnostic artifacts, not a submitted game. The source archive includes a separate hash manifest. The canonical contract is revision 5.0 with the 19 October 2026 roster addendum.

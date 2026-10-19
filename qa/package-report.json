@@ -1,9 +1,9 @@
 {
   "scope": "standalone diagnostic only; SDK/graphics/host certification absent",
   "byteIdenticalTwoBuilds": true,
-  "archiveBytes": 424298,
-  "expandedRuntimeBytes": 1747239,
-  "sha256": "b3882f5181e2498ce1fbb982bf6e7b6ad53e9352ddc02493cda74459f0198d90",
+  "archiveBytes": 429809,
+  "expandedRuntimeBytes": 1760891,
+  "sha256": "554f5757e1d9fbd0a004bfa045492a668ea98e5d3a2e7cee60c2ca8d75127e70",
   "files": [
     {
       "path": "data/bank.json",
@@ -17,13 +17,23 @@
     },
     {
       "path": "index.html",
-      "bytes": 874743,
-      "sha256": "9e5e6b13415d5e6756e190ba48cb5ef9ad5f68330f9cd914a14742ad76296454"
+      "bytes": 881362,
+      "sha256": "a37dc5d61cda2b762536bd77912da5844eb6e7a9d8cc69659e87157a2b1cfa3e"
+    },
+    {
+      "path": "src/audit.mjs",
+      "bytes": 2370,
+      "sha256": "04f8a0f15cd48c2b535e8a61563383f4696c3eacc9bf85dbe8e916c005e9a807"
     },
     {
       "path": "src/content.mjs",
-      "bytes": 6455,
-      "sha256": "3e6aaa58ca3a4955f0a2e728af71b4d6fee2505744442755df7fe7406c63634d"
+      "bytes": 6734,
+      "sha256": "f34394a9edd70a35332feb6e87dddab49cc573f47659cb12f89be00e4bf7b9c3"
+    },
+    {
+      "path": "src/daily.mjs",
+      "bytes": 2323,
+      "sha256": "81730ecb86e8bca09d52c71974b2fd75b460366c488ced107317ccd6abf325eb"
     },
     {
       "path": "src/harness.mjs",
@@ -32,8 +42,8 @@
     },
     {
       "path": "src/race.mjs",
-      "bytes": 12452,
-      "sha256": "54b6b2cdf4f7c4aee9a24bb4806931de01270096b6d3d8e663806dc4db1f1583"
+      "bytes": 12460,
+      "sha256": "bba6e60725e14423d5c188e761e296203d677cae47e939d8b1be15cd0b806a03"
     },
     {
       "path": "src/rules.mjs",
@@ -42,8 +52,8 @@
     },
     {
       "path": "src/session.mjs",
-      "bytes": 21772,
-      "sha256": "9a715de6baeb7711ce158f4f2c5ac1d915b3ff2e1c07b513a5274d47752018ac"
+      "bytes": 23825,
+      "sha256": "adb02f5f4e56e332b288f0cc35dd01bb7f06b8c7cafb673edb6bdb2e645f8b1b"
     },
     {
       "path": "src/solver.mjs",

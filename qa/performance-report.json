@@ -4,22 +4,22 @@
   "platform": "linux",
   "architecture": "x64",
   "catalogCold": {
-    "medianMs": 157.930519,
-    "p95Ms": 235.859164,
-    "maxMs": 235.859164
+    "medianMs": 169.61068000000023,
+    "p95Ms": 226.166065,
+    "maxMs": 226.166065
   },
   "simulatedTick": {
-    "medianMs": 0.0004830000002584711,
-    "p95Ms": 0.0018230000000585278,
-    "maxMs": 2.0021199999996497
+    "medianMs": 0.000796999999693071,
+    "p95Ms": 0.0018569999997453124,
+    "maxMs": 1.3926249999999527
   },
   "commandDispatch": {
-    "medianMs": 0.00011700000004566391,
-    "p95Ms": 0.00032400000009147334,
-    "maxMs": 0.10949900000014168
+    "medianMs": 0.00017900000011650263,
+    "p95Ms": 0.0003299999998489511,
+    "maxMs": 0.16648200000008728
   },
-  "maxResidentBytes": 183844864,
-  "heapBytes": 71598632,
+  "maxResidentBytes": 195719168,
+  "heapBytes": 63566912,
   "hostColdLoad": "NOT RUN",
   "realLayout": "BLOCKED",
   "passed": true
