@@ -10,14 +10,14 @@ import {fileURLToPath} from 'node:url';
 
 const here=path.dirname(fileURLToPath(import.meta.url)),dist=path.join(here,'dist');
 const options={entryPoints:[path.join(here,'src/main.mjs')],bundle:true,format:'esm',target:'es2020',minify:true,legalComments:'eof',
-  loader:{'.json':'json'},outfile:path.join(dist,'game.js'),logLevel:'warning'};
+  loader:{'.json':'json'},outfile:path.join(dist,'game.js'),logLevel:'warning',define:{__PREVIEW__:'false'}};
 const html=fs.readFileSync(path.join(here,'src/index.html'),'utf8');
 const withoutSdk=text=>text.replace(/<!--ytgame-->[\s\S]*?<!--\/ytgame-->\n?/,'');
 fs.mkdirSync(dist,{recursive:true});
 
 if(process.argv.includes('--serve')){
   fs.writeFileSync(path.join(dist,'index.html'),html);
-  const ctx=await esbuild.context({...options,minify:false,sourcemap:true});
+  const ctx=await esbuild.context({...options,minify:false,sourcemap:true,define:{__PREVIEW__:'true'}});
   await ctx.watch();const {port}=await ctx.serve({servedir:dist,port:8080});
   console.log(`Serving http://localhost:${port}`);
 }else{
@@ -25,7 +25,9 @@ if(process.argv.includes('--serve')){
   fs.writeFileSync(path.join(dist,'index.html'),html);
   const files=['index.html','game.js'].map(name=>{const data=fs.readFileSync(path.join(dist,name));return {name,bytes:data.length,gzip:zlib.gzipSync(data,{level:9}).length};});
   if(process.argv.includes('--preview')){
-    const js=fs.readFileSync(path.join(dist,'game.js'),'utf8').replace(/<\/script/gi,'<\\/script');
+    // The shareable preview also accepts #stageNN links to jump to later vehicles; the upload build does not.
+    const {outputFiles}=await esbuild.build({...options,define:{__PREVIEW__:'true'},write:false});
+    const js=outputFiles[0].text.replace(/<\/script/gi,'<\\/script');
     const page=withoutSdk(html).replace('<script type="module" src="game.js"></script>',()=>`<script type="module">${js}</script>`);
     fs.writeFileSync(path.join(dist,'preview.html'),page);files.push({name:'preview.html',bytes:Buffer.byteLength(page),gzip:zlib.gzipSync(page,{level:9}).length});
   }

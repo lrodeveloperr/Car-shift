@@ -13,6 +13,8 @@ npm test           # track-geometry tests against every bank course
 node build.mjs --preview   # also writes dist/preview.html (single file, no YouTube SDK tag)
 ```
 
+The preview build, and only the preview build, accepts a `#stage37`-style link that opens a throwaway journey at that stage. Later vehicles can then be tried without the 36 teaching stages, and the real save is never touched. The upload build compiles this out (`__PREVIEW__` is `false`).
+
 The initial bundle is about 1.46 MB raw and **about 360 KB gzipped**. That includes three.js, the engine, all 9,613 courses (9,577 ordinary plus 36 teaching) and every sound. There are no models, textures, audio files or fonts to fetch, and no network calls other than the YouTube SDK script.
 
 ## Layout

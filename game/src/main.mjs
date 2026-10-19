@@ -2,7 +2,7 @@
 import bank from '../../runtime/data/bank.json';
 import foundations from '../../runtime/data/foundations.json';
 import {WebGLRenderer} from 'three';
-import {Catalog,Session} from '../../source/session.mjs';
+import {Catalog,Session,MemoryStorage,initialData} from '../../source/session.mjs';
 import {Race,advanceEntrant} from '../../source/race.mjs';
 import {FAMILIES,TICK,speed,bestSlot,clone} from '../../source/rules.mjs';
 import {World,FLYERS} from './world.mjs';
@@ -241,10 +241,17 @@ function loop(now){
     if(slowFrames>90&&pixelRatio>1){pixelRatio=Math.max(1,pixelRatio-.25);renderer.setPixelRatio(pixelRatio);resize();slowFrames=0;}}
 }
 
+// Preview builds only (compiled out of the YouTube build): a #stage49-style link opens a throwaway journey
+// at that stage, so later vehicles can be tried without playing the teaching stages. It never touches the real save.
+function storageFor(){
+  const jump=__PREVIEW__&&/^#stage(\d{1,3})$/.exec(location.hash);
+  if(!jump)return host.storage;
+  const data=initialData();data.frontier=Math.max(1,Number(jump[1]));return new MemoryStorage(JSON.stringify(data));
+}
 async function boot(){
   resize();world.render();host.firstFrameReady();syncSoundButtons();sound.music(true,.34);
   await new Promise(requestAnimationFrame);
-  session=new Session(new Catalog(bank.recipes,foundations.recipes),host.storage);
+  session=new Session(new Catalog(bank.recipes,foundations.recipes),storageFor());
   if(!await session.load()){console.warn('save unreadable',session.error);show('problem',true);return;}
   showTitle();world.update(preview.entrants,0,1,0,reducedMotion);world.render();
   host.gameReady();requestAnimationFrame(loop);
