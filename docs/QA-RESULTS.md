@@ -1,31 +1,31 @@
 # Shape Shifting: Vehicle Race — tested product count
 
-18 October 2026. Scope: executable course/engine and standalone diagnostic QA. This is **not a production release or a proven 10/10 experience**.
+19 October 2026 (six later vehicle families added). Scope: executable course/engine and standalone diagnostic QA. This is **not a production release or a proven 10/10 experience**.
 
-**3,989 ordinary race courses pass the implemented automated gates. Including teaching, the conservative total is 4,001 distinct decision structures.**
+**9,577 ordinary race courses pass the implemented automated gates. Including teaching, the conservative total is 9,589 distinct decision structures.** The original six families keep their exact 3,989 courses; the six later families add 5,588.
 
-The 36-stage teaching journey contains 12 structures additional to the ordinary bank. Twenty-one teaching stages reuse exact bank layouts; three other teaching layouts differ only in timing/length under this conservative count. The raw geometric total 4004 is not the headline. No seed, color, distance, phase or modifier-sign change alone creates a new decision structure. The restricted authoring grammar is not a mathematical upper limit on all possible game levels.
+The 36-stage teaching journey contains 12 structures additional to the ordinary bank. Twenty-one teaching stages reuse exact bank layouts; three other teaching layouts differ only in timing/length under this conservative count. The raw geometric total 9592 is not the headline. No seed, color, distance, phase or modifier-sign change alone creates a new decision structure. The restricted authoring grammar is not a mathematical upper limit on all possible game levels.
 
 ## What passed
 
 | Check | Actual result |
 |---|---|
-| Offline authoring | 5,580 restricted sequence candidates; 3,989 admitted, 1,591 rejected; <=16 geometries tried per non-motif candidate |
-| Ordinary race audit | 27,951 entrant simulations plus 7,679 alternate-route simulations; all admitted branches finish |
+| Offline authoring | 12,843 restricted sequence candidates; 9,577 admitted, 3,266 rejected; <=16 geometries tried per non-motif candidate |
+| Ordinary race audit | 67,102 entrant simulations plus 18,863 alternate-route simulations; all admitted branches finish |
 | Teaching | 36 stages; all intended introductions have a useful switch within five simulated seconds; all perfect controllers can win |
-| Unit/session/boundary tests | 39/39 pass |
-| Command-level integrated races | 8,050 full races across both difficulties, each with exact mid-race acknowledged reload; 8,050 lawful Gold finishes |
-| Actual legal command API, all branches | 7,725 route completions; poorer routes may lose |
-| Selection-seed stress |10,000 seeds per family; 120,000 difficulty-profile cases, 300,000 entrant simulations and 113,059 independent selected-path checks; zero seed failures |
+| Unit/session/boundary tests | 42/42 pass, plus 5/5 game track-geometry tests over every course |
+| Command-level integrated races | 19,226 full races across both difficulties, each with exact mid-race acknowledged reload; 19,226 lawful Gold finishes |
+| Actual legal command API, all branches | 18,891 route completions; poorer routes may lose |
+| Selection-seed stress | 10,000 seeds per family for all 12 families; 240,000 difficulty-profile cases, 600,000 entrant simulations and 230,917 independent selected-path checks; zero seed failures |
 | Saved progression | 10,000 stages -> frontier 10,001, 102 exact reloads,64-record eviction, all 36 teaching records retained |
-| Variety | First 100 ordinary stages: 99 distinct layouts/structures and all six families; recent 12 structure/recent 64 layout guards hold |
-| Scheduling | 1660 full six-family blocks and 996 full 3/5/2 fork blocks hold; no scheduling dead end |
-| Complete-state save fixture | 15,016 UTF-8 bytes /32768 budget:64 records,36 teaching records, history 64, signatures 12, queue 3, two checkpoints and one typed rematch |
+| Variety | First 100 ordinary stages: 99 distinct layouts/structures and all 12 families; recent 12 structure/recent 64 layout guards hold |
+| Scheduling | Each later family debuts on its unlock stage; no family repeats back to back; 826 checked 23-stage windows each hold all 12 families; 996 full 3/5/2 fork blocks hold; no scheduling dead end |
+| Complete-state save fixture | 15,042 UTF-8 bytes /32768 budget:64 records,36 teaching records, history 64, signatures 12, queue 3, two checkpoints and one typed rematch |
 | Read/save/ad faults |20 failed read retries -> zero writes to unread source; pre-ad ack/failure, strict earned results, single-flight requests, pause ordering and late claims tested |
 | Synthetic DOM input | 14 handler/flow cases passed with disclosed capture/rectangle adapters |
 | Ten-minute synthetic DOM RAF soak | 600.0 elapsed seconds, 56 race transitions, 0 errors |
-| Node heap during soak | Post-GC samples 31.53–31.70 MiB; final 31.70 MiB; bounded diagnostic run, not a browser/device memory claim |
-| Deterministic diagnostic ZIP | Two byte-identical builds; 198,348 archive bytes and 790,377 expanded bytes; both below 5,000,000 |
+| Node heap during soak | Post-GC samples 38.09–38.36 MiB; final 38.35 MiB; bounded diagnostic run, not a browser/device memory claim |
+| Deterministic diagnostic ZIP | Two byte-identical builds; 424,298 archive bytes and 1,747,239 expanded bytes; both below 5,000,000 |
 
 The ten-minute run uses real elapsed wall time and JSDOM RAF callbacks with a 4 x synthetic controller. Its fixed rectangle/pointer-capture adapters do not measure native gestures, CSS geometry, accessibility, rendering or human play. It includes no actual ad impressions. Only this final harness-hash-matched run is current evidence; earlier attempt logs are historical.
 
@@ -39,12 +39,18 @@ The ten-minute run uses real elapsed wall time and JSDOM RAF callbacks with a 4 
 | Snow |986|Snowmobile / Boat / Helicopter|
 | Deep water |50|Car / Submarine / Helicopter|
 | Flight |51|Car / Boat / Plane|
+| Marsh (stage 37) |986|Car / Hovercraft / Helicopter|
+| Wreck yard (43) |986|Monster truck / Boat / Helicopter|
+| Mountain (49) |2540|Drill / Boat / Helicopter|
+| Rapids (55) |985|Dirt bike / Jet ski / Helicopter|
+| Canyon (61) |51|Car / Boat / Glider|
+| Space (67) |40|Car / Hovercraft / Rocket|
 
-Exactly three stable one-finger controls are active in each race. All eight transport types have actual rules. Plane courses have legal runway connections and >=72-unit corridors; underwater courses enter/exit through surface water. All ordinary paths pass maximum-speed cue, safe checkpoint, length, wait and finish-support rules. Courses have 4–10 legs and at most two forks. Teaching 1/2/3/6 explicitly use shorter 20–26-second exceptions. Introductory terrain-choice forks are teaching/recovery tradeoffs; they are not included in the ordinary phase-dependent gate-pair claim.
+Exactly three stable one-finger controls are active in each race. All fourteen transport types have actual rules, and each later vehicle is the only fastest choice on its own terrain. Plane, glider and rocket courses have legal land connections and >=72-unit corridors; underwater courses enter/exit through surface water. All ordinary paths pass maximum-speed cue, safe checkpoint, length, wait and finish-support rules. Courses have 4–10 legs and at most two forks. Teaching 1/2/3/6 explicitly use shorter 20–26-second exceptions. Introductory terrain-choice forks are teaching/recovery tradeoffs; they are not included in the ordinary phase-dependent gate-pair claim.
 
 Both computer opponents use the same course, gate and compatibility rules. Standard post-foundation speed factors are 0.94/0.98; optional Expert is 0.98/1.00, with fixed reactions and seeded mistakes. Their profiles do not depend on player position or ads. A lawful best run can win; bad branches need not win. Losing still permits a genuine finish, medal and free ordinary continuation.
 
-Median ordinary perfect completion is 42.75 simulated seconds; the range is 36.73–53.02 seconds. Synthetic 250 ms switches produce Standard ranks 3873/116/0 (Gold/Silver/Bronze); synthetic 450 ms switches plus one 700 ms mistake produce 33/3701/255. These are controller assumptions, not human skill distributions or retention measurements.
+Median ordinary perfect completion is 43.83 simulated seconds; the range is 36.73–55.20 seconds. Synthetic 250 ms switches produce Standard ranks 9345/232/0 (Gold/Silver/Bronze); synthetic 450 ms switches plus one 700 ms mistake produce 164/8962/451. These are controller assumptions, not human skill distributions or retention measurements.
 
 ## What “enjoyable” means here
 
@@ -64,8 +70,8 @@ Proposal D remains disabled by default and fixture-only. It tests first/later 2 
 
 See README.md and tools/check-all.mjs. The source package contains all original modules, bank/teaching recipes, offline authoring, independent solver, fixtures, locked DOM development dependencies, test commands and machine-readable evidence. Runtime files contain no external dependencies or requests.
 
-Diagnostic ZIP SHA-256: cd2d0e15c780d866c0b275cb883cfc3b217f7ff658f55cd0b5f808af087cd04a
-Bank SHA-256: 10d986225e8587eb497f84bd49332dda27d6f03f237eb87c8068c91ae2007728
-Final soak harness SHA-256: b4abd97e9673a4a16a8ee455e2bf1accd2c60df1bb22140f9996cd273d9e2e76
+Diagnostic ZIP SHA-256: b3882f5181e2498ce1fbb982bf6e7b6ad53e9352ddc02493cda74459f0198d90
+Bank SHA-256: a3f7f6b622144918bad72c3708ce79448fe855519de3af0410948af94e09c06c
+Final soak harness SHA-256: 9e5e6b13415d5e6756e190ba48cb5ef9ad5f68330f9cd914a14742ad76296454
 
-These hashes identify the diagnostic artifacts, not a submitted game. The source archive includes a separate hash manifest. The canonical contract is revision 5.0.
+These hashes identify the diagnostic artifacts, not a submitted game. The source archive includes a separate hash manifest. The canonical contract is revision 5.0 with the 19 October 2026 roster addendum.
