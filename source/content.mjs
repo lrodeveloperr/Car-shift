@@ -1,15 +1,14 @@
-import {FAMILIES,VERSION,hash,maxSpeed,bestSlot,SUPPORTED,within} from './rules.mjs';
+import {FAMILIES,VERSION,hash,maxSpeed,bestSlot,SUPPORTED,TRANSFERS,FLIGHT,CURRENT_TERRAINS,WIND_TERRAINS,within} from './rules.mjs';
 import {referenceCourse,gateTradeoffs,estimatedTime} from './solver.mjs';
 
 export function* patterns(){
   let ordinal=0;
-  for(let f=0;f<6;f++)for(let n=4;n<=10;n++){
-    const alphabet=f===4?'LWU':f===5?'LWF':'GWA';
+  for(let f=0;f<FAMILIES.length;f++)for(let n=4;n<=10;n++){
+    const {alphabet,special,edge}=FAMILIES[f].pattern,transfer=c=>TRANSFERS.has(c==='G'?FAMILIES[f].ground:c);
     function* visit(s){
       if(s.length===n){
-        const special=f===4?'U':f===5?'F':'G';
-        if(!s.includes(special)||'AUF'.includes(s[0])||'AUF'.includes(s.at(-1)))return;
-        if(f>=4){const edge=f===4?'W':'L';for(let i=0;i<n;i++)if(s[i]===special&&(s[i-1]!==edge||s[i+1]!==edge))return;}
+        if(!s.includes(special)||transfer(s[0])||transfer(s.at(-1)))return;
+        if(edge){for(let i=0;i<n;i++)if(s[i]===special&&(s[i-1]!==edge||s[i+1]!==edge))return;}
         yield s;return;
       }
       for(const c of alphabet)if(c!==s.at(-1))yield* visit(s+c);
@@ -30,17 +29,17 @@ export function buildRecipe(p,variant=0){
   const mods=[];
   // Transport identity, not a new random-power system. One modifier per section.
   if(seed%4===0){
-    const candidates=terrains.map((t,i)=>({t,i})).filter(x=>['W','U','A','F'].includes(x.t));
-    if(candidates.length){const x=candidates[seed%candidates.length];mods.push([x.i,['W','U'].includes(x.t)?'current':'wind',(seed&8)?1:-1]);}
+    const candidates=terrains.map((t,i)=>({t,i})).filter(x=>CURRENT_TERRAINS.includes(x.t)||WIND_TERRAINS.includes(x.t));
+    if(candidates.length){const x=candidates[seed%candidates.length];mods.push([x.i,CURRENT_TERRAINS.includes(x.t)?'current':'wind',(seed&8)?1:-1]);}
   }
   const temp=terrains.map((t,i)=>({t,d:0,...(mods.some(m=>m[0]===i)?{m:mods.find(m=>m[0]===i)[1],dir:mods.find(m=>m[0]===i)[2]}:{})}));
   const target=36+(seed%15);
   const weights=temp.map((_,i)=>.9+(hash(`${seed}:${i}`)%21)/100);
   const sum=weights.reduce((a,b)=>a+b,0);
-  const distances=temp.map((leg,i)=>Math.ceil(Math.max(leg.t==='F'?72:24,target*weights[i]/sum*maxSpeed(p.family,leg))/6)*6);
+  const distances=temp.map((leg,i)=>Math.ceil(Math.max(FLIGHT.has(leg.t)?72:24,target*weights[i]/sum*maxSpeed(p.family,leg))/6)*6);
   const forks=[];
   if(seed%10>=3){
-    const eligible=temp.map((l,i)=>({l,i})).filter(x=>x.i>0&&['L','R','W','T'].includes(x.l.t));
+    const eligible=temp.map((l,i)=>({l,i})).filter(x=>x.i>0&&['L','R','W','T','M','B','K'].includes(x.l.t));
     const count=seed%10>=8?2:1;
     for(const x of eligible){
       if(forks.length>=count)break;
@@ -89,10 +88,10 @@ export function quality(course){
     const block=course.blocks[b];
     for(const leg of block.options){
       if(!within(leg.d,18,600)||maxSpeed(course.family,leg)<=0)reasons.push('invalid_traversal');
-      if(leg.t==='F'&&leg.d<72)reasons.push('short_flight_corridor');
+      if(FLIGHT.has(leg.t)&&leg.d<72)reasons.push('short_flight_corridor');
       if(leg.d/maxSpeed(course.family,leg)*1000<2500)reasons.push('cue_too_short');
       if(leg.t==='U'&&(course.blocks[b-1]?.options[0].t!=='W'||course.blocks[b+1]?.options[0].t!=='W'))reasons.push('unsafe_submarine_connection');
-      if(leg.t==='F'&&(course.blocks[b-1]?.options[0].t!=='L'||course.blocks[b+1]?.options[0].t!=='L'))reasons.push('unsafe_runway');
+      if(FLIGHT.has(leg.t)&&(course.blocks[b-1]?.options[0].t!=='L'||course.blocks[b+1]?.options[0].t!=='L'))reasons.push('unsafe_runway');
     }
     const leg=block.options[paths[0].choices[b]],slot=bestSlot(course.family,leg),dt=leg.d/maxSpeed(course.family,leg)*1000;
     occupancy[slot]+=dt;maxGap=Math.max(maxGap,dt);

@@ -1,16 +1,16 @@
 {
   "scope": "actual Session -> legal commandSlot/chooseBranch -> simultaneous Race -> acknowledged save/reload -> result; algorithmic controls, not native touch/human play",
-  "runs": 8050,
-  "midRaceReloads": 8050,
-  "lawfulCommands": 64770,
-  "firstPlace": 8050,
-  "allRoutesThroughCommandAPI": 7725,
-  "maxSaveBytes": 12159,
+  "runs": 19226,
+  "midRaceReloads": 19226,
+  "lawfulCommands": 154590,
+  "firstPlace": 19226,
+  "allRoutesThroughCommandAPI": 18891,
+  "maxSaveBytes": 12181,
   "failures": [],
   "byDifficulty": {
-    "standard": 4025,
-    "expert": 4025
+    "standard": 9613,
+    "expert": 9613
   },
-  "durationSeconds": 32.143967538999995,
+  "durationSeconds": 147.663911214,
   "passed": true
 }

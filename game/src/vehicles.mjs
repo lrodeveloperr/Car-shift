@@ -1,5 +1,5 @@
 // Procedural low-poly vehicles: no model files to download. Each model faces -z with its wheels/hull at y=0.
-import {BoxGeometry,CylinderGeometry,ConeGeometry,SphereGeometry,Group,Mesh,Matrix4,Euler,Quaternion,Vector3,MeshLambertMaterial} from 'three';
+import {BoxGeometry,CylinderGeometry,ConeGeometry,SphereGeometry,TorusGeometry,Group,Mesh,Matrix4,Euler,Quaternion,Vector3,MeshLambertMaterial,MeshBasicMaterial} from 'three';
 import {mergeGeometries} from 'three/addons/utils/BufferGeometryUtils.js';
 
 export const ENTRANT_COLORS=[{body:0xff7a1a,trim:0xffd23f},{body:0x2f80ed,trim:0x9ad0ff},{body:0xd83f87,trim:0xffb3d1}];
@@ -68,6 +68,40 @@ const DEFS={
     p('trim',box(1.62,.08,.46),[0,1.1,1.36]),p('body',box(.08,.72,.52),[0,1.46,1.36]),
     wheel(.16,.12,[.6,.16,-.4]),wheel(.16,.12,[-.6,.16,-.4]),p('metal',box(.06,.6,.06),[.6,.5,-.4]),p('metal',box(.06,.6,.06),[-.6,.5,-.4]),
   ],spinners:[{axis:'z',speed:40,pivot:[0,1,-1.8],parts:[p('dark',box(1.52,.1,.04),[0,0,0]),p('dark',box(.1,1.52,.04),[0,0,0])]}]}),
+  hovercraft:()=>({parts:[
+    p('dark',cyl(1,1.06,.42,14),[0,.24,0],[0,0,0],[1,1,1.4]),p('body',box(1.5,.36,2.5),[0,.6,0]),
+    p('glass',box(1.1,.46,1),[0,1,-.2]),p('body',box(1.16,.1,1.06),[0,1.28,-.2]),p('trim',box(1.52,.08,2.52),[0,.8,0]),
+    p('trim',new TorusGeometry(.56,.09,6,14),[0,1.1,1.12]),p('trim',box(.06,.52,.32),[.3,1.06,1.42]),p('trim',box(.06,.52,.32),[-.3,1.06,1.42]),
+  ],spinners:[{axis:'z',speed:30,pivot:[0,1.1,1.12],parts:[p('dark',box(1,.12,.04),[0,0,0]),p('dark',box(.12,1,.04),[0,0,0])]}]}),
+  monstertruck:()=>({parts:[
+    ...[[1.06,-1.02],[-1.06,-1.02],[1.06,1.02],[-1.06,1.02]].map(([x,z])=>wheel(.72,.56,[x,.72,z])),
+    ...[[.78,-1.02],[-.78,-1.02],[.78,1.02],[-.78,1.02]].map(([x,z])=>p('metal',box(.12,.52,.12),[x,1.06,z])),
+    p('dark',box(1.5,.26,2.4),[0,.98,0]),p('body',box(1.8,.56,2.6),[0,1.42,0]),p('body',box(1.5,.5,1.2),[0,1.92,.22]),
+    p('glass',box(1.52,.32,1.02),[0,1.96,.22]),p('trim',box(1.56,.1,1.26),[0,2.2,.22]),p('light',box(1.2,.12,.12),[0,2.32,-.3]),
+    p('metal',box(1.9,.2,.2),[0,1.12,-1.36]),p('trim',box(1.82,.08,2.62),[0,1.5,0]),
+  ]}),
+  drill:()=>({parts:[
+    p('dark',box(.46,.52,2.4),[.66,.3,.1]),p('dark',box(.46,.52,2.4),[-.66,.3,.1]),p('body',box(1.3,.8,1.8),[0,.92,.32]),
+    p('glass',box(.92,.42,.62),[0,1.48,.72]),p('trim',box(1,.1,.72),[0,1.74,.72]),p('dark',cyl(.1,.1,.62,6),[.46,1.62,.12]),
+    p('trim',cyl(.8,.8,.2,12),[0,.92,-.62],[X,0,0]),
+  ],spinners:[{axis:'z',speed:24,pivot:[0,.92,-.72],parts:[
+    p('metal',cone(.74,1.6,10),[0,0,-.8],[-X,0,0]),p('trim',box(.1,.1,1.3),[.32,0,-.7],[0,.22,0]),p('trim',box(.1,.1,1.3),[-.32,0,-.7],[0,-.22,0]),
+  ]}]}),
+  jetski:()=>({parts:[
+    p('body',box(.92,.36,2),[0,.26,.15]),p('body',cone(.65,.8,4),[0,.26,-1.25],[-X,Math.PI/4,0],[1,1,.5]),p('trim',box(.94,.08,2.02),[0,.32,.15]),
+    p('dark',box(.5,.2,.9),[0,.56,.3]),p('metal',box(.08,.42,.08),[0,.78,-.42]),p('metal',box(.8,.06,.06),[0,.98,-.38]),
+    p('body',box(.42,.56,.3),[0,1.12,.18],[-.3,0,0]),p('trim',ball(.22,8,6),[0,1.56,-.04]),
+  ]}),
+  glider:()=>({parts:[
+    p('body',cyl(.12,.3,2.6,8),[0,1,.2],[X,0,0]),p('body',ball(.3,8,6),[0,1,-1.1],[0,0,0],[1,1,1.4]),p('glass',ball(.3,8,6),[0,1.16,-.66],[0,0,0],[1,.8,1.8]),
+    p('trim',box(6,.06,.52),[0,1.08,-.25]),p('body',box(.06,.32,.32),[3,1.2,-.2]),p('body',box(.06,.32,.32),[-3,1.2,-.2]),
+    p('body',box(.06,.62,.42),[0,1.36,1.32]),p('trim',box(1.24,.05,.32),[0,1.66,1.38]),p('dark',box(.12,.12,.8),[0,.72,-.3]),
+  ]}),
+  rocket:()=>({parts:[
+    p('light',cyl(.55,.55,2.6,12),[0,1.2,0],[X,0,0]),p('body',cone(.55,1.1,12),[0,1.2,-1.85],[-X,0,0]),p('trim',cyl(.57,.57,.26,12),[0,1.2,-.2],[X,0,0]),
+    p('glass',ball(.2,8,6),[0,1.7,-.62],[0,0,0],[1,.45,1]),p('dark',cyl(.36,.46,.36,10),[0,1.2,1.48],[X,0,0]),
+    p('body',box(.76,.06,.72),[.72,1.2,.95]),p('body',box(.76,.06,.72),[-.72,1.2,.95]),p('body',box(.06,.76,.72),[0,1.92,.95]),p('body',box(.06,.76,.72),[0,.48,.95]),
+  ],spinners:[{axis:'z',speed:18,pivot:[0,1.2,1.66],parts:[p('flame',cone(.4,1.4,7),[0,0,.7],[X,0,0]),p('flame',cone(.22,.9,7),[0,0,.55],[X,0,0])]}]}),
 };
 export const VEHICLES=Object.keys(DEFS);
 
@@ -88,6 +122,7 @@ function geometryFor(type){
   return cache.get(type);
 }
 const sharedMaterials=Object.fromEntries(Object.entries(SHARED).map(([k,c])=>[k,new MeshLambertMaterial({color:c,flatShading:true})]));
+sharedMaterials.flame=new MeshBasicMaterial({color:0xffa62b});
 export function entrantMaterials(index){
   const c=ENTRANT_COLORS[index];
   return {...sharedMaterials,body:new MeshLambertMaterial({color:c.body,flatShading:true}),trim:new MeshLambertMaterial({color:c.trim,flatShading:true})};

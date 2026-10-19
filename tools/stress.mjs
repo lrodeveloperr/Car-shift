@@ -5,7 +5,7 @@ import {simulateEntrant} from '../source/race.mjs';import {hash,FAMILIES} from '
 const bank=JSON.parse(fs.readFileSync('runtime/data/bank.json')).recipes,foundations=JSON.parse(fs.readFileSync('runtime/data/foundations.json')).recipes;
 const began=performance.now(),catalog=new Catalog(bank,foundations),unique=new Set([...bank,...foundations].map(r=>JSON.stringify(r.slice(1,6))));
 const report={scope:'deterministic bank selection, standalone simulation/save integration; no native browser or human enjoyment',seedsPerFamily:10000,profileCases:0,simulations:0,routeChecks:0,seedFailures:[],foundationCopiesInBank:foundations.filter(r=>bank.some(b=>JSON.stringify(b.slice(1,6))===JSON.stringify(r.slice(1,6)))).map(r=>r[0]),distinctLayouts:unique.size,sequence:{stages:0,reloads:0,maxSaveBytes:0,exactHistoryViolations:0,signatureViolations:0,forkBlocks:[],familyBlocks:[],first100:null},fairness:{positionIndependent:true,hiddenSpeedBoost:false}};
-for(let f=0;f<6;f++){
+for(let f=0;f<FAMILIES.length;f++){
  const family=catalog.families[f],seen=new Set();
  for(let seed=0;seed<10000;seed++){
   const r=family[hash(`selection-v1:${f}:${seed}`)%family.length],c=expand(r);seen.add(c.id);
@@ -28,7 +28,11 @@ for(let stage=1;stage<=10000;stage++){
   assert.ok(!layouts.slice(-64).includes(key),`exact repeat stage ${stage}`);assert.ok(!structures.slice(-12).includes(sig),`signature repeat stage ${stage}`);
   ordinary.push(id);layouts.push(key);structures.push(sig);forks.push(recipe[5].length);families.push(recipe[1]);
   if(ordinary.length%10===0){const block=forks.slice(-10),counts=[0,1,2].map(n=>block.filter(x=>x===n).length);assert.deepEqual(counts,[3,5,2]);report.sequence.forkBlocks.push(counts);}
-  if(ordinary.length%6===0){assert.equal(new Set(families.slice(-6)).size,6);report.sequence.familyBlocks.push(6);}
+  // Each family debuts on its unlock stage, never repeats back to back, and once all are unlocked every window of 2N-1 stages holds all N.
+  const debut=FAMILIES.findIndex(f=>f.unlock===stage);if(debut>=0)assert.equal(recipe[1],debut,`debut ${stage}`);
+  assert.ok(FAMILIES[recipe[1]].unlock<=stage,`locked family ${stage}`);if(families.length>1)assert.notEqual(families.at(-1),families.at(-2),`repeat ${stage}`);
+  const window=2*FAMILIES.length-1,settled=Math.max(...FAMILIES.map(f=>f.unlock))+window;
+  if(stage>=settled&&stage%FAMILIES.length===0){assert.equal(new Set(families.slice(-window)).size,FAMILIES.length,`window ${stage}`);report.sequence.familyBlocks.push(FAMILIES.length);}
   if(ordinary.length===100)report.sequence.first100={distinctLayouts:new Set(layouts).size,signatures:new Set(structures).size,families:[...new Set(families)].length,bankSelection:true,unsafeFallbacks:0};
  }
  await s.start({latency:stage%10===0?450:250,difficulty:stage>6&&stage%2===0?'expert':'standard'});

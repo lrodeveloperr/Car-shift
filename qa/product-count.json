@@ -1,6 +1,6 @@
 {
-  "ordinaryAuditedCourses": 3989,
-  "ordinaryDistinctStructures": 3989,
+  "ordinaryAuditedCourses": 9577,
+  "ordinaryDistinctStructures": 9577,
   "teachingStages": 36,
   "teachingExactCopiesOfBank": [
     "F08",
@@ -39,9 +39,9 @@
     "F33",
     "F34"
   ],
-  "distinctLayouts": 4004,
-  "distinctDecisionStructures": 4001,
-  "headline": "3989 ordinary courses; 4001 distinct decision structures including teaching",
+  "distinctLayouts": 9592,
+  "distinctDecisionStructures": 9589,
+  "headline": "9577 ordinary courses; 9589 distinct decision structures including teaching",
   "qualification": "passed implemented automated logic/integration gates; human enjoyment, final graphics, native browsers/devices and host release certification NOT established",
   "structureDefinition": "family + ordered support/branch support + gate presence + modifier kind; excludes distance/phase/seed/colour/sign variants",
   "infiniteNovelty": false

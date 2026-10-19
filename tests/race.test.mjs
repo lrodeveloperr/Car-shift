@@ -3,11 +3,11 @@ import fs from 'node:fs';
 import {Race,simulateEntrant} from '../source/race.mjs';
 import {expand,quality,patterns,buildRecipe,repetitive} from '../source/content.mjs';
 import {referenceCourse,referenceLeg,gateTradeoffs} from '../source/solver.mjs';
-import {speed,FAMILIES} from '../source/rules.mjs';
+import {speed,bestSlot,FAMILIES,SPEEDS} from '../source/rules.mjs';
 const recipes=JSON.parse(fs.readFileSync(new URL('../runtime/data/bank.json',import.meta.url))).recipes;
 const c=()=>expand(recipes.find(r=>r[2].length>=6&&r[5].length));
 const straight=(family,ts,ds)=>expand(['FIXTURE',family,ts,ds,[],[],19,0]);
-test('5580 restricted structural candidates, not multiplied length/seed copies',()=>{assert.equal([...patterns()].length,5580);});
+test('12843 restricted structural candidates (5580 for the original six families), not multiplied length/seed copies',()=>{const all=[...patterns()];assert.equal(all.length,12843);assert.equal(all.filter(p=>p.family<6).length,5580);});
 test('known 20-second traversal agrees with independently derived switch cost',()=>{
  const level=straight(0,'GWG',[60,120,60]),reference=referenceCourse(level)[0].time;
  assert.equal(reference,20000);const e=simulateEntrant(level,'player',{latency:0});
@@ -18,7 +18,7 @@ test('speed matrix key boundary cases and specialized transport identities',()=>
  assert.equal(speed(0,0,{t:'A'}),0);assert.equal(speed(2,0,{t:'T'}),18);assert.equal(speed(2,0,{t:'L'}),0);
  assert.equal(speed(5,2,{t:'F'}),18);assert.equal(speed(5,2,{t:'A'}),0);assert.equal(speed(5,2,{t:'F',m:'wind',dir:1}),21.599999999999998);
  assert.equal(speed(4,1,{t:'U'}),12);assert.equal(speed(4,2,{t:'U'}),0);assert.equal(speed(1,0,{t:'R'}),12);
- assert.equal(new Set(FAMILIES.flatMap(f=>f.vehicles)).size,8);
+ assert.equal(new Set(FAMILIES.flatMap(f=>f.vehicles)).size,14);
 });
 test('invalid airborne/submerged transforms keep safe vehicle, never buffer',()=>{
  for(const [f,ts,ds,special]of [[0,'GAG',[36,72,36],'A'],[4,'WUW',[36,96,36],'U'],[5,'LFL',[36,72,36],'F']]){
@@ -68,4 +68,20 @@ test('all 144 equipped-form/base-support pairs match the written product table',
  const supports=['L','R','W','A','S','U','T','F'];const expected={car:[12,7.2,4,0,4,0,4,0],bike:[10,12,2,0,4,0,4,0],snowmobile:[4,2.4,0,0,12,0,0,0],train:[0,0,0,0,0,0,18,0],boat:[4,4,12,0,0,0,0,0],submarine:[0,0,6,0,0,12,0,0],helicopter:[8,8,8,12,8,0,8,10],plane:[0,0,0,0,0,0,0,18]};
  for(let f=0;f<6;f++)for(let slot=0;slot<3;slot++)for(let t=0;t<supports.length;t++)assert.equal(speed(f,slot,{t:supports[t]}),expected[FAMILIES[f].vehicles[slot]][t]);
  for(const [f,slot,t,m,dir,want]of [[0,1,'W','current',-1,9],[0,1,'W','current',1,15],[4,1,'W','current',-1,4.5],[4,1,'U','current',1,15],[0,2,'L','wind',-1,5.2],[0,2,'A','wind',1,14.4],[5,2,'F','wind',-1,11.7],[5,0,'L','current',1,12],[5,2,'F','current',1,18],[0,1,'W','wind',1,12]])assert.ok(Math.abs(speed(f,slot,{t,m,dir})-want)<1e-9);
+});
+
+test('each later vehicle is the only fastest choice on its own terrain and its family unlocks after the teaching stages',()=>{
+ const owners={hovercraft:'M',monstertruck:'B',drill:'D',jetski:'K',glider:'C',rocket:'O'};
+ for(const [vehicle,terrain] of Object.entries(owners)){
+  const f=FAMILIES.findIndex(x=>x.vehicles.includes(vehicle)&&(x.pattern.special===terrain||x.ground===terrain));assert.ok(f>=6,vehicle);
+  const slot=FAMILIES[f].vehicles.indexOf(vehicle);assert.equal(bestSlot(f,{t:terrain}),slot);
+  for(let other=0;other<3;other++)if(other!==slot)assert.ok(speed(f,other,{t:terrain})<speed(f,slot,{t:terrain}),`${vehicle} ${other}`);
+  assert.ok(FAMILIES[f].unlock>36);
+ }
+ assert.deepEqual(FAMILIES.slice(6).map(f=>f.unlock),[37,43,49,55,61,67]);
+ for(const vehicle of Object.keys(SPEEDS))assert.equal(Object.keys(SPEEDS[vehicle]).length,14);
+});
+test('every later family has prevalidated courses with each fork count available',()=>{
+ for(let f=6;f<FAMILIES.length;f++){const mine=recipes.filter(r=>r[1]===f);assert.ok(mine.length>=40,FAMILIES[f].id);
+  for(const forks of [0,1,2])assert.ok(mine.some(r=>r[5].length===forks),`${FAMILIES[f].id} forks ${forks}`);}
 });

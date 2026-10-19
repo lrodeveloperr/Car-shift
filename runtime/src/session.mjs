@@ -30,7 +30,15 @@ export class Catalog{
   }
 }
 function shuffle(values,seed){const out=[...values];for(let i=out.length-1;i>0;i--){const j=hash(`${seed}:${i}`)%(i+1);[out[i],out[j]]=[out[j],out[i]];}return out;}
-export function initialData(){return {schema:1,revision:0,frontier:1,nextSerial:1,lastCreditedSerial:0,queue:[],history:[],signatures:[],familyCursor:[0,0,0,0,0,0],familyBag:[],bagRound:0,forkBag:[],forkRound:0,records:[],foundationRecords:{},run:null,
+const unlockedAt=stage=>FAMILIES.map((f,i)=>f.unlock<=stage?i:-1).filter(i=>i>=0);
+// A family debuts on the stage it unlocks; otherwise families come from a shuffled bag of everything unlocked.
+function drawFamily(state,stage,last){
+  const debut=FAMILIES.findIndex(f=>f.unlock===stage);
+  if(debut>=0){state.bag=state.bag.filter(x=>x!==debut);return debut;}
+  if(!state.bag.length){state.bag=shuffle(unlockedAt(stage),++state.round);if(state.bag[0]===last&&state.bag.length>1)[state.bag[0],state.bag[1]]=[state.bag[1],state.bag[0]];}
+  return state.bag.shift();
+}
+export function initialData(){return {schema:1,revision:0,frontier:1,nextSerial:1,lastCreditedSerial:0,queue:[],history:[],signatures:[],familyCursor:FAMILIES.map(()=>0),familyBag:[],bagRound:0,forkBag:[],forkRound:0,records:[],foundationRecords:{},run:null,
   pacing:{firstAttempted:false,firstFinishes:0,initialActive:0,finishesSinceAd:0,activeSinceAd:0,hadReservation:false,consumed:[]},adPending:null,claim:null};}
 function encodeRace(snapshot){
   if(!snapshot)return null;
@@ -49,9 +57,11 @@ function validateData(d,catalog){
   if(!d||d.schema!==1)throw new ProtectedSaveError('unknown save schema');
   // Schema 1 was diagnostic-only; absent scheduling fields migrate without touching the source.
   d.forkBag??=[];d.forkRound??=0;
+  // Saves from before the later vehicle families start those families' course cursors at zero.
+  if(Array.isArray(d.familyCursor)&&d.familyCursor.length<FAMILIES.length)d.familyCursor=[...d.familyCursor,...Array(FAMILIES.length-d.familyCursor.length).fill(0)];
   for(const k of ['revision','frontier','nextSerial','lastCreditedSerial','bagRound','forkRound'])if(!Number.isSafeInteger(d[k])||d[k]<0||(['frontier','nextSerial'].includes(k)&&d[k]<1))throw new ProtectedSaveError(`bad ${k}`);
-  for(const [k,max]of [['queue',3],['history',64],['signatures',12],['familyCursor',6],['familyBag',6],['records',64],['forkBag',10]])if(!Array.isArray(d[k])||d[k].length>max)throw new ProtectedSaveError(`bad ${k}`);
-  if(d.familyCursor.length!==6||d.familyCursor.some(x=>!Number.isSafeInteger(x)||x<0)||d.familyBag.some(x=>!Number.isInteger(x)||x<0||x>5))throw new ProtectedSaveError('bad family scheduling');
+  for(const [k,max]of [['queue',3],['history',64],['signatures',12],['familyCursor',FAMILIES.length],['familyBag',FAMILIES.length],['records',64],['forkBag',10]])if(!Array.isArray(d[k])||d[k].length>max)throw new ProtectedSaveError(`bad ${k}`);
+  if(d.familyCursor.length!==FAMILIES.length||d.familyCursor.some(x=>!Number.isSafeInteger(x)||x<0)||d.familyBag.some(x=>!Number.isInteger(x)||x<0||x>=FAMILIES.length))throw new ProtectedSaveError('bad family scheduling');
   if(d.forkBag.some(x=>!Number.isInteger(x)||x<0||x>2)||new Set(d.familyBag).size!==d.familyBag.length||d.lastCreditedSerial>=d.nextSerial)throw new ProtectedSaveError('bad scheduling/serial order');
   if(d.signatures.some(x=>typeof x!=='string'||x.length>256))throw new ProtectedSaveError('bad signatures');
   for(const id of [...d.queue,...d.history])if(typeof id!=='string'||id.length>96||!catalog.map.has(id))throw new ProtectedSaveError('bad course reference');
@@ -102,18 +112,16 @@ export class Session{
     while(this.data.queue.length<3){
       const stage=this.data.frontier+this.data.queue.length;
       if(stage<=this.catalog.foundations.length){this.data.queue.push(this.catalog.foundations[stage-1][0]);continue;}
-      if(!this.data.familyBag.length){this.data.familyBag=shuffle([0,1,2,3,4,5],++this.data.bagRound);const last=this.data.queue.length?this.catalog.map.get(this.data.queue.at(-1))[1]:this.data.history.length?this.catalog.map.get(this.data.history.at(-1))[1]:-1;
-        if(this.data.familyBag[0]===last)[this.data.familyBag[0],this.data.familyBag[1]]=[this.data.familyBag[1],this.data.familyBag[0]];}
+      const last=this.data.queue.length?this.catalog.map.get(this.data.queue.at(-1))[1]:this.data.history.length?this.catalog.map.get(this.data.history.at(-1))[1]:-1;
+      const state={bag:this.data.familyBag,round:this.data.bagRound},f=drawFamily(state,stage,last);
+      this.data.familyBag=state.bag;this.data.bagRound=state.round;
       if(!this.data.forkBag.length)this.data.forkBag=shuffle([0,0,0,1,1,1,1,1,2,2],++this.data.forkRound);
-      const f=this.data.familyBag.shift(),avoid=[...this.data.history,...this.data.queue];
+      const avoid=[...this.data.history,...this.data.queue];
       const signatures=[...this.data.signatures,...this.data.queue.map(id=>this.catalog.signatures.get(id))];
       // Reserve feasible fork counts for the remaining family positions in this ten-stage bag.
       // Independent greedy bags can otherwise strand a flight family with an unavailable two-fork layout.
-      const forecast=[];let familyRest=[...this.data.familyBag],round=this.data.bagRound,last=f;
-      for(let n=1;n<this.data.forkBag.length;n++){
-        if(!familyRest.length){familyRest=shuffle([0,1,2,3,4,5],++round);if(familyRest[0]===last)[familyRest[0],familyRest[1]]=[familyRest[1],familyRest[0]];}
-        last=familyRest.shift();forecast.push(last);
-      }
+      const forecast=[],probe={bag:[...state.bag],round:state.round};let previous=f;
+      for(let n=1;n<this.data.forkBag.length;n++){previous=drawFamily(probe,stage+n,previous);forecast.push(previous);}
       const feasible=(counts,available,i=0,memo=new Map())=>{
         if(i===available.length)return counts.every(n=>n===0);
         const key=`${i}:${counts.join(',')}`;if(memo.has(key))return memo.get(key);
@@ -203,7 +211,7 @@ export class Session{
   setOffer(family){
     const r=this.race?.result,p=this.data.pacing;
     if(!this.enableAdFixtures||!r?.meaningful||this.race.ms<20000||this.data.frontier<37||this.rematchOffer()||this.data.claim||this.inFlight||this.hostPaused||p.consumed.includes(r.serial)||p.hadReservation&&p.activeSinceAd<120000)return null;
-    if(!Number.isInteger(family)||family<0||family>5||this.catalog.map.get(this.data.queue[0])[1]===family)return null;
+    if(!Number.isInteger(family)||family<0||family>=FAMILIES.length||FAMILIES[family].unlock>this.data.frontier||this.catalog.map.get(this.data.queue[0])[1]===family)return null;
     const id=this.catalog.pick(family,hash(`choice:${r.serial}:${family}`),[...this.data.history,...this.data.queue]);
     return {kind:'set',id,family,serial:r.serial};
   }

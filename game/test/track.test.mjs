@@ -3,12 +3,14 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {expand} from '../../source/content.mjs';
 import {Race} from '../../source/race.mjs';
-import {bestSlot} from '../../source/rules.mjs';
+import {bestSlot,SPEEDS} from '../../source/rules.mjs';
 import {buildLayout,entrantTrack,pointAt,gateState,liveOrder,SPLIT,AMAX,LANE_GAP,ROAD} from '../src/track.mjs';
 
 const bank=JSON.parse(fs.readFileSync(new URL('../../runtime/data/bank.json',import.meta.url)));
 const foundations=JSON.parse(fs.readFileSync(new URL('../../runtime/data/foundations.json',import.meta.url)));
 const courses=[...foundations.recipes,...bank.recipes].map(expand);
+// Fastest possible movement per second: the quickest vehicle with the strongest assisting modifier.
+const FASTEST=Math.max(...Object.values(SPEEDS).flatMap(Object.values))*1.25;
 
 test('every fork bypass is drawn at the engine leg length and stays inside its lane',()=>{
   let forks=0;
@@ -42,7 +44,7 @@ test('entrant track position is continuous and forward through a full simulated 
       race.entrants.forEach((e,i)=>{
         const now=entrantTrack(layout,e,race.ms),step=Math.hypot(now.s-previous[i].s,now.x-previous[i].x);
         assert.ok(now.s>=previous[i].s-1e-9,`${course.id} entrant ${i} moved backwards`);
-        assert.ok(step<=18*.02+1e-6,`${course.id} entrant ${i} jumped ${step}`); // fastest vehicle: 18 u/s for 20 ms
+        assert.ok(step<=FASTEST*.02+1e-6,`${course.id} entrant ${i} jumped ${step}`);
         previous[i]=now;
       });
     }

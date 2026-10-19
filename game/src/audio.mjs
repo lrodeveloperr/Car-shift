@@ -14,6 +14,12 @@ const ENGINE={
   submarine:{wave:'sine',lo:42,hi:66,cut:[300,600],sub:.8,noise:.05,nf:350,chop:.2,rate:[1.5,3],gain:.045},
   helicopter:{wave:'sawtooth',lo:44,hi:62,cut:[260,700],sub:.5,noise:.14,nf:600,chop:.48,rate:[10,15],gain:.06},
   plane:{wave:'sawtooth',lo:90,hi:160,cut:[800,2400],sub:.2,noise:.03,nf:2200,chop:.12,rate:[25,45],gain:.045},
+  hovercraft:{wave:'sawtooth',lo:70,hi:140,cut:[500,1600],sub:.3,noise:.12,nf:1200,chop:.06,rate:[30,50],gain:.05},
+  monstertruck:{wave:'sawtooth',lo:36,hi:78,cut:[300,900],sub:.7,noise:.04,nf:500,chop:.22,rate:[8,16],gain:.07},
+  drill:{wave:'square',lo:90,hi:140,cut:[900,2600],sub:.2,noise:.1,nf:2500,chop:.35,rate:[28,46],gain:.035},
+  jetski:{wave:'sawtooth',lo:85,hi:210,cut:[700,2600],sub:.25,noise:.08,nf:900,chop:.1,rate:[20,36],gain:.045},
+  glider:{wave:'sine',lo:200,hi:320,cut:[400,800],sub:0,noise:.18,nf:1600,chop:.15,rate:[.6,1.2],gain:.05},
+  rocket:{wave:'sawtooth',lo:40,hi:55,cut:[400,1200],sub:.6,noise:.3,nf:900,chop:.12,rate:[18,30],gain:.07},
 };
 
 export class Sound{
@@ -96,6 +102,13 @@ export class Sound{
   sfx_land(){this.voice('sine',130,{to:42,dur:.2,gain:.38});this.noise({dur:.14,type:'lowpass',freq:700,gain:.16});}
   sfx_whoosh(){this.noise({dur:.5,attack:.14,type:'bandpass',freq:380,to:2600,q:.8,gain:.22});this.voice('sine',midi(67),{t:.12,to:midi(79),glide:.25,dur:.3,gain:.05,send:.4});}
   // Flight hoops climb the pentatonic scale, so a clean run of rings plays a rising melody.
+  // Specialist entries: each new vehicle gets its own moment when it reaches the terrain it owns.
+  sfx_crush(){this.noise({dur:.35,type:'lowpass',freq:1800,to:400,gain:.3});this.voice('square',95,{to:38,dur:.25,gain:.14,filter:900});
+    for(let i=0;i<3;i++)this.voice('square',900+Math.random()*900,{t:.04+i*.07,to:300,dur:.06,gain:.05,filter:3000});}
+  sfx_tunnel(){this.noise({dur:.7,attack:.08,type:'bandpass',freq:280,to:1300,q:1.4,gain:.24,send:.5});this.voice('square',70,{to:110,dur:.6,gain:.1,filter:700,send:.4});}
+  sfx_launch(){this.noise({dur:1.2,attack:.06,type:'lowpass',freq:400,to:3200,gain:.32});this.voice('sine',58,{to:190,glide:.9,dur:1,gain:.22});
+    [79,84,91].forEach((n,i)=>this.voice('sine',midi(n),{t:.55+i*.08,dur:.5,gain:.05,send:.7}));}
+  sfx_soar(){this.noise({dur:.9,attack:.3,type:'bandpass',freq:700,to:2000,q:.7,gain:.18});this.voice('sine',midi(72),{t:.15,to:midi(79),glide:.5,dur:.7,gain:.06,send:.6});}
   sfx_hoop(n=0){const m=72+PENTA[Math.min(n,PENTA.length-1)];
     this.voice('sine',midi(m),{dur:.65,gain:.16,send:.6});this.voice('triangle',midi(m+12),{dur:.3,gain:.05,send:.6});this.noise({dur:.18,type:'highpass',freq:7000,gain:.04,send:.4});}
   sfx_checkpoint(){this.voice('triangle',midi(79),{dur:.3,gain:.1,send:.5});this.voice('triangle',midi(84),{t:.09,dur:.45,gain:.1,send:.5});}

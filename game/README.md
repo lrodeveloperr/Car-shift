@@ -13,15 +13,15 @@ npm test           # track-geometry tests against every bank course
 node build.mjs --preview   # also writes dist/preview.html (single file, no YouTube SDK tag)
 ```
 
-The initial bundle is about 980 KB raw and **about 248 KB gzipped**. That includes three.js, the engine, all 4,025 courses and every sound. There are no models, textures, audio files or fonts to fetch, and no network calls other than the YouTube SDK script.
+The initial bundle is about 1.46 MB raw and **about 360 KB gzipped**. That includes three.js, the engine, all 9,613 courses (9,577 ordinary plus 36 teaching) and every sound. There are no models, textures, audio files or fonts to fetch, and no network calls other than the YouTube SDK script.
 
 ## Layout
 
 | File | Role |
 |---|---|
 | `src/track.mjs` | Pure math, no three.js: maps an engine `block/choice/pos` to lane coordinates. Fork bypasses wiggle so their drawn length matches the engine leg to within 0.3%, so equal speeds look equal on screen. |
-| `src/world.mjs` | Scene: terrain slabs, low-poly animated water, roads, rails, gates, flight hoops, scenery, particles and the chase camera. One merged mesh draws the track; props are instanced. |
-| `src/vehicles.mjs` | The eight vehicles, built from primitives. Geometry is baked once and shared by all three entrants. |
+| `src/world.mjs` | Scene: terrain slabs, low-poly animated water (calm, marsh and rapids), roads, rails, wreck yards, mountain tunnels, gates, flight rings (gold for planes, teal for gliders, cyan for rockets), scenery, a starry sky for the space family, particle trails and the chase camera. One merged mesh draws the track; props are instanced. |
+| `src/vehicles.mjs` | All fourteen vehicles, built from primitives: car, dirt bike, snowmobile, train, boat, submarine, helicopter, plane, hovercraft, monster truck, drill, jet ski, glider and rocket. Geometry is baked once and shared by all three entrants. |
 | `src/main.mjs` | Boot, the fixed-tick loop with render interpolation, HUD, input, pause, dynamic resolution, and the sound, haptic and hint cues driven by engine state changes. |
 | `src/audio.mjs` | Web Audio synthesis: every effect, a per-vehicle engine hum that follows real speed, and a light music loop. Has a compressor and reverb send; no audio files. |
 | `src/host.mjs` | `ytgame` adapter: `firstFrameReady`, `gameReady`, `loadData`/`saveData`, `onPause`/`onResume`, `isAudioEnabled`/`onAudioEnabledChange`, `sendScore`, `health.logError`. Outside Playables it falls back to `localStorage` and page visibility. |
@@ -45,7 +45,8 @@ Every sound is tied to a real engine event, so the audio also teaches the game.
 | Vehicle switch | Whoosh, pop and sparkle, pitched per slot. Also a light vibration where supported. |
 | Clean transition (engine `clean` credit) | Bright four-note "perfect" chime with a gold sparkle |
 | Entering water, diving, taking off, landing | Splash, dive bubbles, whoosh, thud |
-| Plane through a flight hoop | Chime that climbs a pentatonic scale with each hoop in a row |
+| A specialist reaching its own terrain | Monster truck crush, drill tunnel bore, rocket launch roar, glider soar |
+| Plane, glider or rocket through its rings | Chime that climbs a pentatonic scale with each ring in a row |
 | Overtake | Rising arpeggio |
 | Checkpoint | Two-note chime |
 | Gate ahead opens or closes | Blip or clack |

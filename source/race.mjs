@@ -1,4 +1,4 @@
-import {TICK,FAMILIES,SUPPORTED,speed,bestSlot,aiProfile,reactionFor,mod,clone,within} from './rules.mjs';
+import {TICK,FAMILIES,LABELS,SUPPORTED,speed,bestSlot,aiProfile,reactionFor,mod,clone,within} from './rules.mjs';
 import {referenceLeg} from './solver.mjs';
 
 function makeEntrant(course,kind,{difficulty='standard',stage=37,latency=0,choices=null,mistakeMs=0}={}){
@@ -147,12 +147,12 @@ export function validateRaceSnapshot(s,depth=0){
   if(depth>1||!s||!within(s.ms,0,86400000)||!within(s.stopwatch,0,86400000)||!Number.isSafeInteger(s.serial)||s.serial<1||!Number.isSafeInteger(s.stage)||s.stage<1)bad('clocks/serial');
   if(!['standard','expert'].includes(s.difficulty)||!['journey','replay','rematch'].includes(s.origin)||typeof s.assisted!=='boolean'||typeof s.assistedCommitted!=='boolean')bad('identity');
   const c=s.course;
-  if(!c||!Number.isInteger(c.family)||c.family<0||c.family>5||!Number.isSafeInteger(c.seed)||!Array.isArray(c.blocks)||c.blocks.length<3||c.blocks.length>10||!Array.isArray(s.entrants)||s.entrants.length!==3)bad('shape');
+  if(!c||!Number.isInteger(c.family)||c.family<0||c.family>=FAMILIES.length||!Number.isSafeInteger(c.seed)||!Array.isArray(c.blocks)||c.blocks.length<3||c.blocks.length>10||!Array.isArray(s.entrants)||s.entrants.length!==3)bad('shape');
   if(!['RACING','RESULT'].includes(s.state)||!Array.isArray(s.checkpoints)||s.checkpoints.length>2)bad('state');
   for(const b of c.blocks){
     if(!b||!Array.isArray(b.options)||b.options.length<1||b.options.length>2)bad('options');
     for(const leg of b.options){
-      if(!leg||!Object.hasOwn(SPEED_TERRAINS,leg.t)||!within(leg.d,18,600)||![0,1,2].some(slot=>speed(c.family,slot,leg)>0))bad('leg');
+      if(!leg||!Object.hasOwn(LABELS,leg.t)||!within(leg.d,18,600)||![0,1,2].some(slot=>speed(c.family,slot,leg)>0))bad('leg');
       if(leg.g&&(!within(leg.g.at,0,leg.d)||!within(leg.g.phase,0,3999)))bad('gate');
     }
   }
@@ -178,4 +178,3 @@ export function validateRaceSnapshot(s,depth=0){
   for(const cp of s.checkpoints){if(cp.serial!==s.serial||cp.course.id!==c.id||cp.ms>s.ms||cp.checkpoints.length)bad('checkpoint');validateRaceSnapshot(cp,depth+1);}
   return true;
 }
-const SPEED_TERRAINS={L:1,R:1,W:1,A:1,S:1,U:1,T:1,F:1};

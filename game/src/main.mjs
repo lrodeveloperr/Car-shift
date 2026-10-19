@@ -5,7 +5,7 @@ import {WebGLRenderer} from 'three';
 import {Catalog,Session} from '../../source/session.mjs';
 import {Race,advanceEntrant} from '../../source/race.mjs';
 import {FAMILIES,TICK,speed,bestSlot,clone} from '../../source/rules.mjs';
-import {World} from './world.mjs';
+import {World,FLYERS} from './world.mjs';
 import {liveOrder,progress,gateState,hoopDistances} from './track.mjs';
 import {Sound} from './audio.mjs';
 import {connectHost} from './host.mjs';
@@ -149,13 +149,19 @@ document.addEventListener('keydown',e=>{
 });
 
 function setHint(slot){once('hint',slot,v=>{for(let i=0;i<3;i++)$(`slot${i}`).classList.toggle('hint',i===v);});}
+// Which world the player's vehicle is in; a change of medium plays its entry sound.
 function medium(type,t,previous){
   if(type==='helicopter'||type==='plane'&&t==='F')return 'air';
+  if(type==='glider'&&t==='C')return 'soar';
+  if(type==='rocket'&&t==='O')return 'launch';
+  if(type==='drill'&&t==='D')return 'tunnel';
+  if(type==='monstertruck'&&t==='B')return 'crush';
   if(type==='submarine'&&t==='U')return 'under';
-  if(t==='W'||t==='U')return 'water';
-  return t==='A'||t==='F'?previous:'ground';
+  if(FLYERS[t]||t==='A')return previous;
+  if(type==='hovercraft')return 'ground';
+  return ['W','U','K','M'].includes(t)?'water':'ground';
 }
-const ENTER={water:'splash',under:'dive',air:'whoosh',ground:'land'};
+const ENTER={water:'splash',under:'dive',air:'whoosh',ground:'land',soar:'soar',launch:'launch',tunnel:'tunnel',crush:'crush'};
 // Sounds, haptics and the tutorial hint, all driven by changes in engine state.
 function cues(race,dt){
   const p=race.player,course=race.course,n=course.blocks.length,b=Math.min(p.block,n-1),block=course.blocks[b];
@@ -164,9 +170,9 @@ function cues(race,dt){
   if(p.clean>cue.clean){cue.clean=p.clean;sound.play('perfect');world.sparkle(0);}
   if(p.block!==cue.block){cue.block=p.block;cue.hoops=0;if(course.checkpoints.includes(p.block))sound.play('checkpoint');}
   const m=medium(type,leg.t,cue.medium);if(m!==cue.medium){cue.medium=m;if(racing)sound.play(ENTER[m]);}
-  if(leg.t==='F'){
+  if(FLYERS[leg.t]){
     const passed=hoopDistances(block.options[0].d).filter(d=>d<=p.pos).length;
-    if(type==='plane')while(cue.hoops<passed){sound.play('hoop',cue.hoops++);world.sparkle(0);}else cue.hoops=passed;
+    if(type===FLYERS[leg.t].type)while(cue.hoops<passed){sound.play('hoop',cue.hoops++);world.sparkle(0,FLYERS[leg.t].ring);}else cue.hoops=passed;
   }
   const place=liveOrder(race).indexOf(0);if(place<cue.place&&racing){sound.play('overtake');buzz(6);}cue.place=place;
   const fork=course.blocks.findIndex((x,i)=>i>=p.block&&x.options.length===2&&x.options[0].g);

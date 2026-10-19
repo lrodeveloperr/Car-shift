@@ -1,6 +1,7 @@
 import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';
 import {Catalog,Session,MemoryStorage,initialData} from '../source/session.mjs';
 import {Race} from '../source/race.mjs';
+import {FAMILIES} from '../source/rules.mjs';
 const recipes=JSON.parse(fs.readFileSync(new URL('../runtime/data/bank.json',import.meta.url))).recipes;
 const catalog=new Catalog(recipes);
 const setup=async(options={})=>{const data=initialData();data.frontier=37;const storage=new MemoryStorage(JSON.stringify(data));const s=new Session(catalog,storage,options);assert.equal(await s.load(),true);return {s,storage};};
@@ -79,3 +80,18 @@ test('hostile entrant profiles, positions, choices, nested checkpoints and recor
 });
 
 test('ad fixture cannot be called until reservation save is acknowledged',async()=>{let calls=0;const {s,storage}=await setup({enableAdFixtures:true,ads:{request:async()=>{calls++;return false;}}});await finish(s);s.data.pacing.firstFinishes=2;s.data.pacing.initialActive=120000;const ack=deferred();storage.save=async value=>{await ack.promise;storage.value=value;};const pending=s.requestAd('interstitial');await new Promise(r=>setTimeout(r,0));assert.equal(calls,0);assert.ok(s.data.adPending);ack.resolve();await pending;assert.equal(calls,1);});
+
+test('later vehicle families debut on their unlock stage and six-family saves migrate',async()=>{
+ const data=initialData();data.frontier=37;data.familyCursor=[0,0,0,0,0,0];const s=new Session(catalog,new MemoryStorage(JSON.stringify(data)));assert.equal(await s.load(),true,s.error);
+ assert.equal(s.data.familyCursor.length,FAMILIES.length);
+ const seen=[];
+ while(s.data.frontier<=68){
+  const family=catalog.map.get(s.data.queue[0])[1],debut=FAMILIES.findIndex(f=>f.unlock===s.data.frontier);
+  if(debut>=0)assert.equal(family,debut,`stage ${s.data.frontier}`);
+  assert.ok(FAMILIES[family].unlock<=s.data.frontier,`locked family at ${s.data.frontier}`);seen.push(family);
+  await finish(s);
+ }
+ for(let i=1;i<seen.length;i++)assert.notEqual(seen[i],seen[i-1]);
+ assert.equal(new Set(seen).size,FAMILIES.length);
+ const locked=s.setOffer(FAMILIES.length);assert.equal(locked,null);
+});

@@ -2,6 +2,8 @@ SHAPE SHIFTING: VEHICLE RACE
 Non-graphics game and AI build contract — revision 5.0
 Evidence-led product redesign, 18 October 2026, WorksBien Studios Inc.
 
+Addendum 19 October 2026: the user extended the roster from eight to fourteen transports. Hovercraft, monster truck, drill, jet ski, glider and rocket each own a new terrain and family, unlocking at stages 37, 43, 49, 55, 61 and 67, with the same acceptance coverage. Where this contract says "eight", read fourteen for the current build. Teaching stages 1–36 and the original eight-transport schedule are unchanged. The user also directed that ads rely on YouTube's pre-roll plus a rewarded video for retry; this is recorded in DECISIONS.md and is not implemented, because it changes the free-retry clause.
+
 STATUS AND AUTHORITY
 
 The user authorized deep competitor study, all eight transports, endless continuation, prebuilt logical levels, implementation of the level tests and all feasible end-to-end checks. Revision 5.0 adds an executable presentation-independent engine, prevalidated bank, save/reload and monetization fixtures, and actual automated evidence. A standalone diagnostic exists. No production game, publication, genuine hosted test, human enjoyment score or release certification is claimed. This updates the same contract and preserves the prior research and platform requirements.

@@ -1,25 +1,25 @@
 {
   "scope": "Node CPU microbenchmarks; not browser FPS, network startup, host SDK or physical-device performance",
-  "node": "v24.19.0",
+  "node": "v22.22.0",
   "platform": "linux",
   "architecture": "x64",
   "catalogCold": {
-    "medianMs": 32.19493600000004,
-    "p95Ms": 50.92594300000002,
-    "maxMs": 50.92594300000002
+    "medianMs": 157.930519,
+    "p95Ms": 235.859164,
+    "maxMs": 235.859164
   },
   "simulatedTick": {
-    "medianMs": 0.00026300000001810986,
-    "p95Ms": 0.0006690000000162399,
-    "maxMs": 0.24408199999993485
+    "medianMs": 0.0004830000002584711,
+    "p95Ms": 0.0018230000000585278,
+    "maxMs": 2.0021199999996497
   },
   "commandDispatch": {
-    "medianMs": 0.00007600000003549212,
-    "p95Ms": 0.0001330000000052678,
-    "maxMs": 0.9020919999999251
+    "medianMs": 0.00011700000004566391,
+    "p95Ms": 0.00032400000009147334,
+    "maxMs": 0.10949900000014168
   },
-  "maxResidentBytes": 241041408,
-  "heapBytes": 78727824,
+  "maxResidentBytes": 183844864,
+  "heapBytes": 71598632,
   "hostColdLoad": "NOT RUN",
   "realLayout": "BLOCKED",
   "passed": true

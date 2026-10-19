@@ -1,9 +1,9 @@
 {
   "scope": "deterministic bank selection, standalone simulation/save integration; no native browser or human enjoyment",
   "seedsPerFamily": 10000,
-  "profileCases": 120000,
-  "simulations": 300000,
-  "routeChecks": 113059,
+  "profileCases": 240000,
+  "simulations": 600000,
+  "routeChecks": 230917,
   "seedFailures": [],
   "foundationCopiesInBank": [
     "F08",
@@ -28,19 +28,19 @@
     "F35",
     "F36"
   ],
-  "distinctLayouts": 4004,
+  "distinctLayouts": 9592,
   "sequence": {
     "stages": 10000,
     "reloads": 102,
-    "maxSaveBytes": 14544,
+    "maxSaveBytes": 14617,
     "exactHistoryViolations": 0,
     "signatureViolations": 0,
     "forkBlocks": 996,
-    "familyBlocks": 1660,
+    "familyBlocks": 826,
     "first100": {
       "distinctLayouts": 99,
       "signatures": 99,
-      "families": 6,
+      "families": 12,
       "bankSelection": true,
       "unsafeFallbacks": 0
     },
@@ -52,6 +52,6 @@
     "positionIndependent": true,
     "hiddenSpeedBoost": false
   },
-  "durationSeconds": 53.473274245,
+  "durationSeconds": 183.590587276,
   "passed": true
 }

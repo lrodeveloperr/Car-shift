@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "generatedAt": "2026-10-18T20:13:50.173Z",
-  "durationSeconds": 6.035355437,
+  "generatedAt": "2026-10-19T00:26:16.629Z",
+  "durationSeconds": 28.717915578,
   "scope": "Executable content and simulation audit; not human enjoyment, final presentation, physical devices or YouTube-host certification",
   "gates": {
     "ordinaryLegs": "4–10",
@@ -17,13 +17,13 @@
     "branches": "both gate routes advantageous for some arrival phase"
   },
   "counts": {
-    "rawCandidates": 5580,
-    "geometryAttempts": 19448,
-    "fullRaceSimulations": 27951,
-    "routeSimulations": 7679,
-    "referencePaths": 7679,
-    "accepted": 3989,
-    "rejected": 1591
+    "rawCandidates": 12843,
+    "geometryAttempts": 34483,
+    "fullRaceSimulations": 67102,
+    "routeSimulations": 18863,
+    "referencePaths": 18863,
+    "accepted": 9577,
+    "rejected": 3266
   },
   "byFamily": {
     "coastal": {
@@ -55,63 +55,93 @@
       "candidates": 88,
       "accepted": 51,
       "rejected": 37
+    },
+    "marsh": {
+      "candidates": 1351,
+      "accepted": 986,
+      "rejected": 365
+    },
+    "wreck": {
+      "candidates": 1351,
+      "accepted": 986,
+      "rejected": 365
+    },
+    "mountain": {
+      "candidates": 3034,
+      "accepted": 2540,
+      "rejected": 494
+    },
+    "rapids": {
+      "candidates": 1351,
+      "accepted": 985,
+      "rejected": 366
+    },
+    "canyon": {
+      "candidates": 88,
+      "accepted": 51,
+      "rejected": 37
+    },
+    "space": {
+      "candidates": 88,
+      "accepted": 40,
+      "rejected": 48
     }
   },
   "rejectionReasons": {
-    "no_safe_checkpoint_in_window": 617,
-    "long_no_decision_interval": 8,
-    "course_length": 185,
-    "repeated_motif": 942
+    "no_safe_checkpoint_in_window": 1070,
+    "long_no_decision_interval": 15,
+    "course_length": 272,
+    "repeated_motif": 2156
   },
-  "meaningfulSignatures": 3989,
+  "meaningfulSignatures": 9577,
   "stats": {
     "perfectMs": {
       "min": 36728.88888888895,
-      "median": 42751.11111111114,
-      "p95": 50119.99999999996,
-      "max": 53024.61538461535
+      "median": 43833.33333333338,
+      "p95": 50869.16666666669,
+      "max": 55195.833333333416
     },
     "competentMs": {
       "min": 37333.33333333345,
-      "median": 44222.222222222204,
-      "p95": 51499.999999999956,
-      "max": 55044.16666666677
+      "median": 45212.50000000009,
+      "p95": 52277.777777777745,
+      "max": 56847.08333333339
     },
     "noviceMs": {
-      "min": 38200,
-      "median": 46025.384615384595,
-      "p95": 53183.333333333285,
-      "max": 57014.615384615376
+      "min": 38154.16666666687,
+      "median": 46975,
+      "p95": 54037.50000000002,
+      "max": 59405.00000000002
     },
     "standardLead": {
       "min": 304.48979591781244,
-      "median": 1865.714285714399,
-      "p95": 2437.278911564783,
-      "max": 4038.0952380953604
+      "median": 1909.25170068039,
+      "p95": 2546.285714285732,
+      "max": 4226.7346938773335
     },
     "expertLead": {
       "min": 0,
-      "median": 580,
-      "p95": 860,
-      "max": 2448.8888888889123
+      "median": 617.4999999999345,
+      "p95": 955,
+      "max": 2781.3945578232597
     }
   },
   "syntheticRanks": {
     "competent": [
-      3873,
-      116,
+      9345,
+      232,
       0
     ],
     "novice": [
-      33,
-      3701,
-      255
+      164,
+      8962,
+      451
     ]
   },
   "bytes": {
-    "compactBank": 338099
+    "compactBank": 813308
   },
-  "sha256": "10d986225e8587eb497f84bd49332dda27d6f03f237eb87c8068c91ae2007728",
+  "sha256": "a3f7f6b622144918bad72c3708ce79448fe855519de3af0410948af94e09c06c",
   "humanEnjoyment": "NOT RUN",
   "comparativeUserPreference": "NOT RUN",
   "physicalDevice": "NOT RUN",

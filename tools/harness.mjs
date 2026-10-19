@@ -1,11 +1,11 @@
-import fs from 'node:fs';import path from 'node:path';import {fileURLToPath} from 'node:url';
+import fs from 'node:fs';import path from 'node:path';import {fileURLToPath} from 'node:url';import {FAMILIES} from '../source/rules.mjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const bank=fs.readFileSync(path.join(root,'runtime/data/bank.json'),'utf8'),foundations=fs.readFileSync(path.join(root,'runtime/data/foundations.json'),'utf8');
 const code=['rules','solver','content','race','session','harness'].map(name=>fs.readFileSync(path.join(root,`source/${name}.mjs`),'utf8').replace(/^import .*;\s*$/gm,'').replace(/^export /gm,'')).join('\n');
 const html=`<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Shape Shifting: Vehicle Race — level QA</title>
 <style>body{font-family:system-ui;margin:12px;max-width:100%;overflow-wrap:anywhere}h1{font-size:1.2rem}button,select{font:inherit;min-height:44px;min-width:44px;margin:3px;padding:6px}button[aria-pressed=true]{outline:3px solid currentColor}#controls{display:flex;flex-wrap:wrap}#controls button{flex:1;min-width:85px}progress{width:min(90%,600px)}pre{white-space:pre-wrap;font-size:12px}summary{min-height:44px;cursor:pointer}</style>
 <h1>Shape Shifting: Vehicle Race — standalone level QA</h1><p>This is a diagnostic surface. Production graphics, host services and human enjoyment are not certified.</p>
-<p id="status" role="status"></p><p id="progress"></p><label>Course <select id="family"><option value="journey">Saved journey</option><option value="0">Coastal</option><option value="1">Rough</option><option value="2">Rail</option><option value="3">Snow</option><option value="4">Deep water</option><option value="5">Flight</option></select></label>
+<p id="status" role="status"></p><p id="progress"></p><label>Course <select id="family"><option value="journey">Saved journey</option>${FAMILIES.map((f,i)=>`<option value="${i}">${f.id[0].toUpperCase()+f.id.slice(1)}</option>`).join('')}</select></label>
 <button id="play" data-action="play">Play</button><button id="next" data-action="next">Next</button><button id="replay" data-action="replay">Replay</button><button id="pause" data-action="pause">Pause</button>
 <p id="clock"></p><p id="terrain" aria-live="polite"></p><div id="controls"><button id="slot0" data-action="slot" data-value="0">Ground</button><button id="slot1" data-action="slot" data-value="1">Water</button><button id="slot2" data-action="slot" data-value="2">Air</button></div>
 <div id="fork" hidden><span id="forkLabel"></span><button data-action="branch" data-value="0">Left / direct</button><button data-action="branch" data-value="1">Right / bypass</button></div>
