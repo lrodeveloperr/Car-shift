@@ -19,7 +19,7 @@
     "action": "read support, change slot, choose route",
     "feedback": "live positions and actual speed/rank",
     "completion": "player crosses finish; Gold/Silver/Bronze",
-    "retry": "free exact Restart/Replay",
+    "retry": "same-course retries 1-2 free; 3 one rewarded video; repeat at 6/9/12; reset on advancing; immediate sub-10-second resets free",
     "nextJob": "next prevalidated bank recipe; no terminal stage"
   },
   "rules": {
@@ -53,7 +53,7 @@
     ],
     "scoreFormula": "acknowledged Journey stages cleared; optional reporting, no SDK enabled in QA harness",
     "win": "genuine full finish; Gold first, Silver second, Bronze third",
-    "failure": "mistakes slow/wait safely; never force an ad; retry free"
+    "failure": "mistakes slow/wait safely; normal Next stays free; every third meaningful same-course retry uses one explicitly chosen rewarded video, with unavailable/error free fallback"
   },
   "content": {
     "jobArchetypes": [
@@ -78,7 +78,7 @@
       "plane31",
       "expert6"
     ],
-    "restartPolicy": "new serial/same graph/seed; no pace reset",
+    "restartPolicy": "new serial/same graph/seed; shared persisted Retry/Restart/Replay counter; reset only when advancing to another course",
     "saveFields": [
       "frontier",
       "run",
@@ -122,13 +122,26 @@
     ]
   },
   "monetization": {
-    "interstitialPlacement": "explicit Next/Replay after result; proposal D only in fixtures",
-    "minimumCompletedRounds": 2,
-    "minimumActiveSeconds": 120,
-    "cooldownActiveSeconds": 120,
-    "rewardedPlacement": "checkpoint-rematch or next-transport-set",
-    "optionalReward": "one rematch or one next family choice; no production ad calls in this scope",
-    "rewardReceiptIdPolicy": "stable reward-type IDs and internal one-shot token"
+    "configurationId": "vehicle-shift-ad-5-races-3-retries-v1",
+    "approvalDate": "2026-10-19",
+    "status": "approved specification; documented only; runtime implementation pending",
+    "preroll": "locked host-controlled arrangement; unchanged",
+    "interstitialPlacement": "ordinary Next after visible result; every five genuine completed new Journey races",
+    "minimumCompletedRounds": 5,
+    "minimumActiveSeconds": 0,
+    "cooldownActiveSeconds": 0,
+    "interstitialCountsReplays": false,
+    "rewardedPlacement": "explicit same-course Retry/Restart/Replay at retry ordinals 3, 6, 9, 12 and subsequent multiples of three",
+    "rewardedRetryInterval": 3,
+    "freeRetriesBetweenRewarded": 2,
+    "retryReset": "advance to a different course; not reload, Resume or menus",
+    "meaningfulRetryAttempt": "completed race or at least 10 active racing seconds; immediate shorter resets free and uncounted",
+    "optionalReward": "one full retry of the same immutable course/loadout/seed; ordinary Next remains free",
+    "rewardReceiptIdPolicy": "stable vehicle-shift-full-retry-v1 reward type and internal one-use request token",
+    "noFillPolicy": "unavailable/unsupported/error allows free retry fallback; cancelled/unearned grants no rewarded retry; ordinary Next remains free",
+    "stackingPolicy": "one ad per transition; rewarded request restarts the five-new-race interstitial window; no replacement interstitial on reward decline",
+    "implementationNote": "historical D source/fixtures and diagnostic ZIP unchanged; ADS531-536 NOT RUN",
+    "contract": "docs/PRODUCT-CONTRACT.txt section 7"
   },
   "performance": {
     "maxArchiveBytes": 5000000,
@@ -151,7 +164,7 @@
       "contract E1/E2/E5 with observed metrics and limitations"
     ],
     "weakAnalogues": [
-      "contract R02\u2013R09 selected reviews"
+      "contract R02–R09 selected reviews"
     ],
     "supportedElements": [
       "one finger",

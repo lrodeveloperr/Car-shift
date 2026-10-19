@@ -26,10 +26,17 @@ Primary evidence: `qa/course-audit.json`, `foundation-audit.json`, `unit-results
 
 Native browser downloads were unavailable, and browser security denied opening the local file. No alternative browser route was attempted after the rejection. Layout, native browser/device/YouTube-host operation, human enjoyment, comparative superiority, retention and revenue remain unverified. All 75 contract cases are assessed in `qa/acceptance-matrix.json`; partial model evidence does not become a native/host PASS. Do not submit the diagnostic ZIP as the game.
 
-Live monetization proposal D is unapproved and disabled. Fixtures test optional rematch and next-family credits, timing, strict grants, failed saves, delayed callbacks and host-pause ordering. Production integration must use actual platform APIs and measured publisher data.
+## Approved ad schedule — 19 October 2026
+
+- **Pre-roll:** locked arrangement, unchanged.
+- **Interstitial:** once every **five completed new races**, on **Next** after the result; no 120-second minimum.
+- **Rewarded:** same-course retries **3, 6, 9, 12...** require one explicitly chosen rewarded video; intervening retries are free. Reset the retry counter when advancing to a different course.
+- No rewarded/interstitial stacking on the same transition. Full behavior and recovery rules are in [section 7 of the product contract](docs/PRODUCT-CONTRACT.txt).
+
+**Documented specification; implementation pending.** Source, tests and the diagnostic ZIP remain unchanged. Disabled historical D fixtures still use two finishes/120 seconds and checkpoint/next-family credits; their passes do not verify the new schedule. Production integration must use actual platform APIs and measured publisher data. New acceptance cases ADS531-536 are NOT RUN.
 
 ## Repository handoff
 
-Added to Car-shift on 18 October 2026. The contract is `docs/PRODUCT-CONTRACT.txt` revision 5.0. The full result is in `docs/QA-RESULTS.md`. The repository contains the engine, course bank, authoring tools, tests and actual evidence. Diagnostic archive generation and report exports write to the local `artifacts/` directory; they do not publish or call a live ad service.
+Added to Car-shift on 18 October 2026. The contract is `docs/PRODUCT-CONTRACT.txt` revision 5.1 (approved ad documentation; revision-5.0 executable evidence retained). The full result is in `docs/QA-RESULTS.md`. The repository contains the engine, course bank, authoring tools, tests and actual evidence. Diagnostic archive generation and report exports write to the local `artifacts/` directory; they do not publish or call a live ad service.
 
 The earlier local-framework release check intentionally failed unresolved production gates; its recorded paths identify the original test workspace. The standalone commands above reproduce the implemented checks without that external framework. Native browser/device/YouTube-host and human enjoyment acceptance remain unverified.
