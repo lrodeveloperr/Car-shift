@@ -1,6 +1,6 @@
 {
   "scope": "standalone maximum-state and fault fixtures, not host receipt guarantees",
-  "completeSaveBytes": 15112,
+  "completeSaveBytes": 15235,
   "saveLimit": 32768,
   "records": 64,
   "foundationRecords": 36,
@@ -9,7 +9,7 @@
   "queue": 3,
   "checkpoints": 2,
   "typedRematch": true,
-  "rematchStartMs": 29260,
+  "rematchStartMs": 31760,
   "rematchOriginalResultPreserved": true,
   "duplicateClaimBlocked": true,
   "pendingCrashGrantsNothing": true,

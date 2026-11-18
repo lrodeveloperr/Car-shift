@@ -15,8 +15,9 @@ test('nonempty malformed, future, unknown, oversized and hostile saves are prote
  for(const value of bad){const storage=new MemoryStorage(value);const s=new Session(catalog,storage);assert.equal(await s.load(),false);await assert.rejects(s.start());assert.equal(storage.value,value);assert.equal(storage.writes,0);}
 });
 test('empty SDK forms recognized; valid decoded object also accepted',async()=>{for(const value of [null,undefined,'','null','{}','[]',{},[],initialData()]){const s=new Session(catalog,new MemoryStorage(value));assert.equal(await s.load(),true,String(value));}});
-test('genuine finish advances once, Bronze also advances, rematch does not duplicate',async()=>{
- const {s}=await setup();await finish(s,{latency:700});assert.equal(s.data.frontier,38);const before=s.data.pacing.firstFinishes;for(let i=0;i<10;i++)s.finalize();assert.equal(s.data.frontier,38);assert.equal(s.data.pacing.firstFinishes,before);
+test('only first place clears a level; a loss keeps it, a rematch never duplicates credit',async()=>{
+ const {s}=await setup();await finish(s,{latency:1500});assert.ok(s.race.result.rank>1);assert.equal(s.data.frontier,37);
+ await finish(s);assert.equal(s.race.result.rank,1);assert.equal(s.data.frontier,38);const before=s.data.pacing.firstFinishes;for(let i=0;i<10;i++)s.finalize();assert.equal(s.data.frontier,38);assert.equal(s.data.pacing.firstFinishes,before);
  if(s.race.checkpoints.length){const again=s.race.rematch();again.player.auto=true;again.player.latency=0;s.race=again;while(!s.race.result)s.step(20);assert.equal(s.data.frontier,38);assert.equal(s.data.pacing.firstFinishes,before);}
 });
 test('mid-race acknowledged reload restores exact race, queue and pacing',async()=>{
@@ -82,19 +83,18 @@ test('hostile entrant profiles, positions, choices, nested checkpoints and recor
 
 test('ad fixture cannot be called until reservation save is acknowledged',async()=>{let calls=0;const {s,storage}=await setup({enableAdFixtures:true,ads:{request:async()=>{calls++;return false;}}});await finish(s);s.data.pacing.firstFinishes=2;s.data.pacing.initialActive=120000;const ack=deferred();storage.save=async value=>{await ack.promise;storage.value=value;};const pending=s.requestAd('interstitial');await new Promise(r=>setTimeout(r,0));assert.equal(calls,0);assert.ok(s.data.adPending);ack.resolve();await pending;assert.equal(calls,1);});
 
-test('later vehicle families debut on their unlock stage and six-family saves migrate',async()=>{
- const data=initialData();data.frontier=37;data.familyCursor=[0,0,0,0,0,0];const s=new Session(catalog,new MemoryStorage(JSON.stringify(data)));assert.equal(await s.load(),true,s.error);
+test('each family debuts on its unlock stage, levels never repeat a family back to back, and six-family saves migrate',async()=>{
+ const data=initialData();data.familyCursor=[0,0,0,0,0,0];const s=new Session(catalog,new MemoryStorage(JSON.stringify(data)));assert.equal(await s.load(),true,s.error);
  assert.equal(s.data.familyCursor.length,FAMILIES.length);
  const seen=[];
- while(s.data.frontier<=68){
+ while(s.data.frontier<=40){
   const family=catalog.map.get(s.data.queue[0])[1],debut=FAMILIES.findIndex(f=>f.unlock===s.data.frontier);
   if(debut>=0)assert.equal(family,debut,`stage ${s.data.frontier}`);
-  assert.ok(FAMILIES[family].unlock<=s.data.frontier,`locked family at ${s.data.frontier}`);seen.push(family);
-  await finish(s);
+  assert.ok(FAMILIES[family].unlock<=s.data.frontier,`locked family at ${s.data.frontier}`);
+  if(seen.length&&FAMILIES.filter(f=>f.unlock<=s.data.frontier).length>1)assert.notEqual(family,seen.at(-1),`repeat at ${s.data.frontier}`);
+  seen.push(family);await finish(s);assert.equal(s.race.result.rank,1);
  }
- for(let i=1;i<seen.length;i++)assert.notEqual(seen[i],seen[i-1]);
  assert.equal(new Set(seen).size,FAMILIES.length);
- const locked=s.setOffer(FAMILIES.length);assert.equal(locked,null);
 });
 
 test('daily course: same recipe for the same day and family, fresh geometry, passes every gate',()=>{
@@ -104,16 +104,16 @@ test('daily course: same recipe for the same day and family, fresh geometry, pas
 });
 // Steers with the fastest legal vehicle, like the end-to-end tool, so restored races finish from any point.
 const drive=sess=>{while(!sess.race.result&&sess.race.ms<180000){const r=sess.race,e=r.player,leg=r.course.blocks[e.block]?.options[e.choice];if(leg&&e.slot!==bestSlot(r.course.family,leg))r.commandSlot(bestSlot(r.course.family,leg));sess.step(20);}assert.ok(sess.race.result);};
-test('daily course is offered once per day from stage 4, never moves the journey, and builds a streak',async()=>{
+test('after the teaching stages the first level each day is that day\'s course; winning it clears the level and builds a streak',async()=>{
  const early=initialData();early.frontier=DAILY_FROM-1;const e=new Session(catalog,new MemoryStorage(JSON.stringify(early)));await e.load();assert.equal(e.dailyAvailable('2026-10-19'),null);
- const {s,storage}=await setup();const queue=[...s.data.queue],frontier=s.data.frontier,history=[...s.data.history],records=s.data.records.length;
- const id=s.dailyAvailable('2026-10-19');assert.match(id,/^D2026-10-19\.\d+$/);assert.ok(FAMILIES[Number(id.split('.')[1])].unlock<=frontier);
- await s.startDaily('2026-10-19');assert.equal(s.race.origin,'daily');for(let i=0;i<600;i++)s.step(20);await s.flush();
+ const {s,storage}=await setup();const queue=[...s.data.queue],records=s.data.records.length;assert.equal(s.data.frontier,DAILY_FROM);
+ const id=s.dailyAvailable('2026-10-19');assert.equal(id,`D2026-10-19.${catalog.map.get(queue[0])[1]}`);
+ await s.startDaily('2026-10-19');assert.equal(s.race.origin,'daily');assert.equal(s.race.stage,DAILY_FROM);s.race.player.auto=true;s.race.player.latency=0;for(let i=0;i<600;i++)s.step(20);await s.flush();
  const reloaded=new Session(catalog,storage);assert.equal(await reloaded.load(),true,reloaded.error);assert.equal(reloaded.race.course.id,id);
- drive(reloaded);await reloaded.flush();
- assert.equal(reloaded.data.frontier,frontier);assert.deepEqual(reloaded.data.queue,queue);assert.deepEqual(reloaded.data.history,history);assert.equal(reloaded.data.records.length,records);
+ drive(reloaded);await reloaded.flush();assert.equal(reloaded.race.result.rank,1);
+ assert.equal(reloaded.data.frontier,DAILY_FROM+1);assert.deepEqual(reloaded.data.queue.slice(0,2),queue.slice(1));assert.equal(reloaded.data.history.at(-1),queue[0]);assert.equal(reloaded.data.records.length,records);
  assert.deepEqual({last:reloaded.data.daily.last,streak:reloaded.data.daily.streak},{last:'2026-10-19',streak:1});assert.equal(reloaded.dailyAvailable('2026-10-19'),null);
- await reloaded.next({latency:0,day:'2026-10-19'});assert.equal(reloaded.race.origin,'journey');assert.equal(reloaded.race.course.id,queue[0]);
+ await reloaded.next({latency:0,day:'2026-10-19'});assert.equal(reloaded.race.origin,'journey');assert.equal(reloaded.race.course.id,queue[1]);
  drive(reloaded);
  await reloaded.next({latency:0,day:'2026-10-20'});assert.equal(reloaded.race.origin,'daily');drive(reloaded);
  assert.equal(reloaded.data.daily.streak,2);
@@ -122,22 +122,23 @@ test('daily course is offered once per day from stage 4, never moves the journey
  const next=new Session(catalog,new MemoryStorage((()=>{const d=JSON.parse(storage.value);delete d.daily;return JSON.stringify(d);})()));assert.equal(await next.load(),true,next.error);assert.equal(next.data.daily.streak,0);
 });
 
-test('interstitials stay out of the first five stages and away from a new vehicle debut',async()=>{
- const at=async frontier=>{const d=initialData();d.frontier=frontier;const s=new Session(catalog,new MemoryStorage(JSON.stringify(d)),{enableAdFixtures:true,ads:{request:async()=>true}});await s.load();await finish(s);
+test('interstitials come only after a win, never in the first five stages or before a new vehicle debut',async()=>{
+ const at=async(frontier,latency=0)=>{const d=initialData();d.frontier=frontier;const s=new Session(catalog,new MemoryStorage(JSON.stringify(d)),{enableAdFixtures:true,ads:{request:async()=>true}});await s.load();await finish(s,{latency});
   Object.assign(s.data.pacing,{firstFinishes:2,initialActive:120000});return s.interstitialEligible();};
- assert.equal(await at(3),false);assert.equal(await at(42),false);assert.equal(await at(38),true);
+ assert.equal(await at(3),false);assert.equal(await at(8),false);assert.equal(await at(38),true);assert.equal(await at(38,1500),false);
 });
-test('a lost race offers a rewarded retry, from the checkpoint when gold is reachable, else from the start',async()=>{
+test('losing a level offers a rewarded skip that clears it; retrying is free',async()=>{
  const {s}=await setup({enableAdFixtures:true,ads:{request:async()=>true}});await finish(s,{latency:1500});assert.ok(s.race.result.rank>1);
- assert.ok(['rematch','replay'].includes(s.rewardOffer().kind));
- s.race.checkpoints=[];const offer=s.rewardOffer();assert.deepEqual(offer,{kind:'replay',id:s.race.course.id,serial:s.race.result.serial});
- const frontier=s.data.frontier,queue=[...s.data.queue];
- assert.equal(await s.requestAd('replay',offer),true);assert.equal(s.data.claim.kind,'replay');assert.equal(await s.consumeClaim(),true);
- assert.equal(s.race.origin,'replay');assert.equal(s.race.course.id,offer.id);assert.equal(s.race.state,'RACING');assert.equal(s.data.claim,null);
- drive(s);assert.equal(s.data.frontier,frontier);assert.deepEqual(s.data.queue,queue);
+ const level=s.race.course.id;assert.deepEqual(s.rewardOffer(),{kind:'skip',id:level,serial:s.race.result.serial});
+ await s.next({latency:1500});assert.equal(s.race.course.id,level);assert.equal(s.race.origin,'journey');while(!s.race.result)s.step(20);
+ if(s.race.result.rank>1){
+  const frontier=s.data.frontier,queue=[...s.data.queue],offer=s.rewardOffer();assert.equal(offer.kind,'skip');
+  assert.equal(await s.requestAd('skip',offer),true);assert.equal(await s.consumeClaim(),true);
+  assert.equal(s.data.frontier,frontier+1);assert.deepEqual(s.data.queue.slice(0,2),queue.slice(1));assert.equal(s.data.history.at(-1),level);assert.equal(s.data.claim,null);
+ }
 });
 test('a won race alternates a one-race trial of the next locked family with a new paint',async()=>{
- const {s,storage}=await setup({enableAdFixtures:true,ads:{request:async()=>true}});
+ const data=initialData();data.frontier=10;const storage=new MemoryStorage(JSON.stringify(data)),s=new Session(catalog,storage,{enableAdFixtures:true,ads:{request:async()=>true}});assert.equal(await s.load(),true);
  const offers=[];
  for(let i=0;i<2;i++){await finish(s);assert.equal(s.race.result.rank,1);offers.push(s.rewardOffer());}
  const trial=offers.find(o=>o.kind==='trial'),paint=offers.find(o=>o.kind==='paint');assert.ok(trial&&paint);

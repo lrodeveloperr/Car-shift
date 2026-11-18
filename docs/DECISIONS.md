@@ -8,4 +8,12 @@
 
 18 November 2026. Mediacube approved the game for publication, and the user approved this ad plan. Pre-roll is YouTube's. Interstitials run on Next only: none in stages 1–5, none right before a vehicle debut, at most one every 2 races and 2 minutes, and none within 2 minutes of a rewarded video. There is one rewarded offer per result, and Next stays free. A loss offers a retry: from the checkpoint when gold is reachable, else from the start. A win alternates by stage between a one-race trial of the next locked family (not an unlock, so the contract's no-video-unlock rule holds) and a new paint. These change the contract in three ways. Retry now goes through a rewarded video, but is free when no ad is available. Rewarded offers no longer wait out a 2-minute cooldown. Interstitials start at stage 6.
 
+18 November 2026, later. User restructured play around levels and asked for more competitive opponents and maximum vehicle variety. Changes:
+- Only first place clears a level; retry is free; a rewarded video skips a lost level. Interstitials come only after wins.
+- After a win, the vehicle-trial and paint offers stay.
+- A level number sits top left; there is no pause button, because YouTube pauses the game.
+- Standard opponents after level 6 are 0.952/0.982 speed with 205/152 ms reactions. On a third of the bank, 150 ms simulated switches win 99%, 300 ms win 64%, and slow switches with a mistake win 1%. Perfect play still wins every course.
+- A family unlocks every three levels, so all 14 vehicles arrive by level 33. Teaching levels rotate to the least recently raced family.
+- The daily course became the day's first level after the teaching levels, so the level number never repeats after a win.
+
 Prebuilt content is counted after mathematical/simulation/pacing/diversity acceptance. Human enjoyment is not established by synthetic players. The earlier 5,580 count is a restricted sequence enumeration, not a certified level count. Keep rejection evidence. Do not relax quality gates just to meet a number.

@@ -1,24 +1,24 @@
 {
   "scope": "standalone diagnostic only; SDK/graphics/host certification absent",
   "byteIdenticalTwoBuilds": true,
-  "archiveBytes": 431843,
-  "expandedRuntimeBytes": 1767070,
-  "sha256": "22947e6489608416b57898da9a056947c8b2b38b703d45f9079990c30e4e9a30",
+  "archiveBytes": 432273,
+  "expandedRuntimeBytes": 1768409,
+  "sha256": "0aba4a2c0ad04a53b78a7b4e2a4f7be5732b38cc402feae8435d279a7411aa0c",
   "files": [
     {
       "path": "data/bank.json",
-      "bytes": 813308,
-      "sha256": "a3f7f6b622144918bad72c3708ce79448fe855519de3af0410948af94e09c06c"
+      "bytes": 813355,
+      "sha256": "61191853bc080544e1db00dab792e90cf365ecc7d8773931f714ae7c1cb06a1b"
     },
     {
       "path": "data/foundations.json",
-      "bytes": 2466,
-      "sha256": "28c6c6c4f5415ed39ec137758e9430da7be24d05f63e299d9775607bf5feab98"
+      "bytes": 2289,
+      "sha256": "6ed83a7745465323fa3a012a1eac671ca9f8bad851aa227845c95da0029d9939"
     },
     {
       "path": "index.html",
-      "bytes": 884441,
-      "sha256": "ca1e695d089d6136671b9283596ec6991bec078a102d57e66280cdf81198a685"
+      "bytes": 885120,
+      "sha256": "f6e77a7cd4c1d575a4a863087871f0dd63e6648c4ad6c59863be908f83fbef4f"
     },
     {
       "path": "src/audit.mjs",
@@ -32,8 +32,8 @@
     },
     {
       "path": "src/daily.mjs",
-      "bytes": 2323,
-      "sha256": "81730ecb86e8bca09d52c71974b2fd75b460366c488ced107317ccd6abf325eb"
+      "bytes": 2047,
+      "sha256": "ba2442d2a1235c1128be8a22005ca4dc95dc73096155394ce87b1ff046ca568f"
     },
     {
       "path": "src/harness.mjs",
@@ -47,13 +47,13 @@
     },
     {
       "path": "src/rules.mjs",
-      "bytes": 5456,
-      "sha256": "d8fa5d3e92b0168d15dc5500e3e91c64686faa447152f72b62794081c866a8f7"
+      "bytes": 5666,
+      "sha256": "0c66719d6fb87167824cdee0658c22017228216ccbd8d0fd58bfc893d3f87b4b"
     },
     {
       "path": "src/session.mjs",
-      "bytes": 26480,
-      "sha256": "3295ae8ae2ae4480df313a0224a25b7d668451cf4d038c5d90d91a2bd332d732"
+      "bytes": 27336,
+      "sha256": "5b6a60bceee32eddc55cf360a76f236a3aaed14e3126d13a4db643e24db9d996"
     },
     {
       "path": "src/solver.mjs",

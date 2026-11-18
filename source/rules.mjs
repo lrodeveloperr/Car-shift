@@ -2,20 +2,20 @@ export const VERSION = 1;
 export const TICK = 20;
 // pattern: the course alphabet (G = the family's ground), the terrain every course must contain, and the
 // neighbour that terrain needs on both sides (surface water around a dive, land around a runway corridor).
-// Families after the 36 teaching stages unlock one at a time, each introducing a vehicle with its own terrain.
+// A new family, and with it a new vehicle, unlocks every three stages, so all fourteen are in play by stage 33.
 export const FAMILIES = [
   { id:'coastal', vehicles:['car','boat','helicopter'], ground:'L', unlock:1, pattern:{alphabet:'GWA',special:'G'} },
-  { id:'rough', vehicles:['bike','boat','helicopter'], ground:'R', unlock:7, pattern:{alphabet:'GWA',special:'G'} },
-  { id:'rail', vehicles:['train','boat','helicopter'], ground:'T', unlock:13, pattern:{alphabet:'GWA',special:'G'} },
-  { id:'snow', vehicles:['snowmobile','boat','helicopter'], ground:'S', unlock:19, pattern:{alphabet:'GWA',special:'G'} },
-  { id:'deep', vehicles:['car','submarine','helicopter'], ground:'L', unlock:25, pattern:{alphabet:'LWU',special:'U',edge:'W'} },
-  { id:'flight', vehicles:['car','boat','plane'], ground:'L', unlock:31, pattern:{alphabet:'LWF',special:'F',edge:'L'} },
-  { id:'marsh', vehicles:['car','hovercraft','helicopter'], ground:'L', unlock:37, pattern:{alphabet:'GMA',special:'M'} },
-  { id:'wreck', vehicles:['monstertruck','boat','helicopter'], ground:'B', unlock:43, pattern:{alphabet:'GWA',special:'G'} },
-  { id:'mountain', vehicles:['drill','boat','helicopter'], ground:'L', unlock:49, pattern:{alphabet:'LWD',special:'D'} },
-  { id:'rapids', vehicles:['bike','jetski','helicopter'], ground:'R', unlock:55, pattern:{alphabet:'GKA',special:'K'} },
-  { id:'canyon', vehicles:['car','boat','glider'], ground:'L', unlock:61, pattern:{alphabet:'LWC',special:'C',edge:'L'} },
-  { id:'space', vehicles:['car','hovercraft','rocket'], ground:'L', unlock:67, pattern:{alphabet:'LMO',special:'O',edge:'L'} },
+  { id:'rough', vehicles:['bike','boat','helicopter'], ground:'R', unlock:3, pattern:{alphabet:'GWA',special:'G'} },
+  { id:'rail', vehicles:['train','boat','helicopter'], ground:'T', unlock:6, pattern:{alphabet:'GWA',special:'G'} },
+  { id:'snow', vehicles:['snowmobile','boat','helicopter'], ground:'S', unlock:9, pattern:{alphabet:'GWA',special:'G'} },
+  { id:'deep', vehicles:['car','submarine','helicopter'], ground:'L', unlock:12, pattern:{alphabet:'LWU',special:'U',edge:'W'} },
+  { id:'flight', vehicles:['car','boat','plane'], ground:'L', unlock:15, pattern:{alphabet:'LWF',special:'F',edge:'L'} },
+  { id:'marsh', vehicles:['car','hovercraft','helicopter'], ground:'L', unlock:18, pattern:{alphabet:'GMA',special:'M'} },
+  { id:'wreck', vehicles:['monstertruck','boat','helicopter'], ground:'B', unlock:21, pattern:{alphabet:'GWA',special:'G'} },
+  { id:'mountain', vehicles:['drill','boat','helicopter'], ground:'L', unlock:24, pattern:{alphabet:'LWD',special:'D'} },
+  { id:'rapids', vehicles:['bike','jetski','helicopter'], ground:'R', unlock:27, pattern:{alphabet:'GKA',special:'K'} },
+  { id:'canyon', vehicles:['car','boat','glider'], ground:'L', unlock:30, pattern:{alphabet:'LWC',special:'C',edge:'L'} },
+  { id:'space', vehicles:['car','hovercraft','rocket'], ground:'L', unlock:33, pattern:{alphabet:'LMO',special:'O',edge:'L'} },
 ];
 export const LABELS={ L:'Land', R:'Rough land', W:'Surface water', A:'Air transfer', S:'Snow', U:'Underwater', T:'Rail', F:'Flight corridor',
   M:'Marsh', B:'Wreck yard', K:'Rapids', D:'Mountain tunnel', C:'Canyon glide', O:'Rocket corridor' };
@@ -57,9 +57,11 @@ export function speed(family,slot,leg,factor=1){
 export function bestSlot(family,leg){let b=0;for(let s=1;s<3;s++)if(speed(family,s,leg)>speed(family,b,leg))b=s;return b;}
 export function maxSpeed(family,leg){return Math.max(...[0,1,2].map(s=>speed(family,s,leg)));}
 export function aiProfile(difficulty,ai,stage=37,seed=0){
-  const factors=difficulty==='expert'?[.98,1]:stage<=3?[.78,.86]:stage<=6?[.86,.92]:[.94,.98];
-  return {id:ai===0?'A':'B',factor:factors[ai],reaction:(difficulty==='expert'?[140,100]:[220,160])[ai],
-    extra:difficulty==='expert'?100:200,extraBlock:seed%10,defaultFork:ai===0&&difficulty!=='expert'&&seed%3===0};
+  // Tuned on the bank so an efficient player wins and an inefficient one loses: with 300 ms switches a player
+  // wins about 64% of standard races; with 150 ms, 99%; slow switches with one mistake, about 1%.
+  const factors=difficulty==='expert'?[.98,1]:stage<=3?[.82,.88]:stage<=6?[.9,.94]:[.952,.982];
+  return {id:ai===0?'A':'B',factor:factors[ai],reaction:(difficulty==='expert'?[140,100]:[205,152])[ai],
+    extra:difficulty==='expert'?100:170,extraBlock:seed%10,defaultFork:ai===0&&difficulty!=='expert'&&seed%3===0};
 }
 export function reactionFor(p,terrain){
   let d=0;

@@ -35,12 +35,13 @@ No words or numbers are shown; text exists only as `aria-label`s for screen read
 - **Position:** a gold, silver or bronze disc, plus three racer dots on a thin progress bar that ends in a checkered flag.
 - **Vehicles:** three coloured tiles (green ground, blue water, sky air) showing the vehicle models. A tile dims when that vehicle can't move on the current terrain.
 - **Forks:** a left chevron with a red/green gate lamp, and a wavy line with a right chevron for the bypass.
-- **Screens:** a play button, a medal, and replay, next and sound icons. A grey medal means the race earned no credit because the player never switched vehicle.
+- **Level:** the one number in the game, top left on the title, race and medal screens. It bumps when a level is cleared.
+- **Screens:** a play button, a medal, and next, retry, skip and sound icons. A grey medal means the race earned no credit because the player never switched vehicle. There is no pause button: YouTube pauses the game itself, and the game shows a resume button when it comes back.
 - **Tutorial:** a pulsing tap ripple marks the best vehicle. It appears after 0.6 s in a slower vehicle on stages 1–3, after 2.5 s on later stages, and at once when the current vehicle can't move.
 
 ## Daily course
 
-From stage 4, the first race of each day is that day's course. It has no marker, badge or special sound: to the player it is simply the next level after Play or Next. The course is generated on the device (`source/daily.mjs`), uses only unlocked vehicles, passes the same gates as the built-in levels, and never changes the journey. The engine still records a daily streak in the save, but nothing displays it.
+After the 36 teaching levels, the first level a player races each day uses a course generated on the device (`source/daily.mjs`) from the date and that level's vehicle family. It has no marker: it is simply that level, and winning or skipping it clears the level as usual. It passes the same gates as the built-in levels. The engine also records a daily streak in the save, but nothing displays it.
 
 ## Sound
 
@@ -68,9 +69,10 @@ Audio starts on the first tap, as browsers require. It follows YouTube's audio s
 
 YouTube runs the pre-roll by itself. The game adds interstitials and one rewarded offer, using the engine's reservation, pacing and claim logic (`source/session.mjs`).
 
-- **Interstitial** (`ytgame.ads.requestInterstitialAd`): only when the player taps Next after the medal. Never in stages 1–5, never right before a new vehicle's first race. The first one comes after 2 counted races and 2 minutes of racing; after that, at most one every 2 races and 2 minutes, and never within 2 minutes of any rewarded video.
+- **Levels:** only first place clears a level. After a loss the big button retries the same level for free, and the rewarded button skips it.
+- **Interstitial** (`ytgame.ads.requestInterstitialAd`): only when the player taps Next after a win, so a retry never plays an ad. Never in levels 1–5, never right before a new vehicle's first race. The first one comes after 2 counted races and 2 minutes of racing; after that, at most one every 2 races and 2 minutes, and never within 2 minutes of any rewarded video.
 - **Rewarded** (`ytgame.ads.requestRewardedAd`): one button on the medal screen. Its face shows the reward, with a gold film-clapper mark.
-  - After silver or bronze: retry, from the last checkpoint when gold is still reachable there (the engine's rematch), otherwise from the start. Retrying is only available through this button.
+  - After losing the current level: skip it (the button shows a skip arrow). The video clears the level and starts the next one.
   - After gold: a one-race trial of the next locked vehicle family (the button shows that vehicle), alternating by stage with a new paint for the player's vehicles (the button shows the swatch). After all families unlock, only paint.
   - Nothing after a trial race, or after a race that earned no credit. Next is always free.
 - **Outcomes:** an earned video grants the reward. A video closed early (`false`) grants nothing and spends the offer. If no ad is available (the call rejects, or there is no SDK, as in the preview), the reward is granted free, so retry always works. The engine saves the reservation before the ad and grants a reward only once.

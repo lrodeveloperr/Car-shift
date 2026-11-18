@@ -58,7 +58,17 @@ function showTitle(){
   const saved=session.race?.state==='RACING'?session.race:null,daily=saved?null:session.dailyAvailable(today());
   const course=saved?.course??session.catalog.course(daily??session.data.queue[0]);
   preview=saved??new Race(course,{stage:session.data.frontier});prepareCourse(course);
-  $('play').disabled=false;show('title',true);mode='title';
+  showLevel();$('play').disabled=false;show('title',true);mode='title';
+}
+// The level number, top left on every screen; it bumps when a level is cleared.
+let shownLevel=0;
+function showLevel(){
+  const level=session.data.frontier;
+  for(const el of document.querySelectorAll('.level')){
+    el.querySelector('b').textContent=level;el.setAttribute('aria-label',`Level ${level}`);
+    if(shownLevel&&level>shownLevel){el.classList.remove('up');void el.offsetWidth;el.classList.add('up');}
+  }
+  shownLevel=level;
 }
 // Per-race memory of what the player last heard and saw, so cues fire on changes only.
 function freshCue(race){
@@ -70,7 +80,7 @@ function startRace(race){
   if(!race)return;
   prepareCourse(race.course);race.resume('menu');ghost=null;acc=0;mode='racing';cue=freshCue(race);
   show('title',false);show('result',false);show('paused',false);show('hud',true);
-  sound.play('go');
+  showLevel();sound.play('go');
 }
 async function run(task){
   if(busy)return;busy=true;
@@ -96,13 +106,16 @@ function finish(now){
   session.flush().then(()=>host.sendScore(session.data.frontier-1)).catch(()=>{});
 }
 function showResult(){
-  const r=session.race.result;
+  const race=session.race,r=race.result;
   $('medal').style.setProperty('--medal',r.genuine?MEDALS[r.rank-1]:'var(--none)');
-  showOffer();show('result',true);show('hud',false);mode='result';$('next').focus({preventScroll:true});
+  // Losing the current level turns the big button into a free retry of it; the offer button skips it with a video.
+  const retry=['journey','daily'].includes(race.origin)&&race.stage===session.data.frontier&&(!r.genuine||r.rank>1);
+  $('next').dataset.mode=retry?'retry':'next';$('next').setAttribute('aria-label',retry?'Retry level':'Next level');
+  showOffer();show('result',true);showLevel();show('hud',false);mode='result';$('next').focus({preventScroll:true});
   if(r.genuine)sound.play('medal',r.rank);
 }
 // Rewarded offer: one button on the medal screen whose face shows what the video gives.
-let offer=null;const LABELS_FOR={rematch:'Watch a video to retry from the checkpoint',replay:'Watch a video to retry',trial:'Watch a video to try a new vehicle',paint:'Watch a video for a new paint'};
+let offer=null;const LABELS_FOR={rematch:'Watch a video to retry from the checkpoint',replay:'Watch a video to retry',skip:'Watch a video to skip this level',trial:'Watch a video to try a new vehicle',paint:'Watch a video for a new paint'};
 function showOffer(){
   offer=session.rewardOffer();show('offer',!!offer);if(!offer)return;
   const b=$('offer');b.dataset.kind=offer.kind;b.setAttribute('aria-label',LABELS_FOR[offer.kind]);
@@ -114,6 +127,7 @@ async function claim(){
   const kind=session.data.claim?.kind;
   if(!kind||!await session.consumeClaim())return null;
   if(kind==='paint'){applyPaint();world.sparkle(0,PAINTS[session.data.paint][0]);sound.play('perfect');buzz([10,30,10]);showOffer();return null;}
+  if(kind==='skip'){showLevel();sound.play('perfect');return session.next({day:today()});}
   return session.race;
 }
 const takeOffer=()=>{const o=offer;if(!o)return;show('offer',false);run(async()=>(await session.requestAd(o.kind,o))===true?claim():(showOffer(),null));};

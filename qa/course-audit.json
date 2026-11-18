@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "generatedAt": "2026-10-19T00:26:16.629Z",
-  "durationSeconds": 28.717915578,
+  "generatedAt": "2026-11-18T14:19:37.503Z",
+  "durationSeconds": 18.997222873000002,
   "scope": "Executable content and simulation audit; not human enjoyment, final presentation, physical devices or YouTube-host certification",
   "gates": {
     "ordinaryLegs": "4–10",
@@ -18,10 +18,10 @@
   },
   "counts": {
     "rawCandidates": 12843,
-    "geometryAttempts": 34483,
-    "fullRaceSimulations": 67102,
-    "routeSimulations": 18863,
-    "referencePaths": 18863,
+    "geometryAttempts": 34480,
+    "fullRaceSimulations": 67081,
+    "routeSimulations": 18860,
+    "referencePaths": 18860,
     "accepted": 9577,
     "rejected": 3266
   },
@@ -97,51 +97,51 @@
   "stats": {
     "perfectMs": {
       "min": 36728.88888888895,
-      "median": 43833.33333333338,
-      "p95": 50869.16666666669,
+      "median": 43835.00000000002,
+      "p95": 50871.6666666667,
       "max": 55195.833333333416
     },
     "competentMs": {
       "min": 37333.33333333345,
-      "median": 45212.50000000009,
-      "p95": 52277.777777777745,
+      "median": 45218.75,
+      "p95": 52277.77777777777,
       "max": 56847.08333333339
     },
     "noviceMs": {
       "min": 38154.16666666687,
-      "median": 46975,
-      "p95": 54037.50000000002,
+      "median": 46980,
+      "p95": 54037.50000000024,
       "max": 59405.00000000002
     },
     "standardLead": {
-      "min": 304.48979591781244,
-      "median": 1909.25170068039,
-      "p95": 2546.285714285732,
-      "max": 4226.7346938773335
+      "min": 294.35845213786524,
+      "median": 1747.2989712255949,
+      "p95": 2352.9178547182382,
+      "max": 4117.386286490117
     },
     "expertLead": {
       "min": 0,
-      "median": 617.4999999999345,
+      "median": 617.4999999999054,
       "p95": 955,
       "max": 2781.3945578232597
     }
   },
   "syntheticRanks": {
     "competent": [
-      9345,
-      232,
-      0
+      9247,
+      329,
+      1
     ],
     "novice": [
-      164,
-      8962,
-      451
+      83,
+      5984,
+      3510
     ]
   },
   "bytes": {
-    "compactBank": 813308
+    "compactBank": 813355
   },
-  "sha256": "a3f7f6b622144918bad72c3708ce79448fe855519de3af0410948af94e09c06c",
+  "sha256": "61191853bc080544e1db00dab792e90cf365ecc7d8773931f714ae7c1cb06a1b",
   "humanEnjoyment": "NOT RUN",
   "comparativeUserPreference": "NOT RUN",
   "physicalDevice": "NOT RUN",

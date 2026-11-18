@@ -1,3 +1,24 @@
+# 18 November 2026 — levels, competitive opponents and vehicle variety
+
+**Levels.** Only first place clears a level; finishes still count for ad pacing. A new `skip` claim clears a lost level through a rewarded video. `rewardOffer()` now offers a skip after a loss and a trial or paint after a win (no more paid retry; retrying is free). Interstitials only come after wins.
+
+**Opponents.** Standard opponents strengthened: 0.952/0.982 speed and 205/152 ms reactions after level 6, and slightly stronger in levels 1–6.
+
+**Vehicle variety.**
+- Families unlock every three levels (1, 3 … 33).
+- `tools/foundations.mjs` rebuilds the teaching levels: a fixed debut course for every family on its unlock level, and least-recently-raced rotation in between. The fork, current and wind lessons moved to levels 16, 22, 28, 34 and 35.
+- The re-audited bank keeps 9,577 courses; 3 changed, because the stronger opponents let an earlier layout pass the pressure gate.
+
+**Daily course.** It is now the day's first level after the teaching levels: its family is that level's, and a win or skip clears the level.
+
+**Game screens.** A level number sits top left on all screens and bumps on a clear. The pause button is gone. After a loss the big button is a free retry, and the offer shows a skip arrow.
+
+**Verification.**
+- Engine tests 49/49.
+- Stress: 10,000 levels, 5,134 of them cleared through the rewarded skip.
+- End-to-end: all courses won by optimal play.
+- A mocked-SDK browser run covered a win, a loss, a free retry and an earned skip.
+
 # 18 November 2026 — ads
 
 Wired YouTube interstitial and rewarded ads into the game through the engine's existing reservation, pacing and claim logic. The engine gained a single `rewardOffer()` per result: retry from the checkpoint (rematch) or from the start after a loss, and after a win a one-race trial of the next locked family alternating by stage with a new paint. It also gained new claim kinds (`replay`, `trial`, `paint`), a `trial` race origin that never moves the journey, and the player's paint in the save. Journey credit is now explicitly limited to `journey` races. Interstitials are blocked before stage 6 and right before a vehicle debut. Rewarded offers lost their cooldown. In the game, the medal screen's Replay button became the offer button (reward face plus a video mark: a generic gold film clapper, not YouTube's logo). Paint recolours the player's vehicles, marker, progress dot and icons. Audio is held during ads. A rewarded video that is unavailable grants the reward; one closed early grants nothing. Engine tests 49/49, including new offer, claim, gate and save-validation tests. A browser run against a mocked `ytgame.ads` covered interstitial-on-Next and rewarded earned, skipped and unavailable.

@@ -70,15 +70,14 @@ test('all 144 equipped-form/base-support pairs match the written product table',
  for(const [f,slot,t,m,dir,want]of [[0,1,'W','current',-1,9],[0,1,'W','current',1,15],[4,1,'W','current',-1,4.5],[4,1,'U','current',1,15],[0,2,'L','wind',-1,5.2],[0,2,'A','wind',1,14.4],[5,2,'F','wind',-1,11.7],[5,0,'L','current',1,12],[5,2,'F','current',1,18],[0,1,'W','wind',1,12]])assert.ok(Math.abs(speed(f,slot,{t,m,dir})-want)<1e-9);
 });
 
-test('each later vehicle is the only fastest choice on its own terrain and its family unlocks after the teaching stages',()=>{
+test('each later vehicle is the only fastest choice on its own terrain, and a new family unlocks every three stages',()=>{
  const owners={hovercraft:'M',monstertruck:'B',drill:'D',jetski:'K',glider:'C',rocket:'O'};
  for(const [vehicle,terrain] of Object.entries(owners)){
   const f=FAMILIES.findIndex(x=>x.vehicles.includes(vehicle)&&(x.pattern.special===terrain||x.ground===terrain));assert.ok(f>=6,vehicle);
   const slot=FAMILIES[f].vehicles.indexOf(vehicle);assert.equal(bestSlot(f,{t:terrain}),slot);
   for(let other=0;other<3;other++)if(other!==slot)assert.ok(speed(f,other,{t:terrain})<speed(f,slot,{t:terrain}),`${vehicle} ${other}`);
-  assert.ok(FAMILIES[f].unlock>36);
  }
- assert.deepEqual(FAMILIES.slice(6).map(f=>f.unlock),[37,43,49,55,61,67]);
+ assert.deepEqual(FAMILIES.map(f=>f.unlock),[1,3,6,9,12,15,18,21,24,27,30,33]);
  for(const vehicle of Object.keys(SPEEDS))assert.equal(Object.keys(SPEEDS[vehicle]).length,14);
 });
 test('every later family has prevalidated courses with each fork count available',()=>{

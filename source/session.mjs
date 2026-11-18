@@ -1,7 +1,7 @@
 import {FAMILIES,PAINTS,hash,clone,within,bestSlot} from './rules.mjs';
 import {expand,signature} from './content.mjs';
 import {Race,validateRaceSnapshot} from './race.mjs';
-import {DAILY_FROM,DAILY_ID,dailyId,dailyFamily,dailyRecipe,previousDay} from './daily.mjs';
+import {DAILY_FROM,DAILY_ID,dailyId,dailyRecipe,previousDay} from './daily.mjs';
 
 export class ProtectedSaveError extends Error{}
 export class MemoryStorage{
@@ -35,7 +35,7 @@ export class Catalog{
 function shuffle(values,seed){const out=[...values];for(let i=out.length-1;i>0;i--){const j=hash(`${seed}:${i}`)%(i+1);[out[i],out[j]]=[out[j],out[i]];}return out;}
 // Interstitials never interrupt the first five stages.
 export const INTERSTITIAL_FROM=6;
-const REWARDS=['set','rematch','replay','trial','paint'];
+const REWARDS=['set','rematch','replay','trial','paint','skip'];
 const unlockedAt=stage=>FAMILIES.map((f,i)=>f.unlock<=stage?i:-1).filter(i=>i>=0);
 // A family debuts on the stage it unlocks; otherwise families come from a shuffled bag of everything unlocked.
 function drawFamily(state,stage,last){
@@ -79,7 +79,7 @@ function validateData(d,catalog){
   if(d.claim&&!REWARDS.includes(d.claim.kind))throw new ProtectedSaveError('bad reward type');
   if(d.paint!==null&&(!Number.isInteger(d.paint)||d.paint<0||d.paint>=PAINTS.length))throw new ProtectedSaveError('bad paint');
   if(d.claim?.kind==='paint'&&(!Number.isInteger(d.claim.paint)||d.claim.paint<0||d.claim.paint>=PAINTS.length))throw new ProtectedSaveError('bad paint reward');
-  if(d.claim?.kind==='replay'||d.claim?.kind==='trial'){
+  if(['replay','trial','skip'].includes(d.claim?.kind)){
     if(typeof d.claim.id!=='string'||d.claim.id.length>96)throw new ProtectedSaveError('bad reward course');
     try{catalog.course(d.claim.id);}catch{throw new ProtectedSaveError('bad reward course');}
   }
@@ -189,23 +189,35 @@ export class Session{
     if(r.serial<=this.data.lastCreditedSerial)return false;
     this.data.lastCreditedSerial=r.serial;
     if(r.meaningful){const p=this.data.pacing;p.firstFinishes=Math.min(2,p.firstFinishes+1);p.finishesSinceAd=Math.min(2,p.finishesSinceAd+1);}
-    if(this.race.origin==='daily')this.settleDaily(r);
-    else if(this.race.origin==='journey'&&this.race.stage===this.data.frontier){
-      this.data.history.push(this.race.course.id);if(this.data.history.length>64)this.data.history.shift();
-      this.data.signatures.push(signature(this.race.course));if(this.data.signatures.length>12)this.data.signatures.shift();
-      this.data.frontier++;this.data.queue.shift();this.fillQueue();
+    // Only first place clears a level. The daily course is the day's first level, so winning it clears that level too.
+    if(r.rank===1&&['journey','daily'].includes(this.race.origin)&&this.race.stage===this.data.frontier){
+      if(this.race.origin==='daily')this.settleDaily(r);
+      this.advanceLevel();
     }
     this.record(r);this.dirty();return true;
   }
-  // A daily counts once per day, extends the streak when yesterday's was also cleared, and never moves the journey.
+  // Moves the journey past the current level. Its queued bank course joins the variety history even when the
+  // daily course stood in for it.
+  advanceLevel(){
+    this.data.history.push(this.data.queue[0]);if(this.data.history.length>64)this.data.history.shift();
+    this.data.signatures.push(signature(this.race.course));if(this.data.signatures.length>12)this.data.signatures.shift();
+    this.data.frontier++;this.data.queue.shift();this.fillQueue();
+  }
+  // A rewarded skip clears the level without a win. A skipped daily counts as the day's played course.
+  skipLevel(id){
+    if(this.race?.course.id!==id||!['journey','daily'].includes(this.race.origin)||this.race.stage!==this.data.frontier)return;
+    const day=DAILY_ID.exec(id)?.[1];if(day)this.data.daily.last=day;
+    this.advanceLevel();
+  }
+  // A daily counts once per day and extends the streak when yesterday's was also cleared.
   settleDaily(r){
     const day=DAILY_ID.exec(this.race.course.id)?.[1],d=this.data.daily;if(!day||d.last===day)return;
     d.streak=d.last===previousDay(day)?d.streak+1:1;d.last=day;d.rank=r.rank;d.time=r.time;
   }
   // The day's course id when it is still waiting for this player, otherwise null.
   dailyAvailable(day){
-    if(!this.loaded||this.protected||this.data.frontier<DAILY_FROM||this.data.daily.last===day)return null;
-    const id=dailyId(day,dailyFamily(day,this.data.frontier));
+    if(!this.loaded||this.protected||this.data.frontier<DAILY_FROM||this.data.daily.last===day||!this.data.queue.length)return null;
+    const id=dailyId(day,this.catalog.map.get(this.data.queue[0])[1]);
     try{this.catalog.course(id);return id;}catch{return null;}
   }
   startDaily(day){const id=this.dailyAvailable(day);return id?this.start({id,origin:'daily'}):Promise.resolve(null);}
@@ -217,8 +229,8 @@ export class Session{
     this.data.records.push(item);if(this.data.records.length>64)this.data.records.shift();
     if(item.id.startsWith('F')){const old=this.data.foundationRecords[item.id];this.data.foundationRecords[item.id]={rank:Math.min(old?.rank??3,item.rank),time:Math.min(old?.time??Infinity,item.time)};}
   }
-  // Not in the first five stages, and never right before a new vehicle's first race.
-  interstitialEligible(){const r=this.race?.result,p=this.data.pacing;if(!this.enableAdFixtures||!r?.meaningful||this.hostPaused||this.inFlight||p.consumed.includes(r.serial))return false;
+  // Only after a win, so a free retry never plays an ad; not in the first five stages; never before a new vehicle's debut.
+  interstitialEligible(){const r=this.race?.result,p=this.data.pacing;if(!this.enableAdFixtures||!r?.meaningful||r.rank!==1||this.hostPaused||this.inFlight||p.consumed.includes(r.serial))return false;
     if(this.data.frontier<INTERSTITIAL_FROM||FAMILIES.some(f=>f.unlock===this.data.frontier))return false;
     return p.firstAttempted?p.finishesSinceAd>=2&&p.activeSinceAd>=120000:p.firstFinishes>=2&&p.initialActive>=120000&&(!p.hadReservation||p.activeSinceAd>=120000);
   }
@@ -242,13 +254,17 @@ export class Session{
     if(probe.result?.rank!==1||probe.result.time-cp.ms<10000)return null;
     return {kind:'rematch',snapshot:encodeRace(cp),original:clone(r),serial:r.serial};
   }
-  // The one rewarded offer for this result. A lost race offers a retry: from the last checkpoint when gold is still
-  // reachable there, otherwise from the start. A won race alternates a one-race trial of the next locked family with
-  // a new paint. Trials, and results that earned no credit, offer nothing. Rewarded offers have no cooldown.
+  // The one rewarded offer for this result. Losing the current level offers a skip past it (retrying is free).
+  // A win alternates a one-race trial of the next locked family with a new paint. Other races offer nothing.
+  // Rewarded offers have no cooldown.
   rewardOffer(){
     const r=this.race?.result,p=this.data.pacing;
-    if(!this.enableAdFixtures||!r?.genuine||this.race.origin==='trial'||this.data.claim||this.inFlight||this.hostPaused||p.consumed.includes(r.serial))return null;
-    if(r.rank>1)return this.rematchOffer()??{kind:'replay',id:this.race.course.id,serial:r.serial};
+    if(!this.enableAdFixtures||!r||this.data.claim||this.inFlight||this.hostPaused||p.consumed.includes(r.serial))return null;
+    if(!r.genuine||r.rank>1){
+      const level=['journey','daily'].includes(this.race.origin)&&this.race.stage===this.data.frontier;
+      return level?{kind:'skip',id:this.race.course.id,serial:r.serial}:null;
+    }
+    if(this.race.origin==='trial'||this.race.assisted)return null;
     const next=FAMILIES.map((f,i)=>({f,i})).filter(x=>x.f.unlock>this.data.frontier).sort((a,b)=>a.f.unlock-b.f.unlock)[0];
     // Alternate by journey stage, so retries and trials in between cannot pin the offer to one kind.
     if(next&&this.data.frontier%2===0)
@@ -298,6 +314,7 @@ export class Session{
       const race=Race.restore(decodeRace(claim.snapshot,this.catalog));race.assisted=true;race.originalResult=clone(claim.original);race.state='RACING';race.result=null;race.checkpoints=[];race.origin='rematch';this.race=race;
     }else if(claim.kind==='set')this.data.queue[0]=claim.id;
     else if(claim.kind==='paint')this.data.paint=claim.paint;
+    else if(claim.kind==='skip')this.skipLevel(claim.id);
     this.dirty();
     // A retry or trial starts its race now; that race's first save also records the claim as spent.
     if(claim.kind==='replay'||claim.kind==='trial'){

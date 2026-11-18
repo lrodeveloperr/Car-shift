@@ -20,7 +20,9 @@ for(let f=0;f<FAMILIES.length;f++){
  console.log(JSON.stringify({family:FAMILIES[f].id,seeds:10000,distinctSelected:seen.size,seconds:Math.round((performance.now()-began)/1000)}));
 }
 assert.equal(report.seedFailures.length,0);
-let storage=new MemoryStorage(),s=new Session(catalog,storage);assert.ok(await s.load());
+// Ads always succeed here, so every lost level is cleared through the real rewarded-skip path.
+const adOptions={enableAdFixtures:true,ads:{request:async()=>true}};
+let storage=new MemoryStorage(),s=new Session(catalog,storage,adOptions);assert.ok(await s.load());
 let ordinary=[],layouts=[],structures=[],forks=[],families=[];
 for(let stage=1;stage<=10000;stage++){
  const id=s.data.queue[0],recipe=catalog.map.get(id),key=catalog.keys.get(id),sig=catalog.signatures.get(id);
@@ -37,10 +39,12 @@ for(let stage=1;stage<=10000;stage++){
  }
  await s.start({latency:stage%10===0?450:250,difficulty:stage>6&&stage%2===0?'expert':'standard'});
  while(!s.race.result&&s.race.ms<120000)s.step(20);
- assert.ok(s.race.result?.genuine,`no genuine finish ${stage}`);assert.equal(s.data.frontier,stage+1);assert.equal(s.finalize(),false);
+ assert.ok(s.race.result?.genuine,`no genuine finish ${stage}`);
+ if(s.race.result.rank!==1){const offer=s.rewardOffer();assert.equal(offer?.kind,'skip',`no skip ${stage}`);assert.equal(await s.requestAd('skip',offer),true);assert.equal(await s.consumeClaim(),true);report.sequence.skips=(report.sequence.skips??0)+1;}
+ assert.equal(s.data.frontier,stage+1);assert.equal(s.finalize(),false);
  assert.ok(s.data.records.length<=64);assert.ok(s.data.history.length<=64);assert.ok(s.data.signatures.length<=12);assert.equal(s.data.queue.length,3);
  await s.flush();report.sequence.maxSaveBytes=Math.max(report.sequence.maxSaveBytes,Buffer.byteLength(storage.value));
- if(stage%100===0||stage===36||stage===37){const snapshot=JSON.stringify(s.snapshot());s=new Session(catalog,storage);assert.equal(await s.load(),true,s.error);assert.equal(JSON.stringify(s.snapshot()),snapshot);report.sequence.reloads++;}
+ if(stage%100===0||stage===36||stage===37){const snapshot=JSON.stringify(s.snapshot());s=new Session(catalog,storage,adOptions);assert.equal(await s.load(),true,s.error);assert.equal(JSON.stringify(s.snapshot()),snapshot);report.sequence.reloads++;}
  report.sequence.stages++;
  if(stage%1000===0)console.log(JSON.stringify({stages:stage,frontier:s.data.frontier,maxSaveBytes:report.sequence.maxSaveBytes,seconds:Math.round((performance.now()-began)/1000)}));
 }
