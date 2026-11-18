@@ -23,12 +23,13 @@ const ENGINE={
 };
 
 export class Sound{
-  constructor({muted=false}={}){this.ctx=null;this.muted=muted;this.hostEnabled=true;this.suspended=false;this.musicOn=false;this.seq=null;this.log=null;}
-  get on(){return !!this.ctx&&!this.muted&&this.hostEnabled&&!this.suspended;}
+  // holds: reasons the game must stay silent right now (a host pause, an ad playing).
+  constructor({muted=false}={}){this.ctx=null;this.muted=muted;this.hostEnabled=true;this.holds=new Set();this.musicOn=false;this.seq=null;this.log=null;}
+  get on(){return !!this.ctx&&!this.muted&&this.hostEnabled&&!this.holds.size;}
   // Browsers only start audio from a user gesture; call this from input handlers.
   unlock(){
     if(!this.ctx){const AC=globalThis.AudioContext??globalThis.webkitAudioContext;if(!AC)return;try{this.ctx=new AC();}catch{return;}this.build();}
-    if(this.ctx.state==='suspended'&&!this.suspended&&this.hostEnabled&&!this.muted)this.ctx.resume().catch(()=>{});
+    if(this.ctx.state==='suspended'&&!this.holds.size&&this.hostEnabled&&!this.muted)this.ctx.resume().catch(()=>{});
     this.sync();
   }
   build(){
@@ -54,8 +55,8 @@ export class Sound{
   }
   setMuted(muted){this.muted=muted;if(!muted)this.unlock();this.sync();}
   setHostEnabled(enabled){this.hostEnabled=enabled;this.sync();}
-  suspend(){this.suspended=true;this.sync();this.ctx?.suspend().catch(()=>{});}
-  resume(){this.suspended=false;if(this.ctx&&this.hostEnabled&&!this.muted)this.ctx.resume().catch(()=>{});this.sync();}
+  suspend(reason='host'){this.holds.add(reason);this.sync();this.ctx?.suspend().catch(()=>{});}
+  resume(reason='host'){this.holds.delete(reason);if(!this.holds.size&&this.ctx&&this.hostEnabled&&!this.muted)this.ctx.resume().catch(()=>{});this.sync();}
 
   voice(type,freq,{t=0,dur=.2,attack=.005,gain=.2,to=0,glide=dur,filter=0,cutTo=0,q=1,send=0,bus=this.sfx}={}){
     const c=this.ctx,at=c.currentTime+t,o=c.createOscillator(),g=c.createGain();

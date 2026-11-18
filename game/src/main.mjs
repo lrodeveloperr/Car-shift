@@ -4,7 +4,7 @@ import foundations from '../../runtime/data/foundations.json';
 import {WebGLRenderer} from 'three';
 import {Catalog,Session,MemoryStorage,initialData} from '../../source/session.mjs';
 import {Race,advanceEntrant} from '../../source/race.mjs';
-import {FAMILIES,TICK,speed,bestSlot,clone} from '../../source/rules.mjs';
+import {FAMILIES,PAINTS,TICK,speed,bestSlot,clone} from '../../source/rules.mjs';
 import {World,FLYERS} from './world.mjs';
 import {liveOrder,progress,gateState,hoopDistances} from './track.mjs';
 import {Sound} from './audio.mjs';
@@ -19,6 +19,9 @@ let pixelRatio=Math.min(2,devicePixelRatio||1);renderer.setPixelRatio(pixelRatio
 const world=new World(renderer);
 const sound=new Sound({muted:(()=>{try{return localStorage.getItem(SOUND_KEY)==='off';}catch{return false;}})()});
 const buzz=pattern=>{try{navigator.vibrate?.(pattern);}catch{}};
+// The vehicle each family introduces (the one no earlier family has): the face of a trial offer.
+const SIGNATURE=FAMILIES.map(f=>{const seen=new Set(FAMILIES.filter(g=>g.unlock<f.unlock).flatMap(g=>g.vehicles));return Math.max(0,f.vehicles.findIndex(v=>!seen.has(v)));});
+const hex=n=>`#${n.toString(16).padStart(6,'0')}`;
 const pad=n=>String(n).padStart(2,'0'),today=()=>{const d=new Date();return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;};
 
 let session=null,mode='boot',ghost=null,preview=null,acc=0,last=0,hostPaused=false,finishAt=0,saveAt=0,busy=false,iconFamily=-1,slowFrames=0,cue=null;
@@ -33,15 +36,22 @@ function show(id,visible){$(id).toggleAttribute('hidden',!visible);} // attribut
 function save(){if(session?.loaded&&!hostPaused&&session.unsaved)session.flush().catch(()=>{});}
 function syncSoundButtons(){for(const b of document.querySelectorAll('.sound'))b.setAttribute('aria-pressed',String(!sound.muted));}
 
+function familyIcons(family){try{return world.icons(family,SLOT_BG);}catch(e){console.warn('icon render failed',e);return [];}}
 function prepareCourse(course){
   world.setCourse(course);
   if(iconFamily!==course.family){
-    iconFamily=course.family;let icons=[];
-    try{icons=world.icons(course.family,SLOT_BG);}catch(e){console.warn('icon render failed',e);}
+    iconFamily=course.family;const icons=familyIcons(course.family);
     FAMILIES[course.family].vehicles.forEach((vehicle,slot)=>{
       const button=$(`slot${slot}`);button.querySelector('img').src=icons[slot]??'';button.setAttribute('aria-label',`${ROLES[slot]}: ${vehicle}`);
     });
   }
+}
+// Paint from a rewarded video recolours the player's vehicles, its marker, its progress dot and the slot icons.
+function applyPaint(){
+  const index=session.data.paint;world.setPaint(index);
+  root.style.setProperty('--you',index==null?'':hex(PAINTS[index][0]));
+  if(world.data){iconFamily=-1;const family=world.data.family;iconFamily=family;const icons=familyIcons(family);
+    icons.forEach((src,slot)=>{$(`slot${slot}`).querySelector('img').src=src;});}
 }
 function showTitle(){
   // A saved unfinished race resumes; otherwise the title previews whatever Play will start next.
@@ -88,8 +98,33 @@ function finish(now){
 function showResult(){
   const r=session.race.result;
   $('medal').style.setProperty('--medal',r.genuine?MEDALS[r.rank-1]:'var(--none)');
-  show('result',true);show('hud',false);mode='result';$('next').focus({preventScroll:true});
+  showOffer();show('result',true);show('hud',false);mode='result';$('next').focus({preventScroll:true});
   if(r.genuine)sound.play('medal',r.rank);
+}
+// Rewarded offer: one button on the medal screen whose face shows what the video gives.
+let offer=null;const LABELS_FOR={rematch:'Watch a video to retry from the checkpoint',replay:'Watch a video to retry',trial:'Watch a video to try a new vehicle',paint:'Watch a video for a new paint'};
+function showOffer(){
+  offer=session.rewardOffer();show('offer',!!offer);if(!offer)return;
+  const b=$('offer');b.dataset.kind=offer.kind;b.setAttribute('aria-label',LABELS_FOR[offer.kind]);
+  if(offer.kind==='trial')b.querySelector('.f-trial').src=familyIcons(offer.family)[SIGNATURE[offer.family]]??'';
+  if(offer.kind==='paint'){const [body,trim]=PAINTS[offer.paint];b.querySelector('.f-paint').style.background=`linear-gradient(135deg,${hex(body)} 0 62%,${hex(trim)} 62%)`;}
+}
+// Spends an earned reward: paint applies on the medal screen; a retry or trial starts its race.
+async function claim(){
+  const kind=session.data.claim?.kind;
+  if(!kind||!await session.consumeClaim())return null;
+  if(kind==='paint'){applyPaint();world.sparkle(0,PAINTS[session.data.paint][0]);sound.play('perfect');buzz([10,30,10]);showOffer();return null;}
+  return session.race;
+}
+const takeOffer=()=>{const o=offer;if(!o)return;show('offer',false);run(async()=>(await session.requestAd(o.kind,o))===true?claim():(showOffer(),null));};
+// Engine-facing ad adapter. A reward is granted when the video is earned, or when no ad is available so a retry
+// always works; a video closed early grants nothing. Game audio is held for the length of any ad.
+async function adRequest(kind,token){
+  sound.suspend('ad');
+  try{
+    if(kind==='interstitial'){await host.interstitial();return false;}
+    return await host.rewarded(token)!=='skipped';
+  }finally{sound.resume('ad');}
 }
 function pause(){
   const race=session?.race;if(mode!=='racing'||!race||race.pauses.has('menu'))return;
@@ -102,6 +137,7 @@ host.onPause(()=>{
 },async()=>{
   if(!hostPaused||!session)return;hostPaused=false;last=0;sound.resume();await session.resumeHost();
   if(mode==='racing')pause();
+  else if(mode==='result'&&session.data.claim)run(claim); // a reward earned while the host was paused
 });
 sound.setHostEnabled(host.audioEnabled());host.onAudioChange(enabled=>sound.setHostEnabled(enabled!==false));
 
@@ -143,7 +179,7 @@ document.addEventListener('click',e=>{
     syncSoundButtons();sound.play('tap');return;
   }
   sound.play('tap');
-  ({play,next:()=>next(false),replay:()=>next(true),pause,resume})[b.id]?.();
+  ({play,next:()=>next(false),offer:takeOffer,pause,resume})[b.id]?.();
 });
 document.addEventListener('keydown',e=>{
   sound.unlock();
@@ -260,9 +296,9 @@ function storageFor(){
 async function boot(){
   resize();world.render();host.firstFrameReady();syncSoundButtons();sound.music(true,.34);
   await new Promise(requestAnimationFrame);
-  session=new Session(new Catalog(bank.recipes,foundations.recipes),storageFor());
+  session=new Session(new Catalog(bank.recipes,foundations.recipes),storageFor(),{enableAdFixtures:true,ads:{request:adRequest}});
   if(!await session.load()){console.warn('save unreadable',session.error);show('problem',true);return;}
-  showTitle();world.update(preview.entrants,0,1,0,reducedMotion);world.render();
+  applyPaint();showTitle();world.update(preview.entrants,0,1,0,reducedMotion);world.render();
   host.gameReady();requestAnimationFrame(loop);
 }
 boot();

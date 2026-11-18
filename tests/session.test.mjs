@@ -121,3 +121,50 @@ test('daily course is offered once per day from stage 4, never moves the journey
  await reloaded.restart({latency:0});assert.equal(reloaded.race.origin,'daily');
  const next=new Session(catalog,new MemoryStorage((()=>{const d=JSON.parse(storage.value);delete d.daily;return JSON.stringify(d);})()));assert.equal(await next.load(),true,next.error);assert.equal(next.data.daily.streak,0);
 });
+
+test('interstitials stay out of the first five stages and away from a new vehicle debut',async()=>{
+ const at=async frontier=>{const d=initialData();d.frontier=frontier;const s=new Session(catalog,new MemoryStorage(JSON.stringify(d)),{enableAdFixtures:true,ads:{request:async()=>true}});await s.load();await finish(s);
+  Object.assign(s.data.pacing,{firstFinishes:2,initialActive:120000});return s.interstitialEligible();};
+ assert.equal(await at(3),false);assert.equal(await at(42),false);assert.equal(await at(38),true);
+});
+test('a lost race offers a rewarded retry, from the checkpoint when gold is reachable, else from the start',async()=>{
+ const {s}=await setup({enableAdFixtures:true,ads:{request:async()=>true}});await finish(s,{latency:1500});assert.ok(s.race.result.rank>1);
+ assert.ok(['rematch','replay'].includes(s.rewardOffer().kind));
+ s.race.checkpoints=[];const offer=s.rewardOffer();assert.deepEqual(offer,{kind:'replay',id:s.race.course.id,serial:s.race.result.serial});
+ const frontier=s.data.frontier,queue=[...s.data.queue];
+ assert.equal(await s.requestAd('replay',offer),true);assert.equal(s.data.claim.kind,'replay');assert.equal(await s.consumeClaim(),true);
+ assert.equal(s.race.origin,'replay');assert.equal(s.race.course.id,offer.id);assert.equal(s.race.state,'RACING');assert.equal(s.data.claim,null);
+ drive(s);assert.equal(s.data.frontier,frontier);assert.deepEqual(s.data.queue,queue);
+});
+test('a won race alternates a one-race trial of the next locked family with a new paint',async()=>{
+ const {s,storage}=await setup({enableAdFixtures:true,ads:{request:async()=>true}});
+ const offers=[];
+ for(let i=0;i<2;i++){await finish(s);assert.equal(s.race.result.rank,1);offers.push(s.rewardOffer());}
+ const trial=offers.find(o=>o.kind==='trial'),paint=offers.find(o=>o.kind==='paint');assert.ok(trial&&paint);
+ const next=FAMILIES.map((f,i)=>({f,i})).filter(x=>x.f.unlock>s.data.frontier).sort((a,b)=>a.f.unlock-b.f.unlock)[0].i;assert.equal(trial.family,next);
+ assert.equal(catalog.map.get(trial.id)[1],next);
+ // Keep winning and spend each offer until both a trial and a paint have been consumed.
+ const take=async offer=>{assert.equal(await s.requestAd(offer.kind,offer),true);assert.equal(await s.consumeClaim(),true);};
+ const frontier0=s.data.frontier,taken=new Set();
+ for(let round=0;round<8&&taken.size<2;round++){
+  if(round)await finish(s);if(s.race.result.rank!==1)continue;
+  const offer=s.rewardOffer(),frontier=s.data.frontier,queue=[...s.data.queue];if(!offer)continue;
+  await take(offer);taken.add(offer.kind);
+  if(offer.kind==='trial'){assert.equal(s.race.origin,'trial');assert.equal(s.race.course.family,catalog.map.get(offer.id)[1]);drive(s);assert.equal(s.rewardOffer(),null);
+   assert.equal(s.data.frontier,frontier);assert.deepEqual(s.data.queue,queue);}
+  else assert.equal(s.data.paint,offer.paint);
+ }
+ assert.deepEqual([...taken].sort(),['paint','trial']);assert.ok(s.data.frontier>frontier0);
+ await s.flush();const reloaded=new Session(catalog,storage,{enableAdFixtures:true});assert.equal(await reloaded.load(),true,reloaded.error);assert.equal(reloaded.data.paint,s.data.paint);
+});
+test('a skipped or failed rewarded video grants nothing and spends the offer',async()=>{
+ for(const outcome of [false,undefined]){
+  const {s}=await setup({enableAdFixtures:true,ads:{request:async()=>outcome}});await finish(s);const offer=s.rewardOffer();
+  assert.equal(await s.requestAd(offer.kind,offer),false);assert.equal(s.data.claim,null);assert.equal(s.rewardOffer(),null);assert.equal(s.data.paint,null);
+ }
+});
+test('hostile paint and reward claims leave the save protected',async()=>{
+ for(const mutate of [d=>d.paint=99,d=>d.claim={kind:'paint',paint:-1,serial:1,token:'x'},d=>d.claim={kind:'trial',id:'nope',family:7,serial:1,token:'x'},d=>d.claim={kind:'jackpot',serial:1,token:'x'}]){
+  const d=initialData();d.frontier=37;d.nextSerial=5;mutate(d);const raw=JSON.stringify(d),storage=new MemoryStorage(raw),s=new Session(catalog,storage);assert.equal(await s.load(),false);assert.equal(storage.writes,0);
+ }
+});

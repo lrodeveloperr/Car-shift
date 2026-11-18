@@ -3,7 +3,7 @@ import {Scene,PerspectiveCamera,Color,Fog,HemisphereLight,DirectionalLight,Buffe
   MeshBasicMaterial,InstancedMesh,Object3D,Group,BackSide,SphereGeometry,CircleGeometry,TorusGeometry,BoxGeometry,IcosahedronGeometry,
   ConeGeometry,CylinderGeometry,DodecahedronGeometry,Matrix4,Vector2,Vector3,Quaternion} from 'three';
 import {mergeGeometries} from 'three/addons/utils/BufferGeometryUtils.js';
-import {FAMILIES,hash} from '../../source/rules.mjs';
+import {FAMILIES,PAINTS,hash} from '../../source/rules.mjs';
 import {buildLayout,entrantTrack,gateState,pointAt,straightPath,hoopDistances,LANE_X,LANE_GAP,ROAD,SLAB_HALF} from './track.mjs';
 import {createVehicle,entrantMaterials,spin,ENTRANT_COLORS} from './vehicles.mjs';
 
@@ -322,6 +322,11 @@ export class World{
       this.sparks.push({x,y:y+1,z,vx:Math.cos(a)*5*power*(.6+Math.random()*.6),vy:up,vz:Math.sin(a)*5*power*(.6+Math.random()*.6),life,max:life,
         c:Array.isArray(hex)?colour:colour.lerp(new Color(1,1,1),Math.random()*.5)});}
   }
+  // Player paint won from a rewarded video: an index into PAINTS, or null for the default colours.
+  setPaint(index){
+    const [body,trim]=index==null?[ENTRANT_COLORS[0].body,ENTRANT_COLORS[0].trim]:PAINTS[index];
+    this.materials[0].body.color.set(body);this.materials[0].trim.color.set(trim);this.markerMat.color.set(trim);this.playerBody=body;
+  }
   // Celebration and reward bursts at an entrant's current position.
   sparkle(i,hex=0xffcf33){const p=this.entrants[i]?.root.position;if(p)this.burst(p.x,p.y+.6,p.z,hex,14,.8,.5);}
   confetti(i){const p=this.entrants[i]?.root.position;if(p)this.burst(p.x,p.y+1,p.z-2,CONFETTI,120,2.1,1.6);}
@@ -339,7 +344,7 @@ export class World{
       if(this.snap){v.y=y;v.yaw=0;}
       const oldY=v.y;v.y+=(y-v.y)*damp(flyer?2.2:5,dt);v.vy=dt>0?(v.y-oldY)/dt:0;
       if(v.shown!==e.slot){
-        if(v.shown>=0){v.pop=0;if(!this.snap)this.burst(x,v.y,z,ENTRANT_COLORS[i].body);}
+        if(v.shown>=0){v.pop=0;if(!this.snap)this.burst(x,v.y,z,i===0?this.playerBody??ENTRANT_COLORS[0].body:ENTRANT_COLORS[i].body);}
         v.models.forEach((m,k)=>m.visible=k===e.slot);v.shown=e.slot;
       }
       v.pop=Math.min(1,v.pop+dt/.38);

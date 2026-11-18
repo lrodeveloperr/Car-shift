@@ -36,6 +36,10 @@ export const SPEEDS={
   glider:{L:0,R:0,W:0,A:9,S:0,U:0,T:0,F:0,M:0,B:0,K:0,D:0,C:16,O:0},
   rocket:{L:0,R:0,W:0,A:0,S:0,U:0,T:0,F:0,M:0,B:0,K:0,D:0,C:0,O:24},
 };
+// Paint jobs a rewarded video can give the player's vehicles, [body, trim]. The save stores an index; null keeps
+// the default orange. None is blue or pink, so the player never looks like a computer opponent.
+export const PAINTS=[[0x2ecc71,0xeaffb0],[0x8e44ff,0xffd23f],[0xe8263c,0xffe3e8],[0x00b3a4,0xd4fff9],[0xffc21a,0x2a2f3a],
+  [0x23262d,0xffcf33],[0xf2f4f7,0xe8263c],[0x9be12f,0x1f4d2b],[0xc0392b,0xffcf33],[0x5d4037,0xffb74d]];
 export const SUPPORTED = new Set(['L','R','W','S','T','M','B','K','D']);
 export const TRANSFERS = new Set(['A','U','F','C','O']);
 export const FLIGHT = new Set(['F','C','O']); // corridors only a specialist flyer crosses; land on both ends

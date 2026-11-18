@@ -23,6 +23,13 @@ export function connectHost(){
     // YouTube owns the audio switch inside Playables; the game must stay silent while it is off.
     audioEnabled(){return yt?call(yt.system?.isAudioEnabled)!==false:true;},
     onAudioChange(callback){if(yt)call(yt.system?.onAudioEnabledChange,callback);},
+    // Ads. YouTube's ads API is a public preview and may change. An interstitial is awaited and its outcome ignored.
+    // A rewarded video reports 'earned', 'skipped' (closed early) or 'unavailable' (no ad for this player, or no SDK).
+    async interstitial(){if(!yt?.ads?.requestInterstitialAd)return;try{await yt.ads.requestInterstitialAd();}catch{}},
+    async rewarded(id){
+      if(!yt?.ads?.requestRewardedAd)return 'unavailable';
+      try{return await yt.ads.requestRewardedAd(id)===true?'earned':'skipped';}catch{return 'unavailable';}
+    },
     sendScore(value){Promise.resolve(call(yt?.engagement?.sendScore,{value})).catch(()=>{});},
     logError(){call(yt?.health?.logError);},
   };

@@ -1,4 +1,4 @@
-import {FAMILIES,hash,clone,within,bestSlot} from './rules.mjs';
+import {FAMILIES,PAINTS,hash,clone,within,bestSlot} from './rules.mjs';
 import {expand,signature} from './content.mjs';
 import {Race,validateRaceSnapshot} from './race.mjs';
 import {DAILY_FROM,DAILY_ID,dailyId,dailyFamily,dailyRecipe,previousDay} from './daily.mjs';
@@ -33,6 +33,9 @@ export class Catalog{
   }
 }
 function shuffle(values,seed){const out=[...values];for(let i=out.length-1;i>0;i--){const j=hash(`${seed}:${i}`)%(i+1);[out[i],out[j]]=[out[j],out[i]];}return out;}
+// Interstitials never interrupt the first five stages.
+export const INTERSTITIAL_FROM=6;
+const REWARDS=['set','rematch','replay','trial','paint'];
 const unlockedAt=stage=>FAMILIES.map((f,i)=>f.unlock<=stage?i:-1).filter(i=>i>=0);
 // A family debuts on the stage it unlocks; otherwise families come from a shuffled bag of everything unlocked.
 function drawFamily(state,stage,last){
@@ -43,7 +46,7 @@ function drawFamily(state,stage,last){
 }
 export function initialData(){return {schema:1,revision:0,frontier:1,nextSerial:1,lastCreditedSerial:0,queue:[],history:[],signatures:[],familyCursor:FAMILIES.map(()=>0),familyBag:[],bagRound:0,forkBag:[],forkRound:0,records:[],foundationRecords:{},run:null,
   pacing:{firstAttempted:false,firstFinishes:0,initialActive:0,finishesSinceAd:0,activeSinceAd:0,hadReservation:false,consumed:[]},adPending:null,claim:null,
-  daily:{last:null,streak:0,rank:null,time:null}};}
+  daily:{last:null,streak:0,rank:null,time:null},paint:null};}
 function encodeRace(snapshot){
   if(!snapshot)return null;
   const {course,checkpoints,...rest}=snapshot;
@@ -60,7 +63,7 @@ function decodeRace(snapshot,catalog,depth=0){
 function validateData(d,catalog){
   if(!d||d.schema!==1)throw new ProtectedSaveError('unknown save schema');
   // Schema 1 was diagnostic-only; absent scheduling fields migrate without touching the source.
-  d.forkBag??=[];d.forkRound??=0;d.daily??={last:null,streak:0,rank:null,time:null};
+  d.forkBag??=[];d.forkRound??=0;d.daily??={last:null,streak:0,rank:null,time:null};d.paint??=null;
   // Saves from before the later vehicle families start those families' course cursors at zero.
   if(Array.isArray(d.familyCursor)&&d.familyCursor.length<FAMILIES.length)d.familyCursor=[...d.familyCursor,...Array(FAMILIES.length-d.familyCursor.length).fill(0)];
   for(const k of ['revision','frontier','nextSerial','lastCreditedSerial','bagRound','forkRound'])if(!Number.isSafeInteger(d[k])||d[k]<0||(['frontier','nextSerial'].includes(k)&&d[k]<1))throw new ProtectedSaveError(`bad ${k}`);
@@ -73,7 +76,13 @@ function validateData(d,catalog){
   for(const k of ['firstFinishes','finishesSinceAd'])if(!Number.isInteger(d.pacing[k])||!within(d.pacing[k],0,2))throw new ProtectedSaveError('bad finish pacing');
   for(const k of ['initialActive','activeSinceAd'])if(!within(d.pacing[k],0,120000))throw new ProtectedSaveError('bad active pacing');
   if(d.run){if(d.run.serial>=d.nextSerial)throw new ProtectedSaveError('bad run serial');decodeRace(d.run,catalog);}
-  if(d.claim&&!['rematch','set'].includes(d.claim.kind))throw new ProtectedSaveError('bad reward type');
+  if(d.claim&&!REWARDS.includes(d.claim.kind))throw new ProtectedSaveError('bad reward type');
+  if(d.paint!==null&&(!Number.isInteger(d.paint)||d.paint<0||d.paint>=PAINTS.length))throw new ProtectedSaveError('bad paint');
+  if(d.claim?.kind==='paint'&&(!Number.isInteger(d.claim.paint)||d.claim.paint<0||d.claim.paint>=PAINTS.length))throw new ProtectedSaveError('bad paint reward');
+  if(d.claim?.kind==='replay'||d.claim?.kind==='trial'){
+    if(typeof d.claim.id!=='string'||d.claim.id.length>96)throw new ProtectedSaveError('bad reward course');
+    try{catalog.course(d.claim.id);}catch{throw new ProtectedSaveError('bad reward course');}
+  }
   if(d.claim?.kind==='rematch')decodeRace(d.claim.snapshot,catalog);
   if(d.claim?.kind==='set'&&!catalog.map.has(d.claim.id))throw new ProtectedSaveError('bad selected course');
   if(!d.foundationRecords||Array.isArray(d.foundationRecords)||Object.keys(d.foundationRecords).length>36||Object.entries(d.foundationRecords).some(([id,r])=>!/^F(?:0[1-9]|[12][0-9]|3[0-6])$/.test(id)||!r||!Number.isInteger(r.rank)||!within(r.rank,1,3)||!within(r.time,0,86400000)))throw new ProtectedSaveError('bad foundation records');
@@ -84,7 +93,7 @@ function validateData(d,catalog){
   const day=d.daily;
   if(!day||typeof day!=='object'||Array.isArray(day)||day.last!==null&&!/^\d{4}-\d{2}-\d{2}$/.test(day.last)||!Number.isSafeInteger(day.streak)||day.streak<0||
     day.rank!==null&&(!Number.isInteger(day.rank)||!within(day.rank,1,3))||day.time!==null&&!within(day.time,0,86400000))throw new ProtectedSaveError('bad daily');
-  if(d.adPending&&(!['interstitial','set','rematch'].includes(d.adPending.kind)||typeof d.adPending.token!=='string'||d.adPending.token.length>96))throw new ProtectedSaveError('bad ad reservation');
+  if(d.adPending&&(!['interstitial',...REWARDS].includes(d.adPending.kind)||typeof d.adPending.token!=='string'||d.adPending.token.length>96))throw new ProtectedSaveError('bad ad reservation');
   return true;
 }
 export class Session{
@@ -181,7 +190,7 @@ export class Session{
     this.data.lastCreditedSerial=r.serial;
     if(r.meaningful){const p=this.data.pacing;p.firstFinishes=Math.min(2,p.firstFinishes+1);p.finishesSinceAd=Math.min(2,p.finishesSinceAd+1);}
     if(this.race.origin==='daily')this.settleDaily(r);
-    else if(this.race.origin!=='replay'&&this.race.stage===this.data.frontier){
+    else if(this.race.origin==='journey'&&this.race.stage===this.data.frontier){
       this.data.history.push(this.race.course.id);if(this.data.history.length>64)this.data.history.shift();
       this.data.signatures.push(signature(this.race.course));if(this.data.signatures.length>12)this.data.signatures.shift();
       this.data.frontier++;this.data.queue.shift();this.fillQueue();
@@ -208,7 +217,9 @@ export class Session{
     this.data.records.push(item);if(this.data.records.length>64)this.data.records.shift();
     if(item.id.startsWith('F')){const old=this.data.foundationRecords[item.id];this.data.foundationRecords[item.id]={rank:Math.min(old?.rank??3,item.rank),time:Math.min(old?.time??Infinity,item.time)};}
   }
+  // Not in the first five stages, and never right before a new vehicle's first race.
   interstitialEligible(){const r=this.race?.result,p=this.data.pacing;if(!this.enableAdFixtures||!r?.meaningful||this.hostPaused||this.inFlight||p.consumed.includes(r.serial))return false;
+    if(this.data.frontier<INTERSTITIAL_FROM||FAMILIES.some(f=>f.unlock===this.data.frontier))return false;
     return p.firstAttempted?p.finishesSinceAd>=2&&p.activeSinceAd>=120000:p.firstFinishes>=2&&p.initialActive>=120000&&(!p.hadReservation||p.activeSinceAd>=120000);
   }
   next(options={}){if(this.nextPromise)return this.nextPromise;this.nextPromise=this.nextRun(options).finally(()=>{this.nextPromise=null;});return this.nextPromise;}
@@ -221,15 +232,28 @@ export class Session{
     const daily=!replay&&day?this.dailyAvailable(day):null;
     return this.start({id:replay?oldId:daily,difficulty:daily?'standard':difficulty,replay,latency,origin:daily?'daily':null});
   }
-  async restart({latency=null}={}){if(!this.race||this.hostPaused)throw new Error('not restartable');return this.start({id:this.race.course.id,difficulty:this.race.difficulty,replay:this.race.origin==='replay',latency,origin:this.race.origin==='daily'?'daily':null});}
+  async restart({latency=null}={}){if(!this.race||this.hostPaused)throw new Error('not restartable');return this.start({id:this.race.course.id,difficulty:this.race.difficulty,replay:this.race.origin==='replay',latency,origin:['daily','trial'].includes(this.race.origin)?this.race.origin:null});}
   rematchOffer(){
     const r=this.race?.result,p=this.data.pacing;
-    if(!this.enableAdFixtures||!r?.meaningful||r.rank===1||this.race.ms<20000||this.race.assisted||!this.race.checkpoints.length||this.data.claim||this.inFlight||this.hostPaused||p.consumed.includes(r.serial)||p.hadReservation&&p.activeSinceAd<120000)return null;
+    if(!this.enableAdFixtures||!r?.meaningful||r.rank===1||this.race.ms<20000||this.race.assisted||!this.race.checkpoints.length||this.data.claim||this.inFlight||this.hostPaused||p.consumed.includes(r.serial))return null;
     const cp=this.race.checkpoints.at(-1);const probe=Race.restore(cp);probe.player.auto=true;probe.player.latency=20;
     const leg=probe.course.blocks[probe.player.block].options[probe.player.choice];probe.commandSlot(bestSlot(probe.course.family,leg));
     while(!probe.result&&probe.ms<180000)probe.tick();
     if(probe.result?.rank!==1||probe.result.time-cp.ms<10000)return null;
     return {kind:'rematch',snapshot:encodeRace(cp),original:clone(r),serial:r.serial};
+  }
+  // The one rewarded offer for this result. A lost race offers a retry: from the last checkpoint when gold is still
+  // reachable there, otherwise from the start. A won race alternates a one-race trial of the next locked family with
+  // a new paint. Trials, and results that earned no credit, offer nothing. Rewarded offers have no cooldown.
+  rewardOffer(){
+    const r=this.race?.result,p=this.data.pacing;
+    if(!this.enableAdFixtures||!r?.genuine||this.race.origin==='trial'||this.data.claim||this.inFlight||this.hostPaused||p.consumed.includes(r.serial))return null;
+    if(r.rank>1)return this.rematchOffer()??{kind:'replay',id:this.race.course.id,serial:r.serial};
+    const next=FAMILIES.map((f,i)=>({f,i})).filter(x=>x.f.unlock>this.data.frontier).sort((a,b)=>a.f.unlock-b.f.unlock)[0];
+    // Alternate by journey stage, so retries and trials in between cannot pin the offer to one kind.
+    if(next&&this.data.frontier%2===0)
+      return {kind:'trial',family:next.i,id:this.catalog.pick(next.i,hash(`trial:${r.serial}`),[...this.data.history,...this.data.queue],{forks:0}),serial:r.serial};
+    return {kind:'paint',paint:((this.data.paint??-1)+1+hash(`paint:${r.serial}`)%(PAINTS.length-1))%PAINTS.length,serial:r.serial};
   }
   setOffer(family){
     const r=this.race?.result,p=this.data.pacing;
@@ -244,9 +268,9 @@ export class Session{
     if(!this.ads||!this.enableAdFixtures||this.inFlight||this.hostPaused||!this.race?.result)return false;
     if(kind==='interstitial'&&!this.interstitialEligible())return false;
     if(kind!=='interstitial'){
-      if(!['set','rematch'].includes(kind)||!offer)return false;
-      const expected=kind==='set'?this.setOffer(offer.family):this.rematchOffer();
-      if(!expected||JSON.stringify(expected)!==JSON.stringify(offer))return false;
+      if(!REWARDS.includes(kind)||!offer)return false;
+      const expected=kind==='set'?this.setOffer(offer.family):this.rewardOffer();
+      if(!expected||expected.kind!==kind||JSON.stringify(expected)!==JSON.stringify(offer))return false;
     }
     const token=`${this.epoch}:${this.race.serial}:${kind}`,p=this.data.pacing;
     this.inFlight={token,kind,offer:clone(offer),epoch:this.epoch,waitMs:0};this.race.pause('ad');
@@ -269,11 +293,19 @@ export class Session{
   keepPlaying(){if(!this.inFlight||this.inFlight.waitMs<10000)return false;this.race?.resume('ad');return true;}
   async consumeClaim(){
     if(!this.data.claim||this.hostPaused||this.race?.state==='RACING')return false;
-    const claim=this.data.claim;
+    const claim=this.data.claim,difficulty=this.race?.difficulty??'standard';this.data.claim=null;
     if(claim.kind==='rematch'){
       const race=Race.restore(decodeRace(claim.snapshot,this.catalog));race.assisted=true;race.originalResult=clone(claim.original);race.state='RACING';race.result=null;race.checkpoints=[];race.origin='rematch';this.race=race;
-    }else this.data.queue[0]=claim.id;
-    this.data.claim=null;this.dirty();try{await this.flush();}catch{}return true;
+    }else if(claim.kind==='set')this.data.queue[0]=claim.id;
+    else if(claim.kind==='paint')this.data.paint=claim.paint;
+    this.dirty();
+    // A retry or trial starts its race now; that race's first save also records the claim as spent.
+    if(claim.kind==='replay'||claim.kind==='trial'){
+      try{await this.start({id:claim.id,difficulty:claim.kind==='trial'?'standard':difficulty,replay:true,origin:claim.kind});}
+      catch(e){this.data.claim=claim;this.dirty();throw e;}
+      return true;
+    }
+    try{await this.flush();}catch{}return true;
   }
   pauseHost(){this.hostPaused=true;this.race?.pause('host');}
   async resumeHost(){this.hostPaused=false;this.race?.resume('host');if(this.bootResolve){const resolve=this.bootResolve;this.bootResolve=null;resolve(await this.load());}if(this.deferred){const d=this.deferred;this.deferred=null;await this.settle(d.token,d.outcome);}}
