@@ -96,12 +96,30 @@ svg{display:block;fill:currentColor}
 .offer[data-kind=trial] .f-trial{display:block;width:62px;height:62px;border-radius:24%}
 .offer[data-kind=paint] .f-paint{display:block;width:46px;height:46px;border-radius:50%;box-shadow:0 0 0 3px #fff,0 3px 8px #0006}
 .offer .ad{display:block;position:absolute;right:-7px;bottom:-5px;width:32px;height:32px;margin:0;filter:drop-shadow(0 2px 3px #0006)}
+/* Whenever a video is on offer it takes the big button, so watching is the default tap; the free choice (next level or
+   retry) steps back to a small glass button on the left. The clapper mark stays on the big button so it never hides that
+   it plays a video, and taps are ignored for a moment after it appears so a stray tap from the race cannot open one. */
+#result.featured #next{order:-1;width:64px;height:64px;background:var(--glass);box-shadow:none;animation:none}
+#result.featured #next svg{width:30px;height:30px;margin-left:3px}
+#result.featured #next .i-retry{margin-left:0}
+#result.featured #offer{width:112px;height:112px;border-radius:50%;background:var(--go);box-shadow:0 7px 0 var(--go-deep),0 14px 30px #0005;
+  animation:popin .45s cubic-bezier(.2,1.6,.4,1),breathe 1.6s ease-in-out .45s infinite}
+#result.featured #offer::before{content:"";position:absolute;inset:0;border-radius:50%;box-shadow:0 0 0 4px var(--go);pointer-events:none;
+  animation:invite 1.6s ease-out .45s infinite;opacity:0}
+#result.featured #offer:active{transform:translateY(4px);box-shadow:0 3px 0 var(--go-deep)}
+#result.featured #offer .f-replay,#result.featured #offer .f-skip{width:54px;height:54px}
+#result.featured #offer .f-trial{width:76px;height:76px}
+#result.featured #offer .f-paint{width:60px;height:60px}
+#result.featured #offer .ad{width:46px;height:46px;right:-8px;bottom:-6px}
+@keyframes popin{0%{transform:scale(.3);opacity:0}100%{transform:none;opacity:1}}
+@keyframes invite{0%{transform:scale(1);opacity:.85}100%{transform:scale(1.4);opacity:0}}
 @media (orientation:landscape) and (max-height:520px){
   .bottom{flex-direction:row;align-items:flex-end;justify-content:center;gap:18px}
   .fork{flex-direction:column;gap:8px}.fork button{width:60px;height:42px}
   .slot{width:clamp(62px,19vh,88px);height:clamp(62px,19vh,88px)}
   #title{padding-bottom:max(10vh,env(safe-area-inset-bottom))}
   .play{width:92px;height:92px}.medal{width:110px;height:128px}.overlay{gap:16px}
+  #result.featured #offer{width:92px;height:92px}#result.featured #offer .f-trial{width:64px;height:64px}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>

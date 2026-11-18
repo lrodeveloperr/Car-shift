@@ -113,16 +113,18 @@ function finish(now){
 function showResult(){
   const race=session.race,r=race.result;
   $('medal').style.setProperty('--medal',r.genuine?MEDALS[r.rank-1]:'var(--none)');
-  // Losing the current level turns the big button into a free retry of it; the offer button skips it with a video.
+  // Losing the current level turns the next button into a free retry of it; the offer skips it with a video.
   const retry=['journey','daily'].includes(race.origin)&&race.stage===session.data.frontier&&(!r.genuine||r.rank>1);
   $('next').dataset.mode=retry?'retry':'next';$('next').setAttribute('aria-label',retry?'Retry level':'Next level');
-  showOffer();show('result',true);showLevel();show('hud',false);mode='result';$('next').focus({preventScroll:true});
+  showOffer();show('result',true);showLevel();show('hud',false);mode='result';$(offer?'offer':'next').focus({preventScroll:true});
   if(r.genuine)sound.play('medal',r.rank);
 }
 // Rewarded offer: one button on the medal screen whose face shows what the video gives.
-let offer=null;const LABELS_FOR={rematch:'Watch a video to retry from the checkpoint',replay:'Watch a video to retry',skip:'Watch a video to skip this level',trial:'Watch a video to try a new vehicle',paint:'Watch a video for a new paint'};
+let offer=null,offerArmed=0;const LABELS_FOR={rematch:'Watch a video to retry from the checkpoint',replay:'Watch a video to retry',skip:'Watch a video to skip this level',trial:'Watch a video to try a new vehicle',paint:'Watch a video for a new paint'};
+// The offer takes the big button while it shows; it ignores taps for its first 600 ms so a stray tap cannot open a video.
+function setOffer(on){show('offer',on);$('result').classList.toggle('featured',on);}
 function showOffer(){
-  offer=session.rewardOffer();show('offer',!!offer);if(!offer)return;
+  offer=session.rewardOffer();setOffer(!!offer);if(!offer)return;offerArmed=performance.now()+600;
   const b=$('offer');b.dataset.kind=offer.kind;b.setAttribute('aria-label',LABELS_FOR[offer.kind]);
   if(offer.kind==='trial')b.querySelector('.f-trial').src=familyIcons(offer.family)[SIGNATURE[offer.family]]??'';
   if(offer.kind==='paint'){const [body,trim]=PAINTS[offer.paint];b.querySelector('.f-paint').style.background=`linear-gradient(135deg,${hex(body)} 0 62%,${hex(trim)} 62%)`;}
@@ -135,7 +137,7 @@ async function claim(){
   if(kind==='skip'){showLevel();sound.play('perfect');return session.next({day:today()});}
   return session.race;
 }
-const takeOffer=()=>{const o=offer;if(!o)return;show('offer',false);run(async()=>(await session.requestAd(o.kind,o))===true?claim():(showOffer(),null));};
+const takeOffer=()=>{const o=offer;if(!o||performance.now()<offerArmed)return;setOffer(false);run(async()=>(await session.requestAd(o.kind,o))===true?claim():(showOffer(),null));};
 // Engine-facing ad adapter. A reward is granted when the video is earned, or when no ad is available so a retry
 // always works; a video closed early grants nothing. Game audio is held for the length of any ad.
 async function adRequest(kind,token){

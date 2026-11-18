@@ -17,6 +17,8 @@ The shareable preview could not start a race when the browser blocked storage (f
 
 **Game screens.** A level number sits top left on all screens and bumps on a clear. The pause button is gone. After a loss the big button is a free retry, and the offer shows a skip arrow.
 
+**Rewarded button first.** Whenever a video is on offer (skip after a loss, trial or paint after a win) it is the big pulsing orange button and takes focus; Next or Retry becomes a small glass button on its left. The video button ignores taps for its first 600 ms. The level pill shrinks long numbers (five digits and up) so the position disc and track always fit after it, stays hidden until the save loads, and an unreadable save no longer leaves a Play spinner turning.
+
 **Verification.**
 - Engine tests 49/49.
 - Stress: 10,000 levels, 5,134 of them cleared through the rewarded skip.

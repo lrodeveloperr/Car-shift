@@ -69,9 +69,10 @@ Audio starts on the first tap, as browsers require. It follows YouTube's audio s
 
 YouTube runs the pre-roll by itself. The game adds interstitials and one rewarded offer, using the engine's reservation, pacing and claim logic (`source/session.mjs`).
 
-- **Levels:** only first place clears a level. After a loss the big button retries the same level for free, and the rewarded button skips it.
+- **Levels:** only first place clears a level. After a loss the small button retries the same level for free, and the big rewarded button skips it.
 - **Interstitial** (`ytgame.ads.requestInterstitialAd`): only when the player taps Next after a win, so a retry never plays an ad. Never in levels 1–5, never right before a new vehicle's first race. The first one comes after 2 counted races and 2 minutes of racing; after that, at most one every 2 races and 2 minutes, and never within 2 minutes of any rewarded video.
 - **Rewarded** (`ytgame.ads.requestRewardedAd`): one button on the medal screen. Its face shows the reward, with a gold film-clapper mark.
+  Whenever a video is on offer it is the big, pulsing orange button and the default focus. The free choice (Next or Retry) shrinks to a small glass button on its left. Taps on it are ignored for its first 600 ms, so a stray tap from the race cannot start a video.
   - After losing the current level: skip it (the button shows a skip arrow). The video clears the level and starts the next one.
   - After gold: a one-race trial of the next locked vehicle family (the button shows that vehicle), alternating by stage with a new paint for the player's vehicles (the button shows the swatch). After all families unlock, only paint.
   - Nothing after a trial race, or after a race that earned no credit. Next is always free.
