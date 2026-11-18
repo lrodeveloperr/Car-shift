@@ -2,6 +2,13 @@
 
 No publication or live configuration was changed. The diagnostic ZIP is not a submission build.
 
+**18 November 2026: Playables submission.** The submission build is `releases/youtube-playables/shape-shifting-vehicle-race-playables.zip`, with its kit and checklist in `releases/youtube-playables/SUBMISSION.md`. Nothing has been uploaded. These steps remain, and need YouTube's portal (done by Mediacube for the channel):
+- upload
+- metadata and thumbnails
+- the portal test step: the Playables Test Suite, the real SDK and ads, desktop and the Android and iOS YouTube apps
+- the IARC questionnaire
+- submitting for review
+
 - Native Chromium/Firefox/WebKit/Edge input, storage, responsive layout and cache-update tests are BLOCKED in this environment. The official browser download returned an unavailable page; browser security rejected the local QA file. No alternate route was attempted after that rejection.
 - Physical Android and iOS one-finger entry/fork/switch, rotation, background/return, audio and supported YouTube-app operation have NOT RUN.
 - Production graphics, animation, audio, accessibility review and ten shipped locales have NOT RUN; graphics remain unspecified.

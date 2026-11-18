@@ -6,7 +6,11 @@
   "scripts": {
     "build": "node build.mjs",
     "dev": "node build.mjs --serve",
-    "test": "node --test test/track.test.mjs"
+    "test": "node --test test/track.test.mjs",
+    "package": "node tools/package.mjs",
+    "check:playables": "node tools/playables-check.mjs",
+    "thumbnails": "node tools/thumbnails.mjs",
+    "screenshots": "node build.mjs --preview && node tools/screenshots.mjs"
   },
   "dependencies": {
     "three": "0.186.1"

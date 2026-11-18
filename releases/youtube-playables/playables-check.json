@@ -1,0 +1,102 @@
+{
+  "zip": "shape-shifting-vehicle-race-playables.zip",
+  "passed": 19,
+  "total": 19,
+  "results": [
+    {
+      "name": "SDK: firstFrameReady, then gameReady once Play is tappable",
+      "ok": true,
+      "detail": "firstFrameReady > loadData > gameReady:play-enabled"
+    },
+    {
+      "name": "No in-game mute button inside YouTube",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Race starts on tap",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "onPause stops rendering",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "onPause ignores input",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "onPause saves progress",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "onResume shows the resume button instead of jumping back into the race",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Race finishes",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Level progress is saved through saveData, only after loadData",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Save stays under 64 KiB (best-effort exit save limit)",
+      "ok": true,
+      "detail": "3823 bytes"
+    },
+    {
+      "name": "JS heap under 512 MB after a full race",
+      "ok": true,
+      "detail": "16 MB"
+    },
+    {
+      "name": "sendScore reports cleared levels",
+      "ok": true,
+      "detail": "sendScore:37"
+    },
+    {
+      "name": "New player: first race plays to the end",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "No browser storage used (localStorage/sessionStorage)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "No vibration",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "No Page Visibility API",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "No navigator.language(s)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "No network requests except the game files and the SDK",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "No page errors",
+      "ok": true,
+      "detail": ""
+    }
+  ]
+}

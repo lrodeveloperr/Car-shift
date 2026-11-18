@@ -122,6 +122,8 @@ svg{display:block;fill:currentColor}
   #result.featured #offer{width:92px;height:92px}#result.featured #offer .f-trial{width:64px;height:64px}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* YouTube paused the game: freeze the interface animations too. */
+.host-paused *,.host-paused *::before,.host-paused *::after{animation-play-state:paused!important}
 </style>
 </head>
 <body>

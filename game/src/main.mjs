@@ -17,8 +17,11 @@ const host=connectHost(),root=$('game-root'),canvas=$('game-canvas');
 const renderer=new WebGLRenderer({canvas,antialias:(devicePixelRatio||1)<2,powerPreference:'high-performance',stencil:false});
 let pixelRatio=Math.min(2,devicePixelRatio||1);renderer.setPixelRatio(pixelRatio);
 const world=new World(renderer);
-const sound=new Sound({muted:(()=>{try{return localStorage.getItem(SOUND_KEY)==='off';}catch{return false;}})()});
-const buzz=pattern=>{try{navigator.vibrate?.(pattern);}catch{}};
+// Inside YouTube the player's mute is YouTube's own control: Playables should not show a second one (and must not
+// put look-alike icons near YouTube's), and must not keep anything in browser storage. Outside YouTube the game
+// keeps its sound toggle. There is no vibration: Playables that vibrate must offer an on/off switch for it.
+const sound=new Sound({muted:!host.inPlayables&&(()=>{try{return localStorage.getItem(SOUND_KEY)==='off';}catch{return false;}})()});
+if(host.inPlayables)for(const b of document.querySelectorAll('.sound'))b.remove();
 // The vehicle each family introduces (the one no earlier family has): the face of a trial offer.
 const SIGNATURE=FAMILIES.map(f=>{const seen=new Set(FAMILIES.filter(g=>g.unlock<f.unlock).flatMap(g=>g.vehicles));return Math.max(0,f.vehicles.findIndex(v=>!seen.has(v)));});
 const hex=n=>`#${n.toString(16).padStart(6,'0')}`;
@@ -105,7 +108,7 @@ const next=replay=>run(()=>session.next({replay,day:today()}));
 function finish(now){
   const race=session.race,rank=race.result.rank;mode='finishing';finishAt=now;acc=0;
   ghost={course:race.course,entrants:clone(race.entrants),ms:race.ms,end:race.ms+30000};
-  sound.engine(FAMILIES[race.course.family].vehicles[race.player.slot],0,false);sound.play('finish',rank);buzz([20,40,30]);
+  sound.engine(FAMILIES[race.course.family].vehicles[race.player.slot],0,false);sound.play('finish',rank);
   if(rank===1)world.confetti(0);else world.sparkle(0,0xffffff);
   setHint(-1);
   session.flush().then(()=>host.sendScore(session.data.frontier-1)).catch(()=>{});
@@ -133,7 +136,7 @@ function showOffer(){
 async function claim(){
   const kind=session.data.claim?.kind;
   if(!kind||!await session.consumeClaim())return null;
-  if(kind==='paint'){applyPaint();world.sparkle(0,PAINTS[session.data.paint][0]);sound.play('perfect');buzz([10,30,10]);showOffer();return null;}
+  if(kind==='paint'){applyPaint();world.sparkle(0,PAINTS[session.data.paint][0]);sound.play('perfect');showOffer();return null;}
   if(kind==='skip'){showLevel();sound.play('perfect');return session.next({day:today()});}
   return session.race;
 }
@@ -154,9 +157,9 @@ function pause(){
 function resume(){const race=session?.race;if(!race?.pauses.has('menu'))return;race.resume('menu');acc=0;show('paused',false);}
 
 host.onPause(()=>{
-  if(hostPaused||!session)return;hostPaused=true;session.pauseHost();sound.suspend();session.flush({final:true}).catch(()=>{});
+  if(hostPaused||!session)return;hostPaused=true;document.documentElement.classList.add('host-paused');session.pauseHost();sound.suspend();session.flush({final:true}).catch(()=>{});
 },async()=>{
-  if(!hostPaused||!session)return;hostPaused=false;last=0;sound.resume();await session.resumeHost();
+  if(!hostPaused||!session)return;hostPaused=false;document.documentElement.classList.remove('host-paused');last=0;sound.resume();await session.resumeHost();
   if(mode==='racing')pause();
   else if(mode==='result'&&session.data.claim)run(claim); // a reward earned while the host was paused
 });
@@ -166,7 +169,7 @@ sound.setHostEnabled(host.audioEnabled());host.onAudioChange(enabled=>sound.setH
 function command(slot){
   const race=session?.race;if(mode!=='racing'||!race||race.pauses.size)return;
   if(!race.commandSlot(slot)){
-    const b=$(`slot${slot}`);b.classList.remove('nope');void b.offsetWidth;b.classList.add('nope');sound.play('nope');buzz(15);
+    const b=$(`slot${slot}`);b.classList.remove('nope');void b.offsetWidth;b.classList.add('nope');sound.play('nope');
   }
 }
 function branch(choice){
@@ -176,7 +179,7 @@ function branch(choice){
 }
 let pointer=null;
 root.addEventListener('pointerdown',e=>{
-  sound.unlock();
+  if(hostPaused)return;sound.unlock();
   if(pointer||e.button>0||e.isPrimary===false)return;
   const slot=e.target.closest('[data-slot]');
   if(slot&&slot.disabled)return;
@@ -192,7 +195,7 @@ root.addEventListener('pointerup',e=>{
 });
 for(const type of ['pointercancel','lostpointercapture'])root.addEventListener(type,e=>{if(pointer?.id===e.pointerId)pointer=null;});
 document.addEventListener('click',e=>{
-  const b=e.target.closest('button');if(!b||b.disabled)return;
+  const b=e.target.closest('button');if(!b||b.disabled||hostPaused)return;
   if(b.dataset.slot!==undefined){if(e.detail===0)command(Number(b.dataset.slot));return;}
   if(b.dataset.branch!==undefined)return branch(Number(b.dataset.branch));
   if(b.classList.contains('sound')){
@@ -203,7 +206,7 @@ document.addEventListener('click',e=>{
   ({play,next:()=>next(false),offer:takeOffer,pause,resume})[b.id]?.();
 });
 document.addEventListener('keydown',e=>{
-  sound.unlock();
+  if(hostPaused)return;sound.unlock();
   if(e.repeat||e.ctrlKey||e.metaKey||e.altKey)return;
   if(['1','2','3'].includes(e.key)){command(Number(e.key)-1);e.preventDefault();}
   else if(e.key==='ArrowLeft'||e.key==='ArrowRight'){branch(e.key==='ArrowLeft'?0:1);e.preventDefault();}
@@ -232,7 +235,7 @@ const ENTER={water:'splash',under:'dive',air:'whoosh',ground:'land',soar:'soar',
 function cues(race,dt){
   const p=race.player,course=race.course,n=course.blocks.length,b=Math.min(p.block,n-1),block=course.blocks[b];
   const leg=block.options[p.choice]??block.options[0],type=FAMILIES[course.family].vehicles[p.slot],racing=p.finish===null;
-  if(p.slot!==cue.slot){cue.slot=p.slot;sound.play('switch',p.slot);buzz(8);}
+  if(p.slot!==cue.slot){cue.slot=p.slot;sound.play('switch',p.slot);}
   if(p.clean>cue.clean){cue.clean=p.clean;sound.play('perfect');world.sparkle(0);}
   if(p.block!==cue.block){cue.block=p.block;cue.hoops=0;if(course.checkpoints.includes(p.block))sound.play('checkpoint');}
   const m=medium(type,leg.t,cue.medium);if(m!==cue.medium){cue.medium=m;if(racing)sound.play(ENTER[m]);}
@@ -240,7 +243,7 @@ function cues(race,dt){
     const passed=hoopDistances(block.options[0].d).filter(d=>d<=p.pos).length;
     if(type===FLYERS[leg.t].type)while(cue.hoops<passed){sound.play('hoop',cue.hoops++);world.sparkle(0,FLYERS[leg.t].ring);}else cue.hoops=passed;
   }
-  const place=liveOrder(race).indexOf(0);if(place<cue.place&&racing){sound.play('overtake');buzz(6);}cue.place=place;
+  const place=liveOrder(race).indexOf(0);if(place<cue.place&&racing){sound.play('overtake');}cue.place=place;
   const fork=course.blocks.findIndex((x,i)=>i>=p.block&&x.options.length===2&&x.options[0].g);
   let gateNear=false;
   if(fork>=0){

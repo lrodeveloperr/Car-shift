@@ -1,0 +1,112 @@
+{
+  "zip": "shape-shifting-vehicle-race-playables.zip",
+  "zipBytes": 366613,
+  "zipSha256": "398da8ba6d0d47e57ba798b03db2ea108fb3d89ac21658e68fe336e55b79f4d2",
+  "files": [
+    {
+      "name": "index.html",
+      "bytes": 16068,
+      "gzip": 5061,
+      "sha256": "e14aa8934e65f02175ac6380722b8c50891e9e73570418ccdc47a8ac2d0262fe"
+    },
+    {
+      "name": "game.js",
+      "bytes": 1465121,
+      "gzip": 361380,
+      "sha256": "d8eb8d43698b8a637edcdc1703d8e536b31f76d8a242696bc2fdbded81c43e60"
+    }
+  ],
+  "checks": [
+    {
+      "rule": "index.html is at the zip root (entry point)",
+      "level": "MUST",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "rule": "File names use only letters, digits, _ - .",
+      "level": "MUST",
+      "ok": true,
+      "detail": "index.html, game.js"
+    },
+    {
+      "rule": "At most 8,000 files",
+      "level": "MUST",
+      "ok": true,
+      "detail": "2 files"
+    },
+    {
+      "rule": "Every file under 30 MiB",
+      "level": "MUST",
+      "ok": true,
+      "detail": "index.html 16 KiB, game.js 1431 KiB"
+    },
+    {
+      "rule": "Every file under 512 KiB",
+      "level": "SHOULD",
+      "ok": false,
+      "detail": "game.js holds three.js, the engine and all 9,613 courses in one file"
+    },
+    {
+      "rule": "Total bundle under 250 MiB",
+      "level": "MUST",
+      "ok": true,
+      "detail": "1446 KiB"
+    },
+    {
+      "rule": "Initial bundle under 30 MiB",
+      "level": "MUST",
+      "ok": true,
+      "detail": "1446 KiB raw, 358 KiB gzipped"
+    },
+    {
+      "rule": "Initial bundle under 15 MiB",
+      "level": "SHOULD",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "rule": "Playables SDK loads before any game code",
+      "level": "MUST",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "rule": "Only relative paths",
+      "level": "MUST",
+      "ok": true,
+      "detail": "#i-steps, #i-left, #i-wind, #i-right, #i-steps, #i-sound, #i-mute, #i-play, #i-steps, #i-replay, #i-skip, #i-video, #i-play, #i-replay, #i-sound, #i-mute, #i-play, game.js"
+    },
+    {
+      "rule": "No network APIs in the game code (all assets are in the bundle)",
+      "level": "MUST",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "rule": "Preview-only #stage links compiled out",
+      "level": "MUST",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "rule": "No vibration (would need an on/off toggle)",
+      "level": "MUST",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "rule": "No navigator.language(s)",
+      "level": "MUST",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "rule": "Zip is byte-identical when rebuilt",
+      "level": "MUST",
+      "ok": true,
+      "detail": ""
+    }
+  ],
+  "mustFailures": 0
+}

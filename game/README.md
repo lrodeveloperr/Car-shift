@@ -11,7 +11,10 @@ npm run build      # dist/index.html + dist/game.js — zip dist/ for upload
 npm run dev        # rebuilds on change, serves http://localhost:8080
 npm test           # track-geometry tests against every bank course
 node build.mjs --preview   # also writes dist/preview.html (single file, no YouTube SDK tag)
+npm run package    # builds, checks and zips the upload into ../releases/youtube-playables/
 ```
+
+The submission kit (upload zip, thumbnails, screenshots, listing text, portal settings and the requirements checklist) is in [`releases/youtube-playables/`](../releases/youtube-playables/SUBMISSION.md). `npm run check:playables` plays that zip in Chromium against a stand-in for YouTube's SDK. `npm run thumbnails` and `npm run screenshots` re-render the store images. These three need Playwright; set `PLAYWRIGHT` to its module path if it isn't installed in `game/`.
 
 The preview build, and only the preview build, accepts a `#stage37`-style link that opens a throwaway journey at that stage. Later vehicles can then be tried without the 36 teaching stages, and the real save is never touched. The upload build compiles this out (`__PREVIEW__` is `false`).
 
@@ -49,7 +52,7 @@ Every sound is tied to a real engine event, so the audio also teaches the game.
 
 | Event | Sound |
 |---|---|
-| Vehicle switch | Whoosh, pop and sparkle, pitched per slot. Also a light vibration where supported. |
+| Vehicle switch | Whoosh, pop and sparkle, pitched per slot. |
 | Clean transition (engine `clean` credit) | Bright four-note "perfect" chime with a gold sparkle |
 | Entering water, diving, taking off, landing | Splash, dive bubbles, whoosh, thud |
 | A specialist reaching its own terrain | Monster truck crush, drill tunnel bore, rocket launch roar, glider soar |
@@ -63,7 +66,7 @@ Every sound is tied to a real engine event, so the audio also teaches the game.
 
 The engine hum runs under the music, and the music ducks under the fanfare. All levels were measured offline; peaks stay below −6 dB.
 
-Audio starts on the first tap, as browsers require. It follows YouTube's audio switch, stops during a host pause, and has its own mute toggle on the title and pause screens.
+Audio starts on the first tap, as browsers require. It follows YouTube's audio switch and stops during a host pause. Inside YouTube there is no in-game mute button: Playables should rely on YouTube's own control, and must not show look-alike icons near it. Outside YouTube (the preview) the title and pause screens keep a sound toggle. The game never vibrates: Playables that vibrate must offer an on/off switch.
 
 ## Ads
 

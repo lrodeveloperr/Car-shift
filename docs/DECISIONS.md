@@ -17,3 +17,7 @@
 - The daily course became the day's first level after the teaching levels, so the level number never repeats after a win.
 
 Prebuilt content is counted after mathematical/simulation/pacing/diversity acceptance. Human enjoyment is not established by synthetic players. The earlier 5,580 count is a restricted sequence enumeration, not a certified level count. Keep rejection evidence. Do not relax quality gates just to meet a number.
+
+18 November 2026, later. User asked for the rewarded video to be the prominent, default choice on the medal screen. It is now the big button, and Next or Retry is the small one. The free option always stays visible, and the video button is marked with the clapper icon and ignores taps for 600 ms. That keeps it inside YouTube's rules: rewarded ads strictly opt-in, a clear option to continue without one, and no accidental starts. User then asked to package the game for the Mediacube upload. Store thumbnails are marketing material whose aim is click-through: one big hero, the shift shown in a single image, rivals close, motion and contrast. They are text-free because YouTube bans branding or logos in thumbnails. Two Playables "SHOULD" items remain open by choice:
+- `game.js` is above the recommended 512 KiB per file (1.40 MiB raw, about 358 KiB compressed), because one request starts faster than many.
+- The race position is shown by colour alone (WCAG best effort).

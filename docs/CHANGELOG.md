@@ -1,3 +1,41 @@
+# 18 November 2026: YouTube Playables submission kit
+
+**Upload.** `npm run package` (in `game/`) builds the upload zip. It holds `index.html` and `game.js` at the root, and rebuilding gives a byte-identical zip. Before writing the zip it checks the Playables bundle rules:
+- file names and count
+- size limits
+- relative paths
+- the SDK loads before the game code
+- no network APIs
+- preview-only code compiled out
+
+`npm run check:playables` plays that exact zip in Chromium against a stand-in for YouTube's SDK. All 19 checks pass:
+- SDK call order
+- pause and resume stop rendering and input
+- cloud-save order and size
+- `sendScore`
+- heap size (16 MB after a race)
+- no browser storage, vibration, Page Visibility or language APIs
+- no network calls beyond the SDK
+- no page errors
+
+All nine Playables aspect ratios (9:32 to 32:9) were checked: no control is off-screen or overlapping on the title, race or medal screens.
+
+**Compliance changes.**
+- Inside YouTube, the in-game sound buttons are removed: Playables should rely on YouTube's mute, and must not show look-alike icons near YouTube's controls. The sound setting is no longer read from browser storage there.
+- Vibration is gone everywhere: Playables that vibrate must offer an on/off switch.
+- While YouTube has the game paused, taps and keys are ignored and interface animations freeze, as well as the loop, rendering and sound.
+
+**Store assets.**
+- `tools/thumbnails.mjs` renders marketing thumbnails in six aspect ratios from the game's own models, with no text or logos. The orange racer leaps off the road as a car and shifts, in a gold burst, into a boat that lands with a splash. The helicopter bursts through a ring above, and the rivals are on its tail.
+- `tools/screenshots.mjs` captures eight real in-game screenshots.
+- `releases/youtube-playables/SUBMISSION.md` has the listing text, monetization settings, IARC facts, a device test plan and a requirement-by-requirement checklist.
+
+**Rewarded button first.** Whenever a video is on offer (skip after a loss, trial or paint after a win), it is the big pulsing orange button and takes focus. Next or Retry becomes a small glass button on its left. The video button ignores taps for its first 600 ms. The level pill:
+- shrinks long numbers (five digits and up), so the position disc and track always fit after it
+- stays hidden until the save loads
+
+An unreadable save no longer leaves a Play spinner turning.
+
 # 18 November 2026 — failed saves no longer block play
 
 The shareable preview could not start a race when the browser blocked storage (for example inside a sandboxed viewer): the first save failed and Play did nothing. Outside Playables, progress now falls back to memory when storage is blocked. In every build, a race whose first save fails still starts, and the periodic save retries.
@@ -16,8 +54,6 @@ The shareable preview could not start a race when the browser blocked storage (f
 **Daily course.** It is now the day's first level after the teaching levels: its family is that level's, and a win or skip clears the level.
 
 **Game screens.** A level number sits top left on all screens and bumps on a clear. The pause button is gone. After a loss the big button is a free retry, and the offer shows a skip arrow.
-
-**Rewarded button first.** Whenever a video is on offer (skip after a loss, trial or paint after a win) it is the big pulsing orange button and takes focus; Next or Retry becomes a small glass button on its left. The video button ignores taps for its first 600 ms. The level pill shrinks long numbers (five digits and up) so the position disc and track always fit after it, stays hidden until the save loads, and an unreadable save no longer leaves a Play spinner turning.
 
 **Verification.**
 - Engine tests 49/49.
