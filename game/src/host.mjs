@@ -1,6 +1,7 @@
 // YouTube Playables host adapter. Uses the ytgame SDK inside Playables; elsewhere falls back to localStorage
 // and page visibility so the same build runs in a normal browser for development.
 const KEY='shape-shifting-vehicle-race-v1';
+let memory=null;
 
 export function connectHost(){
   const yt=typeof ytgame!=='undefined'&&ytgame?.IN_PLAYABLES_ENV?ytgame:null;
@@ -9,8 +10,10 @@ export function connectHost(){
     load:()=>yt.game.loadData(),
     save:value=>yt.game.saveData(value),
   }:{
-    async load(){try{return localStorage.getItem(KEY);}catch{return null;}},
-    async save(value){localStorage.setItem(KEY,value);},
+    // Outside Playables, browser storage can be blocked (private windows, sandboxed previews). Then progress lives in
+    // memory for the session instead of every save failing, which would stop races from starting.
+    async load(){try{return localStorage.getItem(KEY);}catch{return memory;}},
+    async save(value){try{localStorage.setItem(KEY,value);}catch{memory=value;}},
   };
   return {
     inPlayables:!!yt,storage,

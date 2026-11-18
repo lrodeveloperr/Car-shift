@@ -1,7 +1,7 @@
 {
   "scope": "JSDOM code/event integration ONLY; not a native browser, layout, device, YouTube host or human playtest",
   "adapter": "Wrap the exact standalone module code in an async function; inject clone/encoder, pointer-capture stubs and fixed button rectangles. No external requests.",
-  "harnessSha256": "ca1e695d089d6136671b9283596ec6991bec078a102d57e66280cdf81198a685",
+  "harnessSha256": "f6e77a7cd4c1d575a4a863087871f0dd63e6648c4ad6c59863be908f83fbef4f",
   "jsdomVersion": "26.1.0",
   "nodeVersion": "v22.23.5",
   "cases": [
@@ -64,61 +64,61 @@
   ],
   "errors": [],
   "soak": {
-    "wallMs": 600007,
+    "wallMs": 600006,
     "transitions": 56,
     "errors": 0,
-    "heap": 43723256,
+    "heap": 58428168,
     "complete": true,
-    "initialHeap": 39878072,
+    "initialHeap": 39884304,
     "method": "600000 ms elapsed wall time, real JSDOM RAF callbacks, 4x simulated controls; not interactive/native browser",
-    "nodeHeap": 40318528
+    "nodeHeap": 40317592
   },
   "nodeHeapSamples": [
     {
       "wallMs": 0,
-      "postGcHeap": 40058320
+      "postGcHeap": 40068472
     },
     {
-      "wallMs": 60016,
-      "postGcHeap": 40194344
+      "wallMs": 60004,
+      "postGcHeap": 40205584
     },
     {
-      "wallMs": 120050,
-      "postGcHeap": 40230416
+      "wallMs": 120052,
+      "postGcHeap": 40232264
     },
     {
-      "wallMs": 180089,
-      "postGcHeap": 40230176
+      "wallMs": 180079,
+      "postGcHeap": 40247952
     },
     {
-      "wallMs": 240142,
-      "postGcHeap": 40266432
+      "wallMs": 240125,
+      "postGcHeap": 40277304
     },
     {
-      "wallMs": 300176,
-      "postGcHeap": 40301944
+      "wallMs": 300156,
+      "postGcHeap": 40306712
     },
     {
-      "wallMs": 360231,
-      "postGcHeap": 40312168
+      "wallMs": 360198,
+      "postGcHeap": 40326808
     },
     {
-      "wallMs": 420265,
-      "postGcHeap": 40305072
+      "wallMs": 420224,
+      "postGcHeap": 40333192
     },
     {
-      "wallMs": 480301,
-      "postGcHeap": 40320704
+      "wallMs": 480283,
+      "postGcHeap": 40332912
     },
     {
-      "wallMs": 540340,
-      "postGcHeap": 40314704
+      "wallMs": 540316,
+      "postGcHeap": 40317328
     },
     {
-      "wallMs": 600007,
-      "postGcHeap": 40310216
+      "wallMs": 600006,
+      "postGcHeap": 40309280
     }
   ],
   "passed": true,
-  "durationSeconds": 601.087019508
+  "durationSeconds": 600.936147662
 }

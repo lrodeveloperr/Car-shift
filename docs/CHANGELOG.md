@@ -1,3 +1,7 @@
+# 18 November 2026 — failed saves no longer block play
+
+The shareable preview could not start a race when the browser blocked storage (for example inside a sandboxed viewer): the first save failed and Play did nothing. Outside Playables, progress now falls back to memory when storage is blocked. In every build, a race whose first save fails still starts, and the periodic save retries.
+
 # 18 November 2026 — levels, competitive opponents and vehicle variety
 
 **Levels.** Only first place clears a level; finishes still count for ad pacing. A new `skip` claim clears a lost level through a rewarded video. `rewardOffer()` now offers a skip after a loss and a trial or paint after a win (no more paid retry; retrying is free). Interstitials only come after wins.

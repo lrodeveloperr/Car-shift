@@ -84,7 +84,12 @@ function startRace(race){
 }
 async function run(task){
   if(busy)return;busy=true;
-  try{startRace(await task());}catch(e){console.error(e);show('title',true);mode='title';}
+  try{startRace(await task());}
+  catch(e){
+    // A failed save must not block play: the engine has already created the race, and the periodic save retries.
+    console.error(e);const race=session?.race;
+    if(race?.state==='RACING'&&mode!=='racing')startRace(race);else{show('title',true);mode='title';}
+  }
   finally{busy=false;}
 }
 // No level picking: Play resumes, or starts today's fresh course if it is waiting, or the next journey course.
