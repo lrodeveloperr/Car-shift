@@ -65,7 +65,7 @@ let shownLevel=0;
 function showLevel(){
   const level=session.data.frontier;
   for(const el of document.querySelectorAll('.level')){
-    el.querySelector('b').textContent=level;el.setAttribute('aria-label',`Level ${level}`);
+    el.hidden=false;el.querySelector('b').textContent=level;el.setAttribute('aria-label',`Level ${level}`);el.dataset.digits=Math.min(7,String(level).length);
     if(shownLevel&&level>shownLevel){el.classList.remove('up');void el.offsetWidth;el.classList.add('up');}
   }
   shownLevel=level;
@@ -308,7 +308,7 @@ function loop(now){
 // Preview builds only (compiled out of the YouTube build): a #stage49-style link opens a throwaway journey
 // at that stage, so later vehicles can be tried without playing the teaching stages. It never touches the real save.
 function storageFor(){
-  const jump=__PREVIEW__&&/^#stage(\d{1,3})$/.exec(location.hash);
+  const jump=__PREVIEW__&&/^#stage(\d{1,7})$/.exec(location.hash);
   if(!jump)return host.storage;
   const data=initialData();data.frontier=Math.max(1,Number(jump[1]));return new MemoryStorage(JSON.stringify(data));
 }
@@ -316,7 +316,7 @@ async function boot(){
   resize();world.render();host.firstFrameReady();syncSoundButtons();sound.music(true,.34);
   await new Promise(requestAnimationFrame);
   session=new Session(new Catalog(bank.recipes,foundations.recipes),storageFor(),{enableAdFixtures:true,ads:{request:adRequest}});
-  if(!await session.load()){console.warn('save unreadable',session.error);show('problem',true);return;}
+  if(!await session.load()){console.warn('save unreadable',session.error);show('problem',true);show('play',false);return;}
   applyPaint();showTitle();world.update(preview.entrants,0,1,0,reducedMotion);world.render();
   host.gameReady();requestAnimationFrame(loop);
 }
